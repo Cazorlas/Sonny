@@ -1,0 +1,88 @@
+﻿#IDE folders
+*.idea/
+*.vs/
+*.vscode/
+.idea/
+.vs/
+.vscode/
+
+#Project-specific folders
+*obj/
+*bin/
+*temp/
+build/bin/
+build/obj/
+build/Debug/
+build/Release/
+
+#Deprecated Nuget folder
+/packages/
+**/packages/
+
+#Nuke output folder
+/output/
+
+#Project-specific files
+*/build.schema.json
+
+#User-specific files
+*.user
+*.suo
+*.DotSettings.user
+*.csproj.user
+*.sln.DotSettings.user
+
+#Test results and coverage
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage.json
+coverage.xml
+
+#NuGet restore files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+#Rider/JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+rider.project.model.nuget.info
+rider.project.restore.info
+
+#Visual Studio
+*.suo
+*.useros
+*.sln.docstates
+*.userprefs
+
+#Build artifacts
+*.dll
+*.pdb
+*.exe
+*.cache
+*.log
+*.tmp
+
+#Revit test files (if too large, uncomment)
+#*.rvt
+#*.rfa
+#*.rft
+
+#Python scripts
+*.py
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.py[cod]
+*$py.class
+
+#OS files
+.DS_Store
+Thumbs.db
+desktop.ini
