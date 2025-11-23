@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonnyRevitExtensions", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revit.Async", "source\Revit.Async\Revit.Async\Revit.Async.csproj", "{CA75AD8E-DF48-4687-B6E0-AEB9260A291B}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Revit.Async.Shared", "source\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.shproj", "{26214B67-5134-4C0A-86A6-51128E71AFE2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyRibbon", "..\EasyRibbon\EasyRibbon\EasyRibbon.csproj", "{605D3801-6EEE-400A-BA74-A8D1C58FD434}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonnyApplication.Tests", "source\SonnyApplication.Tests\SonnyApplication.Tests.csproj", "{C8FC4194-B89A-4709-BF7F-6AF3179FE99A}"
