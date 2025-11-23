@@ -28,7 +28,7 @@ public class RevitDocumentService : IRevitDocument
     /// <summary>
     /// Gets the active view
     /// </summary>
-    public View? ActiveView => _uidoc.ActiveView ;
+    public View ActiveView => _uidoc.ActiveView ;
 
     /// <summary>
     /// Gets the UIApplication

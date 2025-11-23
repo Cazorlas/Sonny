@@ -15,7 +15,7 @@ public interface IRevitDocument
     /// <summary>
     /// Gets the active view
     /// </summary>
-    View? ActiveView { get ; }
+    View ActiveView { get ; }
 
     /// <summary>
     /// Gets the UIApplication

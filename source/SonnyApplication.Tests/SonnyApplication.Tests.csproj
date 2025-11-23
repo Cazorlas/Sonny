@@ -57,6 +57,7 @@
 
   <!-- Reference to SonnyApplication -->
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Unitest\RevitTest\TestAdapter\ricaun.RevitTest.TestAdapter.csproj" />
     <ProjectReference Include="..\SonnyApplication\SonnyApplication.csproj" />
   </ItemGroup>
 

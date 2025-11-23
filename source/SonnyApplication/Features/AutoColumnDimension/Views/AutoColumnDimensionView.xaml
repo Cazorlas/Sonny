@@ -52,10 +52,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label Content="Snap Distance:" Grid.Column="0" />
             <TextBox Grid.Column="1"
-                     Text="{Binding SnapDistance, UpdateSourceTrigger=PropertyChanged}" />
+                     Text="{Binding SnapDistanceDisplay, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Content="{Binding DisplayUnitName}" Grid.Column="2" Margin="5,5,0,5" VerticalAlignment="Center" />
         </Grid>
 
         <!-- Run Button -->
@@ -65,4 +67,3 @@
                 Margin="0,10,0,0" />
     </StackPanel>
 </Window>
-

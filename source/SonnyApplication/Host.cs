@@ -39,6 +39,7 @@ public static class Host
 
             // Common services
             services.AddSingleton<IMessageService, MessageService>() ;
+            services.AddSingleton<IUnitConverter, RevitUnitConverter>() ;
 
             // AutoColumnDimension services
             services.AddSingleton<IGridFinder, GridFinder>() ;

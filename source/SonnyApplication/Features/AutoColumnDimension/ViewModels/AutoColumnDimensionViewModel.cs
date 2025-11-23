@@ -1,23 +1,18 @@
 using System.Collections.ObjectModel ;
 using Revit.Async ;
-using Serilog ;
+using SonnyApplication.Bases ;
 using SonnyApplication.Features.AutoColumnDimension.Interfaces ;
 using SonnyApplication.Interfaces ;
 
 namespace SonnyApplication.Features.AutoColumnDimension.ViewModels ;
 
-public partial class AutoColumnDimensionViewModel : ObservableObject
+public partial class AutoColumnDimensionViewModel : BaseViewModel
 {
     #region Constructor
 
-    public AutoColumnDimensionViewModel(IRevitDocument revitDocument,
-        IMessageService messageService,
-        ILogger logger,
-        IAutoColumnDimensionHandler handler)
+    public AutoColumnDimensionViewModel(ICommonServices commonServices,
+        IAutoColumnDimensionHandler handler) : base(commonServices)
     {
-        RevitDocument = revitDocument ;
-        MessageService = messageService ;
-        Logger = logger ;
         Handler = handler ;
 
         // Initialize data synchronously (using RevitDocument service directly)
@@ -26,14 +21,11 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
 
     #endregion
 
-    #region Services (Dependency Injection)
+    #region Feature-Specific Services
 
-    private IRevitDocument RevitDocument { get ; }
-
-    private IMessageService MessageService { get ; }
-
-    private ILogger Logger { get ; }
-
+    /// <summary>
+    /// Handler for auto column dimension feature
+    /// </summary>
     private IAutoColumnDimensionHandler Handler { get ; }
 
     #endregion
@@ -45,14 +37,18 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
 
     public ObservableCollection<DimensionType> DimensionTypes { get ; set ; } = [] ;
 
+    /// <summary>
+    /// Snap distance in display unit (mm, cm, m, etc.) for UI binding
+    /// </summary>
     [ObservableProperty]
-    private double snapDistance ;
+    private double snapDistanceDisplay ;
 
-    #endregion
-
-    #region Private Fields (Class Internal State)
-
-    public Action? CloseWindowAction { get ; set ; }
+    /// <summary>
+    /// Snap distance in internal unit (feet) for calculation
+    /// </summary>
+    private double SnapDistanceInternal =>
+        UnitConverter.ToInternalUnit(snapDistanceDisplay,
+            DisplayUnit) ;
 
     #endregion
 
@@ -63,9 +59,9 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
     {
         try
         {
-            await RevitTask.RunAsync(() => Handler.Execute(
-                RevitDocument,
-                SnapDistance,
+            // Convert display unit to internal unit (feet) before passing to handler
+            await RevitTask.RunAsync(() => Handler.Execute(RevitDocument,
+                SnapDistanceInternal * RevitDocument.ActiveView.Scale,
                 SelectedDimensionType)) ;
 
             // Close window after successful execution
@@ -73,9 +69,9 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            Logger.Error(ex,
-                "Error occurred during dimension creation") ;
-            MessageService.ShowError($"An error occurred: {ex.Message}") ;
+            LogError("Error occurred during dimension creation",
+                ex) ;
+            ShowError($"An error occurred: {ex.Message}") ;
         }
     }
 
@@ -107,9 +103,9 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            Logger.Error(ex,
-                "Failed to initialize dimension types") ;
-            MessageService.ShowError($"Failed to initialize dimension types: {ex.Message}") ;
+            LogError("Failed to initialize dimension types",
+                ex) ;
+            ShowError($"Failed to initialize dimension types: {ex.Message}") ;
         }
     }
 
@@ -126,30 +122,23 @@ public partial class AutoColumnDimensionViewModel : ObservableObject
 
         try
         {
-            if (RevitDocument.ActiveView == null)
-            {
-                return ;
-            }
-
             var parameter = dimensionType.FindParameter(BuiltInParameter.DIM_STYLE_DIM_LINE_SNAP_DIST) ;
             if (parameter is not { StorageType: StorageType.Double })
             {
                 return ;
             }
 
-            var snapDistanceValue = parameter.AsDouble() ;
-            SnapDistance = snapDistanceValue * RevitDocument.ActiveView.Scale ;
+            // Get value in feet from Revit parameter
+            var snapDistanceFeet = parameter.AsDouble() ;
+
+            // Convert from internal unit (feet) to display unit (mm, cm, etc.)
+            SnapDistanceDisplay = UnitConverter.FromInternalUnit(snapDistanceFeet,
+                DisplayUnit) ;
         }
         catch (Exception ex)
         {
-            Logger.Warning(ex,
-                "Failed to update snap distance") ;
+            LogWarning($"Failed to update snap distance: {ex.Message}") ;
         }
-    }
-
-    private void CloseWindow()
-    {
-        CloseWindowAction?.Invoke() ;
     }
 
     #endregion

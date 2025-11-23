@@ -1,6 +1,8 @@
 using Autodesk.Revit.UI ;
 using Revit.Async ;
-using SonnyApplication ;
+using Serilog ;
+using SonnyApplication.Interfaces ;
+using SonnyApplication.Services ;
 
 namespace SonnyApplication.Bases ;
 
@@ -48,5 +50,23 @@ public abstract class BaseExternalCommand : IExternalCommand
     protected T GetService<T>() where T : class
     {
         return Host.GetService<T>() ;
+    }
+
+    /// <summary>
+    /// Creates a CommonServices instance for ViewModels
+    /// </summary>
+    /// <param name="commandData">The external command data</param>
+    /// <returns>CommonServices instance</returns>
+    protected ICommonServices CreateCommonServices(ExternalCommandData commandData)
+    {
+        var revitDocumentService = new RevitDocumentService(commandData.Application.ActiveUIDocument) ;
+        var messageService = GetService<IMessageService>() ;
+        var logger = GetService<ILogger>() ;
+        var unitConverter = GetService<IUnitConverter>() ;
+
+        return new CommonServices(revitDocumentService,
+            messageService,
+            logger,
+            unitConverter) ;
     }
 }
