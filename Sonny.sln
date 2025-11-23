@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36203.30 d17.14
+VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0740AF79-A414-4978-8E4E-113B6414AA5A}"
 	ProjectSection(SolutionItems) = preProject
@@ -195,8 +195,10 @@ Global
 		{4DE01C6E-1851-42B1-BFDE-2E5EB7020975} = {0AD304FD-27CD-4FA3-A723-565B5F2B19C5}
 		{583776DC-864F-4481-9C6C-D01A43C03190} = {0AD304FD-27CD-4FA3-A723-565B5F2B19C5}
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EF4D6B59-469D-4963-AB6E-587640DDD089}
+	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		source\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.projitems*{26214b67-5134-4c0a-86a6-51128e71afe2}*SharedItemsImports = 13
-		source\Revit.Async\Revit.Async.Shared\Revit.Async.Shared.projitems*{ca75ad8e-df48-4687-b6e0-aeb9260a291b}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

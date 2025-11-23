@@ -62,21 +62,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" Condition="!$(TargetFramework.StartsWith('net4'))" />
+    <PackageReference Include="NUnit" Version="3.13.3"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" Condition="!$(TargetFramework.StartsWith('net4'))"/>
+    <!-- Mocking library for unit tests - NSubstitute has simpler syntax than Moq -->
+    <PackageReference Include="NSubstitute" Version="5.3.0"/>
   </ItemGroup>
 
   <!-- Reference to SonnyApplication -->
   <!-- MSBuild will automatically pass Configuration to referenced project -->
   <ItemGroup>
-    <ProjectReference Include="..\SonnyApplication\SonnyApplication.csproj" />
+    <ProjectReference Include="..\SonnyApplication\SonnyApplication.csproj"/>
   </ItemGroup>
 
   <!-- Revit API References -->
   <ItemGroup>
-    <PackageReference Include="ricaun.Revit.UI.Tasks" Version="*" />
-    <PackageReference Include="ricaun.RevitTest.TestAdapter" Version="*" />
-    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All" />
+    <PackageReference Include="ricaun.Revit.UI.Tasks" Version="*"/>
+    <PackageReference Include="ricaun.RevitTest.TestAdapter" Version="*"/>
+    <PackageReference Include="Revit_All_Main_Versions_API_x64" Version="$(RevitVersion).*" IncludeAssets="build; compile" PrivateAssets="All"/>
   </ItemGroup>
 
   <!-- Force Revit Version and Settings for TestAdapter -->

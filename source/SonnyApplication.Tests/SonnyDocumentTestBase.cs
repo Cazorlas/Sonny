@@ -7,7 +7,7 @@ using Autodesk.Revit.UI ;
 namespace SonnyApplication.Tests ;
 
 /// <summary>
-/// Base class for tests that need a document
+///     Base class for tests that need a document
 /// </summary>
 public abstract class SonnyDocumentTestBase : SonnyRevitTestBase
 {
