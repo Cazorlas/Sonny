@@ -127,13 +127,15 @@ namespace SonnyApplication.Tests
 
             if (string.IsNullOrEmpty(assemblyLocation))
             {
-                // Fallback: try CodeBase if Location is empty
+                // Fallback: try CodeBase if Location is empty (only for .NET Framework)
+#if NETFRAMEWORK
                 var codeBase = assembly.CodeBase ;
                 if (! string.IsNullOrEmpty(codeBase))
                 {
                     var uri = new Uri(codeBase) ;
                     assemblyLocation = uri.LocalPath ;
                 }
+#endif
             }
 
             if (string.IsNullOrEmpty(assemblyLocation))
