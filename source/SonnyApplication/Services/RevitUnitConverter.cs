@@ -1,4 +1,3 @@
-using Autodesk.Revit.DB ;
 using SonnyApplication.Interfaces ;
 
 namespace SonnyApplication.Services ;
@@ -43,10 +42,6 @@ public class RevitUnitConverter : IUnitConverter
     /// </summary>
     public ForgeTypeId GetDefaultDisplayUnit(Document document)
     {
-        // Get from document units
-        var units = document.GetUnits() ;
-        var lengthUnit = units.GetFormatOptions(SpecTypeId.Length).GetUnitTypeId() ;
-
         // If document uses metric, default to millimeters
         // Otherwise use feet
         var isMetric = document.DisplayUnitSystem == DisplayUnit.METRIC ;

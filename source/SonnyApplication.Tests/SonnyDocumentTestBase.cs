@@ -11,8 +11,8 @@ namespace SonnyApplication.Tests ;
 /// </summary>
 public abstract class SonnyDocumentTestBase : SonnyRevitTestBase
 {
-    protected Document Document { get ; private set ; }
-    protected UIDocument UIDocument { get ; private set ; }
+    protected Document? Document { get ; private set ; }
+    protected UIDocument? UIDocument { get ; private set ; }
 
     protected virtual string? DocumentFilePath => null ;
 
@@ -26,13 +26,14 @@ public abstract class SonnyDocumentTestBase : SonnyRevitTestBase
             Document = UIDocument.Document ;
         }
 
-        AssertDocument(Document,
+        AssertDocument(Document!,
             "Failed to create or open document") ;
     }
 
     protected override void OnTearDown()
     {
-        Document.Close(false) ;
+        UIApp?.OpenAndActivateDocument(GetTestRevitFilePath("PlaceHolder_V2023.rvt")) ;
+        Document!.Close(false) ;
         Document.Dispose() ;
 
         base.OnTearDown() ;

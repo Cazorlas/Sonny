@@ -28,5 +28,3 @@ public interface IDimensionCreator
         ViewWrapperBase viewWrapper,
         DimensionType? dimensionType) ;
 }
-
-
