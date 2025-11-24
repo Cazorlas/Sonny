@@ -99,6 +99,11 @@
       <_Parameter1>NUnit.Verbosity</_Parameter1>
       <_Parameter2>2</_Parameter2>
     </AssemblyAttribute>
+    <!-- Force to close Revit after test finish -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>NUnit.Close</_Parameter1>
+      <_Parameter2>true</_Parameter2>
+    </AssemblyAttribute>
   </ItemGroup>
 
   <!-- Copy test Revit files to output -->
@@ -106,6 +111,33 @@
     <None Update="Resources\RevitFiles\*.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <!-- Include Python script and VBScript for starting it -->
+    <None Update="Utils\autoload_addin.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Utils\StartPythonScript.vbs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
+
+  <!-- Kill any existing Python script before starting new one -->
+  <Target Name="StopAddInDialogClicker" BeforeTargets="StartAddInDialogClicker">
+    <Message Text="Stopping any existing AddInDialogAutoClicker Python script..." />
+    <Exec Command="powershell -NoProfile -Command &quot;Get-WmiObject Win32_Process | Where-Object { $_.CommandLine -like '*autoload_addin.py*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(OS)' == 'Windows_NT'" />
+  </Target>
+
+  <!-- Start Python script before running tests (runs in background, only one instance) -->
+  <Target Name="StartAddInDialogClicker" BeforeTargets="VSTest" DependsOnTargets="StopAddInDialogClicker">
+    <Message Text="Starting AddInDialogAutoClicker Python script (single instance, exits after clicking dialog once)..." />
+    <!-- Use VBScript to start Python script in completely separate process without blocking MSBuild -->
+    <Exec Command="wscript.exe &quot;$(MSBuildThisFileDirectory)Utils\StartPythonScript.vbs&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(OS)' == 'Windows_NT'" />
+    <Message Text="AddInDialogAutoClicker Python script started (will exit after clicking dialog once or 5 min timeout)" />
+  </Target>
+
+  <!-- Stop Python script after tests complete -->
+  <Target Name="StopAddInDialogClickerAfterTest" AfterTargets="VSTest">
+    <Message Text="Stopping AddInDialogAutoClicker Python script after tests..." />
+    <Exec Command="powershell -NoProfile -Command &quot;Get-WmiObject Win32_Process | Where-Object { $_.CommandLine -like '*autoload_addin.py*' } | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(OS)' == 'Windows_NT'" />
+  </Target>
 
 </Project>
