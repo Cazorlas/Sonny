@@ -89,10 +89,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\AlphaBIM\AlphaBIMSolution\source\SonnyRevitExtensions\SonnyRevitExtensions.csproj" />
+      <ProjectReference Include="..\SonnyRevitExtensions\SonnyRevitExtensions.csproj" />
       <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
       <ProjectReference Include="..\EasyRibbon\EasyRibbon\EasyRibbon.csproj" />
 
+      <!-- SonnyRevitExtensions reference -->
+      <!-- SonnyRevitExtensions is included as a git submodule from https://github.com/PhanCongVuDuc/SonnyRevitExtensions -->
+      
       <!-- Revit.Async reference -->
       <!-- Use Revit.Async (net45) for all configurations -->
       <!-- net45 is compatible with net48 (R21-R24) and can work with net8.0 (R25-R26) -->

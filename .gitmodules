@@ -4,3 +4,6 @@
 [submodule "source/EasyRibbon"]
 	path = source/EasyRibbon
 	url = https://github.com/PhanCongVuDuc/EasyRibbon.git
+[submodule "source/SonnyRevitExtensions"]
+	path = source/SonnyRevitExtensions
+	url = https://github.com/PhanCongVuDuc/SonnyRevitExtensions.git

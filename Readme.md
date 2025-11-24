@@ -71,6 +71,7 @@ This project uses **Git Submodule** to manage dependencies. The following librar
 
 - **Revit.Async** - Async utilities for Revit API
 - **EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
+- **SonnyRevitExtensions** - Revit API extension methods and utilities library
 
 ### Clone with Submodules
 
@@ -93,7 +94,7 @@ To update submodules to their latest commits:
 git submodule update --remote
 
 # Commit and push the submodule reference update to GitHub
-git add source/Revit.Async source/EasyRibbon
+git add source/Revit.Async source/EasyRibbon source/SonnyRevitExtensions
 git commit -m "Update submodules to latest version"
 git push origin master
 ```
@@ -114,8 +115,14 @@ This project includes the following submodules:
 - The submodule tracks a specific commit from the EasyRibbon repository
 - Changes to EasyRibbon should be committed in its own repository, not in Sonny
 
+#### SonnyRevitExtensions
+- **Submodule location**: `source/SonnyRevitExtensions`
+- **Submodule repository**: [SonnyRevitExtensions](https://github.com/PhanCongVuDuc/SonnyRevitExtensions)
+- The submodule tracks a specific commit from the SonnyRevitExtensions repository
+- Changes to SonnyRevitExtensions should be committed in its own repository, not in Sonny
+
 > [!NOTE]
-> If you see an empty `source/Revit.Async` folder after cloning, you need to initialize submodules using `git submodule update --init --recursive`
+> If you see empty submodule folders after cloning, you need to initialize submodules using `git submodule update --init --recursive`
 
 ## Solution Structure
 
