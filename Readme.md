@@ -18,6 +18,7 @@ This project focuses on developing useful tools for the Revit community, with op
 * [What You Can Learn](#what-you-can-learn)
 * [Videos](#videos)
 * [Prerequisites](#prerequisites)
+* [Cloning the Repository](#cloning-the-repository)
 * [Solution Structure](#solution-structure)
 * [Managing Supported Revit Versions](#managing-supported-revit-versions)
 * [Learn More](#learn-more)
@@ -63,6 +64,52 @@ If you haven't already installed these, you can do so by visiting the following:
 - [JetBrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio](https://visualstudio.microsoft.com/)
 
 After installation, clone this repository to your local machine and navigate to the project directory.
+
+## Cloning the Repository
+
+This project uses **Git Submodule** to manage dependencies. The following libraries are included as submodules from their own repositories:
+
+- **Revit.Async** - Async utilities for Revit API
+- **EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
+
+### Clone with Submodules
+
+When cloning this repository, you need to initialize and update submodules to get all dependencies:
+
+```bash
+# Clone with submodules (recommended)
+git clone --recursive <repository-url>
+
+# Or if you already cloned without --recursive
+git submodule update --init --recursive
+```
+
+### Updating Submodules
+
+To update submodules to their latest commits:
+
+```bash
+git submodule update --remote
+```
+
+### Working with Submodules
+
+This project includes the following submodules:
+
+#### Revit.Async
+- **Submodule location**: `source/Revit.Async`
+- **Submodule repository**: [Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)
+- The submodule tracks a specific commit from the Revit.Async repository
+- Changes to Revit.Async should be committed in its own repository, not in Sonny
+
+#### EasyRibbon
+- **Submodule location**: `source/EasyRibbon`
+- **Submodule repository**: [EasyRibbon](https://github.com/PhanCongVuDuc/EasyRibbon)
+- The submodule tracks a specific commit from the EasyRibbon repository
+- Changes to EasyRibbon should be committed in its own repository, not in Sonny
+
+> [!NOTE]
+> If you see an empty `source/Revit.Async` folder after cloning, you need to initialize submodules using `git submodule update --init --recursive`
 
 ## Solution Structure
 

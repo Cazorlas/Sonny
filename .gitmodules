@@ -1,3 +1,6 @@
 [submodule "source/Revit.Async"]
 	path = source/Revit.Async
 	url = https://github.com/PhanCongVuDuc/Revit.Async.git
+[submodule "source/EasyRibbon"]
+	path = source/EasyRibbon
+	url = https://github.com/PhanCongVuDuc/EasyRibbon.git
