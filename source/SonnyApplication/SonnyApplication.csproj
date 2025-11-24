@@ -89,7 +89,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SonnyRevitExtensions\SonnyRevitExtensions.csproj" />
+      <ProjectReference Include="..\SonnyRevitExtensions\source\SonnyRevitExtensions\SonnyRevitExtensions.csproj" />
       <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
       <ProjectReference Include="..\EasyRibbon\EasyRibbon\EasyRibbon.csproj" />
 
