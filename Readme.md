@@ -89,7 +89,13 @@ git submodule update --init --recursive
 To update submodules to their latest commits:
 
 ```bash
+# Update submodules to latest commits
 git submodule update --remote
+
+# Commit and push the submodule reference update to GitHub
+git add source/Revit.Async source/EasyRibbon
+git commit -m "Update submodules to latest version"
+git push origin master
 ```
 
 ### Working with Submodules
