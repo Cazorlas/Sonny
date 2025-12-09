@@ -110,16 +110,16 @@ This project includes the following submodules:
 - Changes to Revit.Async should be committed in its own repository, not in Sonny
 
 #### EasyRibbon
-- **Submodule location**: `source/EasyRibbon`
-- **Submodule repository**: [EasyRibbon](https://github.com/PhanCongVuDuc/EasyRibbon)
-- The submodule tracks a specific commit from the EasyRibbon repository
-- Changes to EasyRibbon should be committed in its own repository, not in Sonny
+- **Submodule location**: `source/Sonny.EasyRibbon`
+- **Submodule repository**: [Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)
+- The submodule tracks a specific commit from the Sonny.EasyRibbon repository
+- Changes to Sonny.EasyRibbon should be committed in its own repository, not in Sonny
 
 #### SonnyRevitExtensions
-- **Submodule location**: `source/SonnyRevitExtensions`
-- **Submodule repository**: [SonnyRevitExtensions](https://github.com/PhanCongVuDuc/SonnyRevitExtensions)
-- The submodule tracks a specific commit from the SonnyRevitExtensions repository
-- Changes to SonnyRevitExtensions should be committed in its own repository, not in Sonny
+- **Submodule location**: `source/Sonny.RevitExtensions`
+- **Submodule repository**: [Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)
+- The submodule tracks a specific commit from the Sonny.RevitExtensions repository
+- Changes to Sonny.RevitExtensions should be committed in its own repository, not in Sonny
 
 > [!NOTE]
 > If you see empty submodule folders after cloning, you need to initialize submodules using `git submodule update --init --recursive`
@@ -215,8 +215,8 @@ This project uses the following libraries and tools:
 - **[RevitTemplates](https://github.com/Nice3point/RevitTemplates)** - Project templates and build system for Revit plugins
 - **[Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)** - Async utilities for Revit API
 - **[RevitTest](https://github.com/ricaun-io/RevitTest)** - Testing framework for Revit applications
-- **[EasyRibbon](https://github.com/PhanCongVuDuc/EasyRibbon)** - Attribute-based framework for creating Revit Ribbon UI
-- **[SonnyRevitExtensions](https://github.com/PhanCongVuDuc/SonnyRevitExtensions)** - Revit API extension methods and utilities library
+- **[Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)** - Attribute-based framework for creating Revit Ribbon UI
+- **[Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)** - Revit API extension methods and utilities library
 
 ## Acknowledgments
 
