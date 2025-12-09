@@ -1,6 +1,6 @@
 using SonnyApplication.Features.AutoColumnDimension.Interfaces ;
-using SonnyRevitExtensions.Extensions.XYZs ;
-using SonnyRevitExtensions.RevitWrapper ;
+using Sonny.RevitExtensions.Extensions.XYZs ;
+using Sonny.RevitExtensions.RevitWrapper ;
 
 namespace SonnyApplication.Features.AutoColumnDimension.Services ;
 

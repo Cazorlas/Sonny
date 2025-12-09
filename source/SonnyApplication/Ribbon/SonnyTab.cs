@@ -1,4 +1,4 @@
-using EasyRibbon.UIAttributeBase;
+using Sonny.EasyRibbon.UIAttributeBase;
 using SonnyApplication.Features.AutoColumnDimension.Commands;
 
 namespace SonnyApplication.Ribbon;

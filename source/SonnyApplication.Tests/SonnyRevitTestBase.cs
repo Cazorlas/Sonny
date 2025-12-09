@@ -6,7 +6,7 @@ using Autodesk.Revit.ApplicationServices ;
 using Autodesk.Revit.DB ;
 using Autodesk.Revit.UI ;
 using NUnit.Framework ;
-using SonnyRevitExtensions.Extensions ;
+using Sonny.RevitExtensions.Extensions ;
 using RevitApplication = Autodesk.Revit.ApplicationServices.Application ;
 
 namespace SonnyApplication.Tests ;

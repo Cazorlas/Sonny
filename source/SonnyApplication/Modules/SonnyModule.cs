@@ -1,6 +1,6 @@
 using Autodesk.Revit.UI;
-using EasyRibbon;
-using EasyRibbon.Modules;
+using Sonny.EasyRibbon;
+using Sonny.EasyRibbon.Modules;
 using SonnyApplication.Ribbon;
 
 namespace SonnyApplication.Modules;
@@ -14,7 +14,7 @@ public class SonnyModule : IApplicationModule
 
     public void OnStartup(UIControlledApplication application)
     {
-        // Create ribbon UI using EasyRibbon
+        // Create ribbon UI using Sonny.EasyRibbon
         CreateUIApp.CreateUI<SonnyTab>(application);
     }
 
