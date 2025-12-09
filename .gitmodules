@@ -2,11 +2,11 @@
 	path = source/Revit.Async
 	url = https://github.com/PhanCongVuDuc/Revit.Async.git
 	branch = master
-[submodule "source/EasyRibbon"]
-	path = source/EasyRibbon
-	url = https://github.com/PhanCongVuDuc/EasyRibbon.git
-	branch = main
-[submodule "source/SonnyRevitExtensions"]
-	path = source/SonnyRevitExtensions
-	url = https://github.com/PhanCongVuDuc/SonnyRevitExtensions.git
+[submodule "source/Sonny.RevitExtensions"]
+	path = source/Sonny.RevitExtensions
+	url = https://github.com/PhanCongVuDuc/Sonny.RevitExtensions.git
 	branch = master
+[submodule "source/Sonny.EasyRibbon"]
+	path = source/Sonny.EasyRibbon
+	url = https://github.com/PhanCongVuDuc/Sonny.EasyRibbon.git
+	branch = main
