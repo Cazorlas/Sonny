@@ -1,4 +1,4 @@
-using System.Diagnostics ;
+using Serilog ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.RevitExtensions.RevitWrapper ;
 
@@ -11,17 +11,21 @@ public class AutoColumnDimensionService : IAutoColumnDimensionService
 {
     private readonly IDimensionCreator _dimensionCreator ;
     private readonly IGridFinder _gridFinder ;
+    private readonly ILogger _logger ;
 
     /// <summary>
     ///     Initializes a new instance of AutoColumnDimensionService
     /// </summary>
     /// <param name="gridFinder">The grid finder service</param>
     /// <param name="dimensionCreator">The dimension creator service</param>
+    /// <param name="logger">The logger</param>
     public AutoColumnDimensionService(IGridFinder gridFinder,
-        IDimensionCreator dimensionCreator)
+        IDimensionCreator dimensionCreator,
+        ILogger logger)
     {
         _gridFinder = gridFinder ;
         _dimensionCreator = dimensionCreator ;
+        _logger = logger ;
     }
 
     /// <summary>
@@ -53,8 +57,8 @@ public class AutoColumnDimensionService : IAutoColumnDimensionService
             catch (Exception ex)
             {
                 // Log error but continue processing other columns
-                // Exception details are logged by the caller if logger is available
-                Debug.WriteLine($"Failed to create dimensions for column: {ex.Message}") ;
+                _logger.Warning(ex,
+                    "Failed to create dimensions for column") ;
             }
         }
 

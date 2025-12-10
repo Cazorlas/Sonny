@@ -17,7 +17,6 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
     private const int ExpectedDimensionsPerColumn = 2 ;
     private readonly IAutoColumnDimensionService _autoColumnDimensionService ;
     private readonly ILogger _logger ;
-
     private readonly IMessageService _messageService ;
 
     /// <summary>
@@ -46,13 +45,6 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
         DimensionType? dimensionType)
     {
         _logger.Information("Starting dimension creation process") ;
-
-        if (revitDocument.ActiveView == null)
-        {
-            _logger.Warning("No active view found") ;
-            _messageService.ShowError("No active view found.") ;
-            return ;
-        }
 
         _logger.Debug("Processing view: {ViewName}",
             revitDocument.ActiveView.Name) ;

@@ -1,4 +1,4 @@
-using System.Diagnostics ;
+using Serilog ;
 using Sonny.Application.Core ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.RevitExtensions.Extensions.GeometryObjects.Faces.PlanarFaces ;
@@ -13,6 +13,17 @@ namespace Sonny.Application.Features.AutoColumnDimension.Services ;
 /// </summary>
 public class DimensionCreator : IDimensionCreator
 {
+    private readonly ILogger _logger ;
+
+    /// <summary>
+    ///     Initializes a new instance of DimensionCreator
+    /// </summary>
+    /// <param name="logger">The logger</param>
+    public DimensionCreator(ILogger logger)
+    {
+        _logger = logger ;
+    }
+
     public List<ElementWrapperBase> DimensionByDirection(List<PlanarFace> planarFaces,
         XYZ direction,
         XYZ offsetDirection,
@@ -72,8 +83,8 @@ public class DimensionCreator : IDimensionCreator
             catch (Exception ex)
             {
                 // Log error but continue to create dimension without grid reference
-                // Exception details are logged by the caller if logger is available
-                Debug.WriteLine($"Failed to create dimension with grid reference: {ex.Message}") ;
+                _logger.Warning(ex,
+                    "Failed to create dimension with grid reference") ;
             }
         }
 
@@ -93,8 +104,8 @@ public class DimensionCreator : IDimensionCreator
         catch (Exception ex)
         {
             // Log error but return partial results
-            // Exception details are logged by the caller if logger is available
-            Debug.WriteLine($"Failed to create dimension: {ex.Message}") ;
+            _logger.Warning(ex,
+                "Failed to create dimension") ;
         }
 
         return dimensionWrappers ;
