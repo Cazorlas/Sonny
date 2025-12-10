@@ -5,34 +5,25 @@ using Sonny.RevitExtensions.Extensions.Views ;
 using Sonny.RevitExtensions.Extensions.XYZs ;
 using Sonny.RevitExtensions.RevitWrapper ;
 
-namespace Sonny.Application.Features.AutoColumnDimension.Services ;
+namespace Sonny.Application.Features.AutoColumnDimension.Contexts ;
 
 /// <summary>
 ///     Immutable context containing information to create dimension for column
 /// </summary>
-public class ColumnDimensionContext
+public class ColumnDimensionContext(
+    List<PlanarFace> planarFaces,
+    XYZ maxPoint,
+    XYZ firstDirection,
+    XYZ secondDirection,
+    GridWrapperBase? firstGridWrapper,
+    GridWrapperBase? secondGridWrapper)
 {
-    private ColumnDimensionContext(List<PlanarFace> planarFaces,
-        XYZ maxPoint,
-        XYZ firstDirection,
-        XYZ secondDirection,
-        GridWrapperBase? firstGridWrapper,
-        GridWrapperBase? secondGridWrapper)
-    {
-        PlanarFaces = planarFaces ;
-        MaxPoint = maxPoint ;
-        FirstDirection = firstDirection ;
-        SecondDirection = secondDirection ;
-        FirstGridWrapper = firstGridWrapper ;
-        SecondGridWrapper = secondGridWrapper ;
-    }
-
-    public List<PlanarFace> PlanarFaces { get ; }
-    public XYZ MaxPoint { get ; }
-    public XYZ FirstDirection { get ; }
-    public GridWrapperBase? FirstGridWrapper { get ; }
-    public XYZ SecondDirection { get ; }
-    public GridWrapperBase? SecondGridWrapper { get ; }
+    public List<PlanarFace> PlanarFaces { get ; } = planarFaces ;
+    public XYZ MaxPoint { get ; } = maxPoint ;
+    public XYZ FirstDirection { get ; } = firstDirection ;
+    public GridWrapperBase? FirstGridWrapper { get ; } = firstGridWrapper ;
+    public XYZ SecondDirection { get ; } = secondDirection ;
+    public GridWrapperBase? SecondGridWrapper { get ; } = secondGridWrapper ;
 
     public static ColumnDimensionContext? Create(ColumnWrapperBase columnWrapper,
         ViewWrapperBase viewWrapper,
