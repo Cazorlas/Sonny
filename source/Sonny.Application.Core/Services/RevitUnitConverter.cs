@@ -70,7 +70,7 @@ public class RevitUnitConverter : IUnitConverter
         {
             "autodesk.unit.unit:millimeters-1.0.1" => "mm",
             "autodesk.unit.unit:centimeters-1.0.1" => "cm",
-            "autodesk.unit.unit:meters-1.0.1" => "m",
+            "autodesk.unit.unit:meters-1.0.0" => "m",
             "autodesk.unit.unit:feet-1.0.1" => "ft",
             "autodesk.unit.unit:inches-1.0.1" => "in",
             _ => unitTypeId.ToString()!

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         x:Name="ThisWindow"
         Title="Auto Column Dimension"
-        Height="250" Width="400"
+        Height="200" Width="400"
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance {x:Type viewModel:AutoColumnDimensionViewModel}, IsDesignTimeCreatable=True}">

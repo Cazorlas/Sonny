@@ -21,9 +21,37 @@ public abstract class BaseViewModel : ObservableObject
         MessageService = commonServices.MessageService ;
         Logger = commonServices.Logger ;
         UnitConverter = commonServices.UnitConverter ;
+        SettingsService = commonServices.SettingsService ;
 
-        // Initialize display unit from document settings
-        DisplayUnit = UnitConverter.GetDefaultDisplayUnit(RevitDocument.Document) ;
+        // Initialize display unit from user settings (or default)
+        DisplayUnit = SettingsService.GetDisplayUnit(RevitDocument.Document) ;
+
+        // Subscribe to display unit changes
+        SettingsService.DisplayUnitChanged += OnDisplayUnitChanged ;
+    }
+
+    /// <summary>
+    ///     Handle display unit changed event
+    /// </summary>
+    private void OnDisplayUnitChanged(object? sender, ForgeTypeId newUnit)
+    {
+        var oldUnit = DisplayUnit ;
+        DisplayUnit = newUnit ;
+        OnPropertyChanged(nameof(DisplayUnit)) ;
+        OnPropertyChanged(nameof(DisplayUnitName)) ;
+        
+        // Allow derived classes to handle unit conversion
+        OnDisplayUnitChanged(oldUnit, newUnit) ;
+    }
+
+    /// <summary>
+    ///     Called when display unit changes, allowing derived classes to convert values
+    /// </summary>
+    /// <param name="oldUnit">Previous display unit</param>
+    /// <param name="newUnit">New display unit</param>
+    protected virtual void OnDisplayUnitChanged(ForgeTypeId oldUnit, ForgeTypeId newUnit)
+    {
+        // Override in derived classes to convert values when unit changes
     }
 
     #endregion
@@ -50,6 +78,11 @@ public abstract class BaseViewModel : ObservableObject
     /// </summary>
     protected IUnitConverter UnitConverter { get ; }
 
+    /// <summary>
+    ///     Settings service for managing application preferences
+    /// </summary>
+    protected ISettingsService SettingsService { get ; }
+
     #endregion
 
     #region Common Properties
@@ -62,7 +95,7 @@ public abstract class BaseViewModel : ObservableObject
     /// <summary>
     ///     Display unit type (default: millimeters for metric, feet for imperial)
     /// </summary>
-    protected ForgeTypeId DisplayUnit { get ; }
+    protected ForgeTypeId DisplayUnit { get ; private set ; }
 
     /// <summary>
     ///     Display unit name for UI (e.g., "mm", "cm", "ft")

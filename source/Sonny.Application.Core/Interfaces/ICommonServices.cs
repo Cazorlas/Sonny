@@ -27,4 +27,9 @@ public interface ICommonServices
     ///     Unit converter for converting between display units and internal units
     /// </summary>
     IUnitConverter UnitConverter { get ; }
+
+    /// <summary>
+    ///     Settings service for managing application preferences
+    /// </summary>
+    ISettingsService SettingsService { get ; }
 }

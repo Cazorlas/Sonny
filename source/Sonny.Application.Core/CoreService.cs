@@ -18,6 +18,7 @@ public static class CoreService
         // Common services
         services.AddSingleton<IMessageService, MessageService>() ;
         services.AddSingleton<IUnitConverter, RevitUnitConverter>() ;
+        services.AddSingleton<ISettingsService, SettingsService>() ;
 
         // UIDocument Provider (Singleton - stores current UIDocument)
         services.AddSingleton<IUIDocumentProvider, UIDocumentProvider>() ;

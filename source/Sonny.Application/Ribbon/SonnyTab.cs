@@ -10,6 +10,24 @@ namespace Sonny.Application.Ribbon ;
 public class SonnyTab
 {
     /// <summary>
+    ///     Panel for application settings
+    /// </summary>
+    [Panel("Settings")]
+    public class SettingsPanel
+    {
+        /// <summary>
+        ///     Button for application settings
+        /// </summary>
+        [Button("Settings",
+            typeof( SettingsCommand ),
+            Image = "/Sonny.Application;component/Resources/Icons/Setting16.png",
+            LargeImage = "/Sonny.Application;component/Resources/Icons/Setting32.png",
+            ToolTip = "Open application settings",
+            LongDescription = "Configure application preferences including display units")]
+        public class SettingsButton ;
+    }
+
+    /// <summary>
     ///     Panel for dimension tools
     /// </summary>
     [Panel("Dimension Tools")]

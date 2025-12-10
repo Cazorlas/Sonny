@@ -19,10 +19,12 @@ public static class ServiceUtils
         var messageService = Host.GetService<IMessageService>() ;
         var logger = Host.GetService<ILogger>() ;
         var unitConverter = Host.GetService<IUnitConverter>() ;
+        var settingsService = Host.GetService<ISettingsService>() ;
 
         return new CommonServices(revitDocumentService,
             messageService,
             logger,
-            unitConverter) ;
+            unitConverter,
+            settingsService) ;
     }
 }

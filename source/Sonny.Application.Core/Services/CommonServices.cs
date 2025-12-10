@@ -15,15 +15,18 @@ public class CommonServices : ICommonServices
     /// <param name="messageService">Message service</param>
     /// <param name="logger">Logger</param>
     /// <param name="unitConverter">Unit converter</param>
+    /// <param name="settingsService">Settings service</param>
     public CommonServices(IRevitDocument revitDocument,
         IMessageService messageService,
         ILogger logger,
-        IUnitConverter unitConverter)
+        IUnitConverter unitConverter,
+        ISettingsService settingsService)
     {
         RevitDocument = revitDocument ;
         MessageService = messageService ;
         Logger = logger ;
         UnitConverter = unitConverter ;
+        SettingsService = settingsService ;
     }
 
     /// <summary>
@@ -45,4 +48,9 @@ public class CommonServices : ICommonServices
     ///     Unit converter for converting between display units and internal units
     /// </summary>
     public IUnitConverter UnitConverter { get ; }
+
+    /// <summary>
+    ///     Settings service for managing application preferences
+    /// </summary>
+    public ISettingsService SettingsService { get ; }
 }

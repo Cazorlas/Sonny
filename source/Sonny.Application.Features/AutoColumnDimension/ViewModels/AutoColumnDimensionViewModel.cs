@@ -59,6 +59,31 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
 
     partial void OnSelectedDimensionTypeChanged(DimensionType? value) => UpdateSnapDistanceFromDimensionType() ;
 
+    /// <summary>
+    ///     Handle display unit changed event to convert snap distance value
+    /// </summary>
+    /// <param name="oldUnit">Previous display unit</param>
+    /// <param name="newUnit">New display unit</param>
+    protected override void OnDisplayUnitChanged(ForgeTypeId oldUnit, ForgeTypeId newUnit)
+    {
+        base.OnDisplayUnitChanged(oldUnit, newUnit) ;
+
+        // Convert snap distance from old unit to new unit
+        if (SnapDistanceDisplay != 0)
+        {
+            try
+            {
+                // Convert current value to internal unit (feet), then to new display unit
+                var valueInFeet = UnitConverter.ToInternalUnit(SnapDistanceDisplay, oldUnit) ;
+                SnapDistanceDisplay = UnitConverter.FromInternalUnit(valueInFeet, newUnit) ;
+            }
+            catch (Exception ex)
+            {
+                LogWarning($"Failed to convert snap distance when unit changed: {ex.Message}") ;
+            }
+        }
+    }
+
     #endregion
 
     #region Private Methods - Initialization

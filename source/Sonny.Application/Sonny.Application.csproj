@@ -78,10 +78,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Icons\RibbonIcon16.png"/>
-    <Resource Include="Resources\Icons\RibbonIcon32.png"/>
-    <Resource Include="Resources\Icons\AutoColumnDimension16.png"/>
-    <Resource Include="Resources\Icons\AutoColumnDimension32.png"/>
+    <!-- Icon resources - always include and embed -->
+    <Resource Include="Resources\Icons\*.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -101,12 +101,6 @@
 
     <!-- EasyRibbon reference -->
     <!-- EasyRibbon is included as a git submodule from https://github.com/PhanCongVuDuc/EasyRibbon -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Features\AutoColumnDimension\Views\AutoColumnDimensionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
 </Project>
