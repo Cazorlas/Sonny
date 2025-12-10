@@ -1,6 +1,6 @@
 using Autodesk.Revit.Attributes ;
 using Autodesk.Revit.UI ;
-using Sonny.Application.Core.Bases ;
+using Sonny.Application.Bases ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.ViewModels ;
 using Sonny.Application.Features.AutoColumnDimension.Views ;
@@ -15,7 +15,7 @@ public class AutoColumnDimensionCommand : BaseExternalCommand
         ref string message,
         ElementSet elements)
     {
-        var commonServices = ServiceUtils.CreateCommonServices(commandData.Application.ActiveUIDocument) ;
+        var commonServices = ServiceUtils.CreateCommonServices() ;
         var handler = Host.GetService<IAutoColumnDimensionHandler>() ;
         var viewModel = new AutoColumnDimensionViewModel(commonServices,
             handler) ;

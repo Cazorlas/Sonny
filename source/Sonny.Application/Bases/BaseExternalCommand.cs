@@ -1,7 +1,8 @@
 using Autodesk.Revit.UI ;
 using Revit.Async ;
+using Sonny.Application.Core.Interfaces ;
 
-namespace Sonny.Application.Core.Bases ;
+namespace Sonny.Application.Bases ;
 
 /// <summary>
 ///     Base class for all external commands with automatic RevitTask initialization
@@ -19,6 +20,13 @@ public abstract class BaseExternalCommand : IExternalCommand
         ref string message,
         ElementSet elements)
     {
+        // Initialize Host if not already initialized
+        Host.Start() ;
+
+        // Set UIDocument in provider for DI container
+        var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
+        uiDocumentProvider.SetUIDocument(commandData.Application.ActiveUIDocument) ;
+
         // Initialize RevitTask in Command context (valid Revit API context)
         RevitTask.Initialize(commandData.Application) ;
 

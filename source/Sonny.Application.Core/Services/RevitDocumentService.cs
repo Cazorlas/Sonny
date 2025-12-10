@@ -9,28 +9,31 @@ namespace Sonny.Application.Core.Services ;
 /// </summary>
 public class RevitDocumentService : IRevitDocument
 {
-    private readonly UIDocument _uidoc ;
+    private readonly UIDocument _uiDocument ;
 
     /// <summary>
     ///     Initializes a new instance of RevitDocumentService
     /// </summary>
-    /// <param name="uidoc">The UIDocument</param>
-    public RevitDocumentService(UIDocument uidoc) => _uidoc = uidoc ;
+    /// <param name="uiDocumentProvider">The UIDocument provider</param>
+    public RevitDocumentService(IUIDocumentProvider uiDocumentProvider)
+    {
+        _uiDocument = uiDocumentProvider.GetUIDocument() ;
+    }
 
     /// <summary>
     ///     Gets the Revit Document
     /// </summary>
-    public Document Document => _uidoc.Document ;
+    public Document Document => _uiDocument.Document ;
 
     /// <summary>
     ///     Gets the active view
     /// </summary>
-    public View ActiveView => _uidoc.ActiveView ;
+    public View ActiveView => _uiDocument.ActiveView ;
 
     /// <summary>
     ///     Gets the UIApplication
     /// </summary>
-    public UIApplication Application => _uidoc.Application ;
+    public UIApplication Application => _uiDocument.Application ;
 
     /// <summary>
     ///     Gets dimension types from the document

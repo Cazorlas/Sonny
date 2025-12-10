@@ -4,7 +4,6 @@ using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
 using Sonny.Application.Core.Interfaces ;
-using Sonny.Application.Core.Services ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Services ;
 
@@ -32,8 +31,12 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
     {
         base.OnSetup() ;
 
-        // Initialize Revit Document Service (needs UIDocument from test context)
-        _revitDocumentService = new RevitDocumentService(UIDocument!) ;
+        // Set UIDocument in provider for DI container
+        var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
+        uiDocumentProvider.SetUIDocument(UIDocument!) ;
+
+        // Get Revit Document Service from DI container
+        _revitDocumentService = Host.GetService<IRevitDocument>() ;
 
         // Create handler with mock MessageService using NSubstitute to avoid showing dialogs in tests
         var mockMessageService = Substitute.For<IMessageService>() ;

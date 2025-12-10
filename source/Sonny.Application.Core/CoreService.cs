@@ -18,5 +18,11 @@ public static class CoreService
         // Common services
         services.AddSingleton<IMessageService, MessageService>() ;
         services.AddSingleton<IUnitConverter, RevitUnitConverter>() ;
+
+        // UIDocument Provider (Singleton - stores current UIDocument)
+        services.AddSingleton<IUIDocumentProvider, UIDocumentProvider>() ;
+
+        // RevitDocumentService (Transient - creates new instance each time, gets UIDocument from provider)
+        services.AddTransient<IRevitDocument, RevitDocumentService>() ;
     }
 }
