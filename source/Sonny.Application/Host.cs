@@ -1,9 +1,8 @@
 using Microsoft.Extensions.DependencyInjection ;
-using Sonny.Application.Config.Logging ;
-using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
-using Sonny.Application.Features.AutoColumnDimension.Services ;
-using Sonny.Application.Interfaces ;
-using Sonny.Application.Services ;
+using Serilog ;
+using Sonny.Application.Core ;
+using Sonny.Application.Core.Config.Logging ;
+using Sonny.Application.Features ;
 
 namespace Sonny.Application ;
 
@@ -34,20 +33,11 @@ public static class Host
 
             var services = new ServiceCollection() ;
 
-            //Logging
-            services.AddSerilogConfiguration() ;
-
-            // Common services
-            services.AddSingleton<IMessageService, MessageService>() ;
-            services.AddSingleton<IUnitConverter, RevitUnitConverter>() ;
-
-            // AutoColumnDimension services
-            services.AddSingleton<IGridFinder, GridFinder>() ;
-            services.AddSingleton<IDimensionCreator, DimensionCreator>() ;
-            services.AddSingleton<IAutoColumnDimensionService, AutoColumnDimensionService>() ;
-            services.AddSingleton<IAutoColumnDimensionHandler, AutoColumnDimensionHandler>() ;
+            services.AddCoreServices() ;
+            services.AddFeatureServices() ;
 
             s_serviceProvider = services.BuildServiceProvider() ;
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException ;
         }
     }
 
@@ -71,5 +61,14 @@ public static class Host
     {
         EnsureInitialized() ;
         return s_serviceProvider!.GetRequiredService<T>() ;
+    }
+
+    private static void OnUnhandledException(object sender,
+        UnhandledExceptionEventArgs args)
+    {
+        var exception = (Exception)args.ExceptionObject ;
+        var logger = Host.GetService<ILogger>() ;
+        logger.Fatal(exception,
+            "Domain unhandled exception") ;
     }
 }
