@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Window Title -->
+    <system:String x:Key="WindowTitle">Tự động Column Dimension</system:String>
+
+    <!-- Labels -->
+    <system:String x:Key="LabelDimensionType">Loại Dimension:</system:String>
+    <system:String x:Key="LabelSnapDistance">Khoảng cách Snap:</system:String>
+
+    <!-- Buttons -->
+    <system:String x:Key="ButtonRun">Chạy</system:String>
+
+    <!-- Messages -->
+    <system:String x:Key="MessageNoColumnsFound">Không tìm thấy cột kết cấu trong view hiện tại.</system:String>
+    <system:String x:Key="MessageErrorOccurred">Đã xảy ra lỗi: {0}</system:String>
+    <system:String x:Key="MessageFailedToInitialize">Không thể khởi tạo loại kích thước: {0}</system:String>
+
+    <!-- Execution Result Messages -->
+    <system:String x:Key="ExecutionResultCompleted">Hoàn thành lúc {0}</system:String>
+    <system:String x:Key="ExecutionResultTotalColumns">Tổng số cột đã xử lý: {0}</system:String>
+    <system:String x:Key="ExecutionResultSuccess">Đã tạo thành công kích thước: {0}</system:String>
+    <system:String x:Key="ExecutionResultFailed">Thất bại: {0}</system:String>
+
+</ResourceDictionary>

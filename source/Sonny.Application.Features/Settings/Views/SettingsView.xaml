@@ -7,27 +7,9 @@
         mc:Ignorable="d"
         x:Name="ThisWindow"
         Title="Settings"
-        Height="150" Width="400"
+        Height="200" Width="400"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
         d:DataContext="{d:DesignInstance {x:Type viewModel:SettingsViewModel}, IsDesignTimeCreatable=True}">
-    <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Height" Value="25" />
-        </Style>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Padding" Value="10,5" />
-            <Setter Property="MinWidth" Value="100" />
-            <Setter Property="Height" Value="35" />
-        </Style>
-    </Window.Resources>
-
     <StackPanel Margin="20">
         <!-- Display Unit Selection -->
         <Grid Margin="0,0,0,20">
@@ -39,6 +21,19 @@
             <ComboBox Grid.Column="1"
                       ItemsSource="{Binding UnitOptions}"
                       SelectedItem="{Binding SelectedUnitOption}"
+                      DisplayMemberPath="DisplayName" />
+        </Grid>
+
+        <!-- Language Selection -->
+        <Grid Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Language:" Grid.Column="0" />
+            <ComboBox Grid.Column="1"
+                      ItemsSource="{Binding LanguageOptions}"
+                      SelectedItem="{Binding SelectedLanguageOption}"
                       DisplayMemberPath="DisplayName" />
         </Grid>
 

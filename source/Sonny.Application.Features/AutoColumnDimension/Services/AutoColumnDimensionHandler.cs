@@ -3,6 +3,7 @@ using Sonny.Application.Core.Interfaces ;
 using Sonny.Application.Core.Managers ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Models ;
+using Sonny.ResourceManager ;
 using Sonny.RevitExtensions.Extensions.Elements ;
 using Sonny.RevitExtensions.RevitWrapper ;
 
@@ -88,7 +89,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
         if (wrappers.Count == 0)
         {
             _logger.Warning("No valid columns found for dimensioning") ;
-            _messageService.ShowInfo("No structural columns found in the active view.") ;
+            _messageService.ShowInfo(ResourceHelper.GetString("MessageNoColumnsFound")) ;
             return false ;
         }
 

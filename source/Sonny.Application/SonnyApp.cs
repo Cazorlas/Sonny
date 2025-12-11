@@ -1,5 +1,7 @@
 ﻿using Nice3point.Revit.Toolkit.External ;
 using Revit.Async ;
+using Sonny.Application.Core.Interfaces ;
+using Sonny.Application.Features ;
 using Sonny.Application.Modules ;
 
 namespace Sonny.Application ;
@@ -8,7 +10,7 @@ namespace Sonny.Application ;
 ///     Application entry point
 /// </summary>
 [UsedImplicitly]
-public class Application : ExternalApplication
+public class SonnyApp : ExternalApplication
 {
     private readonly SonnyModule _module = new() ;
 
@@ -18,6 +20,10 @@ public class Application : ExternalApplication
         RevitTask.Initialize(Application) ;
 
         Host.Start() ;
+        // Initialize resources if not already initialized
+        var settingsService = Host.GetService<ISettingsService>() ;
+        var currentLanguage = settingsService.GetLanguage() ;
+        SonnyResourcesInitializer.Initialize(currentLanguage) ;
 
         // Initialize EasyRibbon module
         _module.OnStartup(Application) ;

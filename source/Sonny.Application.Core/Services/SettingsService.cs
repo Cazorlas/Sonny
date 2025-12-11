@@ -1,5 +1,6 @@
 using System.Text.Json ;
 using Sonny.Application.Core.Interfaces ;
+using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Core.Services ;
 
@@ -11,6 +12,7 @@ public class SettingsService : ISettingsService
     private const string SettingsFileName = "SonnySettings.json" ;
     private readonly string _settingsFilePath ;
     private ForgeTypeId? _cachedDisplayUnit ;
+    private LanguageCode? _cachedLanguage ;
 
     /// <summary>
     ///     Initializes a new instance of SettingsService
@@ -30,6 +32,11 @@ public class SettingsService : ISettingsService
     public event EventHandler<ForgeTypeId>? DisplayUnitChanged ;
 
     /// <summary>
+    ///     Event raised when language setting changes
+    /// </summary>
+    public event EventHandler<LanguageCode>? LanguageChanged ;
+
+    /// <summary>
     ///     Get the user-selected display unit preference
     /// </summary>
     public ForgeTypeId GetDisplayUnit(Document document)
@@ -45,8 +52,7 @@ public class SettingsService : ISettingsService
         {
             try
             {
-                var json = File.ReadAllText(_settingsFilePath) ;
-                var settings = JsonSerializer.Deserialize<SettingsData>(json) ;
+                var settings = LoadSettingsData() ;
 
                 if (settings?.DisplayUnitTypeId != null)
                 {
@@ -76,13 +82,11 @@ public class SettingsService : ISettingsService
 
         try
         {
-            var settings = new SettingsData
-            {
-                DisplayUnitTypeId = displayUnit.TypeId
-            } ;
+            // Load existing settings to preserve other settings
+            var settings = LoadSettingsData() ;
+            settings.DisplayUnitTypeId = displayUnit.TypeId ;
 
-            var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }) ;
-            File.WriteAllText(_settingsFilePath, json) ;
+            SaveSettingsData(settings) ;
 
             // Raise event to notify subscribers
             DisplayUnitChanged?.Invoke(this, displayUnit) ;
@@ -94,6 +98,68 @@ public class SettingsService : ISettingsService
     }
 
     /// <summary>
+    ///     Get the user-selected language preference
+    /// </summary>
+    public LanguageCode GetLanguage()
+    {
+        // Return cached value if available
+        if (_cachedLanguage != null)
+        {
+            return _cachedLanguage.Value ;
+        }
+
+        // Try to load from file
+        if (File.Exists(_settingsFilePath))
+        {
+            try
+            {
+                var settings = LoadSettingsData() ;
+
+                if (settings.LanguageCode != null && Enum.TryParse<LanguageCode>(settings.LanguageCode, out var languageCode))
+                {
+                    _cachedLanguage = languageCode ;
+                    return languageCode ;
+                }
+            }
+            catch
+            {
+                // If deserialization fails, fall back to default
+            }
+        }
+
+        // Fall back to default
+        const LanguageCode defaultLanguage = LanguageCode.En ;
+        _cachedLanguage = defaultLanguage ;
+        return defaultLanguage ;
+    }
+
+    /// <summary>
+    ///     Set the user-selected language preference
+    /// </summary>
+    public void SetLanguage(LanguageCode languageCode)
+    {
+        _cachedLanguage = languageCode ;
+
+        try
+        {
+            // Load existing settings to preserve other settings
+            var settings = LoadSettingsData() ;
+            settings.LanguageCode = languageCode.ToString() ;
+
+            SaveSettingsData(settings) ;
+
+            // Raise event to notify subscribers
+            LanguageChanged?.Invoke(this, languageCode) ;
+        }
+        catch
+        {
+            // Log error but don't throw - settings are not critical
+        }
+    }
+
+    #region Private Methods
+
+    /// <summary>
     ///     Get default display unit based on document settings
     /// </summary>
     private static ForgeTypeId GetDefaultDisplayUnit(Document document)
@@ -103,11 +169,44 @@ public class SettingsService : ISettingsService
     }
 
     /// <summary>
+    ///     Load settings data from file
+    /// </summary>
+    private SettingsData LoadSettingsData()
+    {
+        if (File.Exists(_settingsFilePath))
+        {
+            try
+            {
+                var json = File.ReadAllText(_settingsFilePath) ;
+                return JsonSerializer.Deserialize<SettingsData>(json) ?? new SettingsData() ;
+            }
+            catch
+            {
+                return new SettingsData() ;
+            }
+        }
+
+        return new SettingsData() ;
+    }
+
+    /// <summary>
+    ///     Save settings data to file
+    /// </summary>
+    private void SaveSettingsData(SettingsData settings)
+    {
+        var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }) ;
+        File.WriteAllText(_settingsFilePath, json) ;
+    }
+
+    /// <summary>
     ///     Settings data structure for JSON serialization
     /// </summary>
     private class SettingsData
     {
         public string? DisplayUnitTypeId { get ; set ; }
+        public string? LanguageCode { get ; set ; }
     }
+
+    #endregion
 }
 

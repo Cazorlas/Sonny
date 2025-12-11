@@ -3,6 +3,7 @@ using Revit.Async ;
 using Sonny.Application.Core.Bases ;
 using Sonny.Application.Core.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
+using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Features.AutoColumnDimension.ViewModels ;
 
@@ -49,7 +50,7 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
         {
             LogError("Error occurred during dimension creation",
                 ex) ;
-            ShowError($"An error occurred: {ex.Message}") ;
+            ShowError(ResourceHelper.GetString("MessageErrorOccurred", ex.Message)) ;
         }
     }
 
@@ -105,7 +106,7 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
         {
             LogError("Failed to initialize dimension types",
                 ex) ;
-            ShowError($"Failed to initialize dimension types: {ex.Message}") ;
+            ShowError(ResourceHelper.GetString("MessageFailedToInitialize", ex.Message)) ;
         }
     }
 

@@ -1,0 +1,26 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Window Title -->
+    <system:String x:Key="WindowTitle">Auto Column Dimension</system:String>
+
+    <!-- Labels -->
+    <system:String x:Key="LabelDimensionType">Dimension Type:</system:String>
+    <system:String x:Key="LabelSnapDistance">Snap Distance:</system:String>
+
+    <!-- Buttons -->
+    <system:String x:Key="ButtonRun">Run</system:String>
+
+    <!-- Messages -->
+    <system:String x:Key="MessageNoColumnsFound">No structural columns found in the active view.</system:String>
+    <system:String x:Key="MessageErrorOccurred">An error occurred: {0}</system:String>
+    <system:String x:Key="MessageFailedToInitialize">Failed to initialize dimension types: {0}</system:String>
+
+    <!-- Execution Result Messages -->
+    <system:String x:Key="ExecutionResultCompleted">Execution completed at {0}</system:String>
+    <system:String x:Key="ExecutionResultTotalColumns">Total columns processed: {0}</system:String>
+    <system:String x:Key="ExecutionResultSuccess">Successfully created dimensions: {0}</system:String>
+    <system:String x:Key="ExecutionResultFailed">Failed: {0}</system:String>
+
+</ResourceDictionary>

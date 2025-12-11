@@ -2,6 +2,7 @@ using System.Collections.ObjectModel ;
 using Sonny.Application.Core.Bases ;
 using Sonny.Application.Core.Interfaces ;
 using Sonny.Application.Features.Settings.Models ;
+using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Features.Settings.ViewModels ;
 
@@ -19,6 +20,7 @@ public partial class SettingsViewModel : BaseViewModel
     public SettingsViewModel(ICommonServices commonServices) : base(commonServices)
     {
         InitializeUnitOptions() ;
+        InitializeLanguageOptions() ;
         LoadCurrentSettings() ;
     }
 
@@ -37,9 +39,17 @@ public partial class SettingsViewModel : BaseViewModel
             if (SelectedUnitOption != null)
             {
                 SettingsService.SetDisplayUnit(SelectedUnitOption.UnitTypeId) ;
-                ShowInfo("Settings saved successfully") ;
-                CloseWindow() ;
             }
+
+            if (SelectedLanguageOption != null)
+            {
+                SettingsService.SetLanguage(SelectedLanguageOption.LanguageCode) ;
+                // Change language in ResourceDictionaryManager
+                ResourceDictionaryManager.Instance.ChangeLanguage(SelectedLanguageOption.LanguageCode) ;
+            }
+
+            ShowInfo("Settings saved successfully") ;
+            CloseWindow() ;
         }
         catch (Exception ex)
         {
@@ -70,6 +80,17 @@ public partial class SettingsViewModel : BaseViewModel
     [ObservableProperty]
     private UnitOption? selectedUnitOption ;
 
+    /// <summary>
+    ///     Available language options
+    /// </summary>
+    public ObservableCollection<LanguageOption> LanguageOptions { get ; private set ; } = [] ;
+
+    /// <summary>
+    ///     Selected language option
+    /// </summary>
+    [ObservableProperty]
+    private LanguageOption? selectedLanguageOption ;
+
     #endregion
 
     #region Private Methods
@@ -95,12 +116,29 @@ public partial class SettingsViewModel : BaseViewModel
     }
 
     /// <summary>
+    ///     Initialize available language options
+    /// </summary>
+    private void InitializeLanguageOptions()
+    {
+        LanguageOptions =
+        [
+            new LanguageOption("English",
+                LanguageCode.En),
+            new LanguageOption("Vietnamese",
+                LanguageCode.Vi)
+        ] ;
+    }
+
+    /// <summary>
     ///     Load current settings
     /// </summary>
     private void LoadCurrentSettings()
     {
         var currentUnit = SettingsService.GetDisplayUnit(RevitDocument.Document) ;
         SelectedUnitOption = UnitOptions.FirstOrDefault(u => u.UnitTypeId.TypeId == currentUnit.TypeId) ;
+
+        var currentLanguage = SettingsService.GetLanguage() ;
+        SelectedLanguageOption = LanguageOptions.FirstOrDefault(l => l.LanguageCode == currentLanguage) ;
     }
 
     #endregion

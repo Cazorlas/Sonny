@@ -3,7 +3,7 @@
         <Name>Sonny.Application</Name>
         <Assembly>Sonny.Application\Sonny.Application.dll</Assembly>
         <AddInId>C6D911F3-BD17-4DF2-89CE-279D9D4EB990</AddInId>
-        <FullClassName>Sonny.Application.Application</FullClassName>
+        <FullClassName>Sonny.Application.SonnyApp</FullClassName>
         <VendorId>Development</VendorId>
         <VendorDescription></VendorDescription>
         <VendorEmail></VendorEmail>

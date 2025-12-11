@@ -1,3 +1,5 @@
+using Sonny.ResourceManager ;
+
 namespace Sonny.Application.Features.AutoColumnDimension.Models ;
 
 /// <summary>
@@ -27,9 +29,10 @@ public class ExecutionResult
     public string GetLogMessage()
     {
         var total = SuccessCount + FailureCount ;
-        return $"Execution completed at {ExecutionTime:yyyy-MM-dd HH:mm:ss}\n\n"
-               + $"Total columns processed: {total}\n"
-               + $"Successfully created dimensions: {SuccessCount}\n"
-               + $"Failed: {FailureCount}" ;
+        var completedTime = ExecutionTime.ToString("yyyy-MM-dd HH:mm:ss") ;
+        return ResourceHelper.GetString("ExecutionResultCompleted", completedTime) + "\n\n"
+               + ResourceHelper.GetString("ExecutionResultTotalColumns", total) + "\n"
+               + ResourceHelper.GetString("ExecutionResultSuccess", SuccessCount) + "\n"
+               + ResourceHelper.GetString("ExecutionResultFailed", FailureCount) ;
     }
 }

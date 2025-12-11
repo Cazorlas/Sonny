@@ -1,3 +1,5 @@
+using Sonny.ResourceManager ;
+
 namespace Sonny.Application.Core.Interfaces ;
 
 /// <summary>
@@ -22,4 +24,21 @@ public interface ISettingsService
     ///     Event raised when display unit setting changes
     /// </summary>
     event EventHandler<ForgeTypeId>? DisplayUnitChanged ;
+
+    /// <summary>
+    ///     Get the user-selected language preference
+    /// </summary>
+    /// <returns>Language code enum</returns>
+    LanguageCode GetLanguage() ;
+
+    /// <summary>
+    ///     Set the user-selected language preference
+    /// </summary>
+    /// <param name="languageCode">Language code enum to save</param>
+    void SetLanguage(LanguageCode languageCode) ;
+
+    /// <summary>
+    ///     Event raised when language setting changes
+    /// </summary>
+    event EventHandler<LanguageCode>? LanguageChanged ;
 }
