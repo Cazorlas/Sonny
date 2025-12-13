@@ -17,9 +17,7 @@ public class SettingsCommand : BaseExternalCommand
         ref string message,
         ElementSet elements)
     {
-        var commonServices = ServiceUtils.CreateCommonServices() ;
-        var viewModel = new SettingsViewModel(commonServices) ;
-        var view = new SettingsView(viewModel) ;
+        var view = Host.GetService<SettingsView>() ;
         view.Show() ;
 
         return Result.Succeeded ;

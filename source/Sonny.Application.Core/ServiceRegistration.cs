@@ -8,7 +8,7 @@ using Sonny.Application.Core.Services ;
 
 namespace Sonny.Application.Core ;
 
-public static class CoreService
+public static class ServiceRegistration
 {
     public static void AddCoreServices(this IServiceCollection services)
     {
@@ -23,7 +23,10 @@ public static class CoreService
         // UIDocument Provider (Singleton - stores current UIDocument)
         services.AddSingleton<IUIDocumentProvider, UIDocumentProvider>() ;
 
-        // RevitDocumentService (Transient - creates new instance each time, gets UIDocument from provider)
+        // RevitDocumentService (Singleton - gets UIDocument from provider each time, no caching)
         services.AddTransient<IRevitDocument, RevitDocumentService>() ;
+
+        // CommonServices (Singleton - gets fresh UIDocument from provider via IRevitDocument)
+        services.AddTransient<ICommonServices, CommonServices>() ;
     }
 }
