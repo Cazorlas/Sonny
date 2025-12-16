@@ -58,7 +58,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sonny.Application.Core\Sonny.Application.Core.csproj" />
-      <ProjectReference Include="..\..\..\AlphaBIM\AlphaBIMSolution\source\Sonny.ResourceManager\Sonny.ResourceManager.csproj" />
+      <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj" />
     </ItemGroup>
 
 </Project>
