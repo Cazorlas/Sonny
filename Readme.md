@@ -45,7 +45,7 @@ This project focuses on developing useful tools for the Revit community, with op
 
 ### AutoColumnDimension Demo
 
-📹 [Watch Video](assets/videos/AutoColumnDimension%20demo.mp4)
+![AutoColumnDimension Demo](assets/videos/AutoColumnDimension%20demo.gif)
 
 ### Unit Testing by Console
 
