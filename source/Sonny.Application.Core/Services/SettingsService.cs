@@ -1,4 +1,8 @@
+#if NETCOREAPP
 using System.Text.Json ;
+#else
+using Newtonsoft.Json ;
+#endif
 using Sonny.Application.Core.Interfaces ;
 using Sonny.ResourceManager ;
 
@@ -178,7 +182,11 @@ public class SettingsService : ISettingsService
             try
             {
                 var json = File.ReadAllText(_settingsFilePath) ;
+#if NETCOREAPP
                 return JsonSerializer.Deserialize<SettingsData>(json) ?? new SettingsData() ;
+#else
+                return JsonConvert.DeserializeObject<SettingsData>(json) ?? new SettingsData() ;
+#endif
             }
             catch
             {
@@ -194,7 +202,11 @@ public class SettingsService : ISettingsService
     /// </summary>
     private void SaveSettingsData(SettingsData settings)
     {
+#if NETCOREAPP
         var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }) ;
+#else
+        var json = JsonConvert.SerializeObject(settings, Formatting.Indented) ;
+#endif
         File.WriteAllText(_settingsFilePath, json) ;
     }
 

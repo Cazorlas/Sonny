@@ -1,6 +1,7 @@
 using System ;
 using NUnit.Framework ;
 using Sonny.Application.Features.Settings.Models ;
+using Sonny.Application.Tests.Utils ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Tests.ResourceManager.UnitTests ;
@@ -114,7 +115,7 @@ public class LanguageOptionTests
     public void Constructor_ShouldWorkWithAllLanguageCodes()
     {
         // Act & Assert - Verify constructor works with all language codes
-        var allCodes = Enum.GetValues<LanguageCode>() ;
+        var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
         foreach (var code in allCodes)
         {

@@ -17,13 +17,13 @@ sealed partial class Build
   /// </summary>
   Project[] Bundles =>
   [
-    Solution.Sonny
+    Solution.Sonny_Application
   ] ;
 
   /// <summary>
   ///     Mapping between used installer project and the project containing the installation files.
   /// </summary>
-  Dictionary<Project, Project> InstallersMap => new() { { Solution.Automation.Installer, Solution.Sonny } } ;
+  Dictionary<Project, Project> InstallersMap => new() { { Solution.Automation.Installer, Solution.Sonny_Application } } ;
 
   /// <summary>
   ///     Path to build output.

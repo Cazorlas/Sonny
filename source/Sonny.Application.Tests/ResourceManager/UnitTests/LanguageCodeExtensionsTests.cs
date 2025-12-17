@@ -1,6 +1,7 @@
 using System ;
 using System.Globalization ;
 using NUnit.Framework ;
+using Sonny.Application.Tests.Utils ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Tests.ResourceManager.UnitTests ;
@@ -168,7 +169,7 @@ public class LanguageCodeExtensionsTests
     public void ToCultureInfo_ShouldReturnValidCultureInfo_ForAllLanguageCodes()
     {
         // Act & Assert - Verify all language codes can create valid cultures
-        var allCodes = Enum.GetValues<LanguageCode>() ;
+        var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
         foreach (var code in allCodes)
         {

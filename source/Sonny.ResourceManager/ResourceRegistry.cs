@@ -64,7 +64,16 @@ internal class ResourceRegistry
     /// </summary>
     /// <param name="resourceId">Resource identifier</param>
     /// <returns>ResourceConfig if found, null otherwise</returns>
-    public ResourceConfig? GetConfig(string resourceId) => _registeredResources.GetValueOrDefault(resourceId) ;
+    public ResourceConfig? GetConfig(string resourceId)
+#if NETCOREAPP
+        => _registeredResources.GetValueOrDefault(resourceId);
+#else
+        =>
+            _registeredResources.TryGetValue(resourceId,
+                out var config)
+                ? config
+                : null ;
+#endif
 
     /// <summary>
     ///     Get all registered resource IDs

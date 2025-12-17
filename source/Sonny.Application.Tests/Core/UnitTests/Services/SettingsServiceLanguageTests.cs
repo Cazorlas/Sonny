@@ -2,6 +2,7 @@ using System ;
 using System.IO ;
 using NUnit.Framework ;
 using Sonny.Application.Core.Services ;
+using Sonny.Application.Tests.Utils ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Tests.Core.UnitTests.Services ;
@@ -110,7 +111,7 @@ public class SettingsServiceLanguageTests
     public void SetLanguage_ShouldWorkWithAllLanguageCodes()
     {
         // Act & Assert - Verify SetLanguage works with all language codes
-        var allCodes = Enum.GetValues<LanguageCode>() ;
+        var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
         foreach (var code in allCodes)
         {

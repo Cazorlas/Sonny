@@ -57,10 +57,22 @@
 
   </ItemGroup>
 
+  <!-- JSON serialization for net48 (Newtonsoft.Json) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj"/>
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
     <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj" />
+  </ItemGroup>
+
+  <!-- WPF references for net48 (needed for Window, HwndSource, DependencyObject) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="PresentationCore"/>
+    <Reference Include="PresentationFramework"/>
+    <Reference Include="WindowsBase"/>
   </ItemGroup>
 
 </Project>
