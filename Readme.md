@@ -29,35 +29,31 @@ This project focuses on developing useful tools for the Revit community, with op
 
 - **Dependency Injection** - Using Microsoft.Extensions.DependencyInjection for IoC
 - **Unit Testing** - Writing tests with NUnit and NSubstitute
-- **Revit Integration Testing** - Testing Revit plugins with RevitTest framework
 - **MVVM Pattern** - Implementing MVVM with CommunityToolkit.Mvvm
 - **Resource Management / Localization** - Multi-language support with ResourceDictionary and WPFLocalizeExtension
 - **Multi-version Support** - Supporting multiple Revit versions (2021-2026)
 - **Multiple Units Support** - Handling different measurement units (feet, meters, inches, etc.)
 - **Async Programming** - Using async/await with Revit API
-- **WPF UI Development** - Building user interfaces with WPF
 - **Build Automation** - Using Nuke for build automation
 - **MSBuild Customization** - Custom MSBuild targets and tasks
-- **Logging** - Structured logging with Serilog
-- **Revit API** - Working with Revit API and extension methods
 
 ## Videos
 
 ### AutoColumnDimension Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ue2QgaLX7fE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=ue2QgaLX7fE" target="_blank"><img src="http://img.youtube.com/vi/ue2QgaLX7fE/0.jpg" alt="AutoColumnDimension Demo" width="560" height="315" border="10" /></a>
 
 ### Unit Testing by Console
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/L4UvIr6Km7g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=L4UvIr6Km7g" target="_blank"><img src="http://img.youtube.com/vi/L4UvIr6Km7g/0.jpg" alt="Unit Testing by Console" width="560" height="315" border="10" /></a>
 
 ### Unit Testing by Visual Studio
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/exr4cEYcHmk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=exr4cEYcHmk" target="_blank"><img src="http://img.youtube.com/vi/exr4cEYcHmk/0.jpg" alt="Unit Testing by Visual Studio" width="560" height="315" border="10" /></a>
 
 ### Units & Languages Support
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/DQbC8JEZ5BM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=DQbC8JEZ5BM" target="_blank"><img src="http://img.youtube.com/vi/DQbC8JEZ5BM/0.jpg" alt="Units & Languages Support" width="560" height="315" border="10" /></a>
 
 ## Prerequisites
 
