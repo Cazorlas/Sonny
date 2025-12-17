@@ -15,15 +15,24 @@ public class LanguageCodeExtensionsTests
     public void ToCodeString_ShouldReturnCorrectCode_ForAllLanguageCodes()
     {
         // Act & Assert
-        Assert.AreEqual("en", LanguageCode.En.ToCodeString()) ;
-        Assert.AreEqual("vi", LanguageCode.Vi.ToCodeString()) ;
-        Assert.AreEqual("ja", LanguageCode.Ja.ToCodeString()) ;
-        Assert.AreEqual("es", LanguageCode.Es.ToCodeString()) ;
-        Assert.AreEqual("id", LanguageCode.Id.ToCodeString()) ;
-        Assert.AreEqual("th", LanguageCode.Th.ToCodeString()) ;
-        Assert.AreEqual("km", LanguageCode.Km.ToCodeString()) ;
-        Assert.AreEqual("zh", LanguageCode.Zh.ToCodeString()) ;
-        Assert.AreEqual("ko", LanguageCode.Ko.ToCodeString()) ;
+        Assert.AreEqual("en",
+            LanguageCode.En.ToCodeString()) ;
+        Assert.AreEqual("vi",
+            LanguageCode.Vi.ToCodeString()) ;
+        Assert.AreEqual("ja",
+            LanguageCode.Ja.ToCodeString()) ;
+        Assert.AreEqual("es",
+            LanguageCode.Es.ToCodeString()) ;
+        Assert.AreEqual("id",
+            LanguageCode.Id.ToCodeString()) ;
+        Assert.AreEqual("th",
+            LanguageCode.Th.ToCodeString()) ;
+        Assert.AreEqual("km",
+            LanguageCode.Km.ToCodeString()) ;
+        Assert.AreEqual("zh",
+            LanguageCode.Zh.ToCodeString()) ;
+        Assert.AreEqual("ko",
+            LanguageCode.Ko.ToCodeString()) ;
     }
 
     [Test]
@@ -36,32 +45,46 @@ public class LanguageCodeExtensionsTests
         var result = invalidValue.ToCodeString() ;
 
         // Assert
-        Assert.AreEqual("en", result) ;
+        Assert.AreEqual("en",
+            result) ;
     }
 
     [Test]
     public void ToLanguageCode_ShouldReturnCorrectEnum_ForValidCodeStrings()
     {
         // Act & Assert
-        Assert.AreEqual(LanguageCode.En, "en".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Vi, "vi".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Ja, "ja".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Es, "es".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Id, "id".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Th, "th".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Km, "km".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Zh, "zh".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Ko, "ko".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.En,
+            "en".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Vi,
+            "vi".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Ja,
+            "ja".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Es,
+            "es".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Id,
+            "id".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Th,
+            "th".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Km,
+            "km".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Zh,
+            "zh".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Ko,
+            "ko".ToLanguageCode()) ;
     }
 
     [Test]
     public void ToLanguageCode_ShouldBeCaseInsensitive()
     {
         // Act & Assert
-        Assert.AreEqual(LanguageCode.En, "EN".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Vi, "VI".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Ja, "Ja".ToLanguageCode()) ;
-        Assert.AreEqual(LanguageCode.Es, "ES".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.En,
+            "EN".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Vi,
+            "VI".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Ja,
+            "Ja".ToLanguageCode()) ;
+        Assert.AreEqual(LanguageCode.Es,
+            "ES".ToLanguageCode()) ;
     }
 
     [Test]
@@ -71,7 +94,8 @@ public class LanguageCodeExtensionsTests
         var result = ((string?)null).ToLanguageCode() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En, result) ;
+        Assert.AreEqual(LanguageCode.En,
+            result) ;
     }
 
     [Test]
@@ -81,7 +105,8 @@ public class LanguageCodeExtensionsTests
         var result = string.Empty.ToLanguageCode() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En, result) ;
+        Assert.AreEqual(LanguageCode.En,
+            result) ;
     }
 
     [Test]
@@ -91,7 +116,8 @@ public class LanguageCodeExtensionsTests
         var result = "   ".ToLanguageCode() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En, result) ;
+        Assert.AreEqual(LanguageCode.En,
+            result) ;
     }
 
     [Test]
@@ -101,7 +127,8 @@ public class LanguageCodeExtensionsTests
         var result = "invalid".ToLanguageCode() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En, result) ;
+        Assert.AreEqual(LanguageCode.En,
+            result) ;
     }
 
     [Test]
@@ -109,13 +136,16 @@ public class LanguageCodeExtensionsTests
     {
         // Act & Assert
         var enCulture = LanguageCode.En.ToCultureInfo() ;
-        Assert.AreEqual("en", enCulture.TwoLetterISOLanguageName) ;
+        Assert.AreEqual("en",
+            enCulture.TwoLetterISOLanguageName) ;
 
         var viCulture = LanguageCode.Vi.ToCultureInfo() ;
-        Assert.AreEqual("vi", viCulture.TwoLetterISOLanguageName) ;
+        Assert.AreEqual("vi",
+            viCulture.TwoLetterISOLanguageName) ;
 
         var jaCulture = LanguageCode.Ja.ToCultureInfo() ;
-        Assert.AreEqual("ja", jaCulture.TwoLetterISOLanguageName) ;
+        Assert.AreEqual("ja",
+            jaCulture.TwoLetterISOLanguageName) ;
     }
 
     [Test]
@@ -130,7 +160,8 @@ public class LanguageCodeExtensionsTests
 
         // Assert
         Assert.IsNotNull(result) ;
-        Assert.AreEqual("en", result.TwoLetterISOLanguageName) ;
+        Assert.AreEqual("en",
+            result.TwoLetterISOLanguageName) ;
     }
 
     [Test]
@@ -142,8 +173,10 @@ public class LanguageCodeExtensionsTests
         foreach (var code in allCodes)
         {
             var culture = code.ToCultureInfo() ;
-            Assert.IsNotNull(culture, $"Culture should not be null for {code}") ;
-            Assert.IsNotNull(culture.TwoLetterISOLanguageName, $"TwoLetterISOLanguageName should not be null for {code}") ;
+            Assert.IsNotNull(culture,
+                $"Culture should not be null for {code}") ;
+            Assert.IsNotNull(culture.TwoLetterISOLanguageName,
+                $"TwoLetterISOLanguageName should not be null for {code}") ;
         }
     }
 }

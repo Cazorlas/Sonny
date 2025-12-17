@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
 using Sonny.Application.Core ;
-using Sonny.Application.Core.Config.Logging ;
 using Sonny.Application.Features ;
 
 namespace Sonny.Application ;
@@ -67,7 +66,7 @@ public static class Host
         UnhandledExceptionEventArgs args)
     {
         var exception = (Exception)args.ExceptionObject ;
-        var logger = Host.GetService<ILogger>() ;
+        var logger = GetService<ILogger>() ;
         logger.Fatal(exception,
             "Domain unhandled exception") ;
     }

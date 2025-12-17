@@ -22,8 +22,10 @@ public class SettingsServiceLanguageTests
         // Create a test settings service with a temporary file path
         _settingsService = new SettingsService() ;
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) ;
-        var sonnyFolder = Path.Combine(appDataPath, "Sonny") ;
-        _testSettingsFilePath = Path.Combine(sonnyFolder, "SonnySettings.json") ;
+        var sonnyFolder = Path.Combine(appDataPath,
+            "Sonny") ;
+        _testSettingsFilePath = Path.Combine(sonnyFolder,
+            "SonnySettings.json") ;
 
         // Clean up test file if it exists
         if (File.Exists(_testSettingsFilePath))
@@ -49,7 +51,8 @@ public class SettingsServiceLanguageTests
         var result = _settingsService.GetLanguage() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En, result) ;
+        Assert.AreEqual(LanguageCode.En,
+            result) ;
     }
 
     [Test]
@@ -64,7 +67,8 @@ public class SettingsServiceLanguageTests
         // Assert
         Assert.IsTrue(File.Exists(_testSettingsFilePath)) ;
         var savedLanguage = _settingsService.GetLanguage() ;
-        Assert.AreEqual(languageCode, savedLanguage) ;
+        Assert.AreEqual(languageCode,
+            savedLanguage) ;
     }
 
     [Test]
@@ -73,13 +77,18 @@ public class SettingsServiceLanguageTests
         // Arrange
         var languageCode = LanguageCode.Ja ;
         LanguageCode? eventLanguage = null ;
-        _settingsService.LanguageChanged += (sender, code) => { eventLanguage = code ; } ;
+        _settingsService.LanguageChanged += (sender,
+            code) =>
+        {
+            eventLanguage = code ;
+        } ;
 
         // Act
         _settingsService.SetLanguage(languageCode) ;
 
         // Assert
-        Assert.AreEqual(languageCode, eventLanguage) ;
+        Assert.AreEqual(languageCode,
+            eventLanguage) ;
     }
 
     [Test]
@@ -93,7 +102,8 @@ public class SettingsServiceLanguageTests
         var result = _settingsService.GetLanguage() ;
 
         // Assert
-        Assert.AreEqual(languageCode, result) ;
+        Assert.AreEqual(languageCode,
+            result) ;
     }
 
     [Test]
@@ -106,7 +116,9 @@ public class SettingsServiceLanguageTests
         {
             _settingsService.SetLanguage(code) ;
             var result = _settingsService.GetLanguage() ;
-            Assert.AreEqual(code, result, $"Failed for language code: {code}") ;
+            Assert.AreEqual(code,
+                result,
+                $"Failed for language code: {code}") ;
         }
     }
 
@@ -124,7 +136,8 @@ public class SettingsServiceLanguageTests
         var result = newService.GetLanguage() ;
 
         // Assert
-        Assert.AreEqual(languageCode, result) ;
+        Assert.AreEqual(languageCode,
+            result) ;
     }
 
     [Test]
@@ -138,7 +151,8 @@ public class SettingsServiceLanguageTests
 
         // Assert
         var result = _settingsService.GetLanguage() ;
-        Assert.AreEqual(LanguageCode.Ko, result) ;
+        Assert.AreEqual(LanguageCode.Ko,
+            result) ;
     }
 
     [Test]
@@ -148,7 +162,11 @@ public class SettingsServiceLanguageTests
         var languageCode = LanguageCode.Zh ;
         _settingsService.SetLanguage(languageCode) ;
         var eventRaised = false ;
-        _settingsService.LanguageChanged += (sender, code) => { eventRaised = true ; } ;
+        _settingsService.LanguageChanged += (sender,
+            code) =>
+        {
+            eventRaised = true ;
+        } ;
 
         // Act
         _settingsService.SetLanguage(languageCode) ;
@@ -157,7 +175,8 @@ public class SettingsServiceLanguageTests
         // Note: Current implementation may or may not raise event for same value
         // This test verifies the behavior
         var result = _settingsService.GetLanguage() ;
-        Assert.AreEqual(languageCode, result) ;
+        Assert.AreEqual(languageCode,
+            result) ;
     }
 }
 

@@ -85,8 +85,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sonny.Application.Core\Sonny.Application.Core.csproj" />
-    <ProjectReference Include="..\Sonny.Application.Features\Sonny.Application.Features.csproj" />
+    <ProjectReference Include="..\Sonny.Application.Core\Sonny.Application.Core.csproj"/>
+    <ProjectReference Include="..\Sonny.Application.Features\Sonny.Application.Features.csproj"/>
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
     <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj"/>
     <ProjectReference Include="..\Sonny.EasyRibbon\Sonny.EasyRibbon\Sonny.EasyRibbon.csproj"/>

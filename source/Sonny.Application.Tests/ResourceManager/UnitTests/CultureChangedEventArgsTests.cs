@@ -100,3 +100,4 @@ public class CultureChangedEventArgsTests
             args.Culture) ;
     }
 }
+

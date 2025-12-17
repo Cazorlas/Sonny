@@ -19,11 +19,14 @@ public class LanguageOptionTests
         var languageCode = LanguageCode.En ;
 
         // Act
-        var option = new LanguageOption(displayName, languageCode) ;
+        var option = new LanguageOption(displayName,
+            languageCode) ;
 
         // Assert
-        Assert.AreEqual(displayName, option.DisplayName) ;
-        Assert.AreEqual(languageCode, option.LanguageCode) ;
+        Assert.AreEqual(displayName,
+            option.DisplayName) ;
+        Assert.AreEqual(languageCode,
+            option.LanguageCode) ;
     }
 
     [Test]
@@ -34,11 +37,14 @@ public class LanguageOptionTests
         var languageCode = LanguageCode.En ;
 
         // Act
-        var option = new LanguageOption(displayName, languageCode) ;
+        var option = new LanguageOption(displayName,
+            languageCode) ;
 
         // Assert
-        Assert.AreEqual(string.Empty, option.DisplayName) ;
-        Assert.AreEqual(LanguageCode.En, option.LanguageCode) ;
+        Assert.AreEqual(string.Empty,
+            option.DisplayName) ;
+        Assert.AreEqual(LanguageCode.En,
+            option.LanguageCode) ;
     }
 
     [Test]
@@ -49,11 +55,13 @@ public class LanguageOptionTests
         var languageCode = LanguageCode.Vi ;
 
         // Act
-        var option = new LanguageOption(displayName!, languageCode) ;
+        var option = new LanguageOption(displayName!,
+            languageCode) ;
 
         // Assert
         Assert.IsNull(option.DisplayName) ;
-        Assert.AreEqual(LanguageCode.Vi, option.LanguageCode) ;
+        Assert.AreEqual(LanguageCode.Vi,
+            option.LanguageCode) ;
     }
 
     [Test]
@@ -62,33 +70,38 @@ public class LanguageOptionTests
         // Arrange
         var displayName = "Vietnamese" ;
         var languageCode = LanguageCode.Vi ;
-        var option = new LanguageOption(displayName, languageCode) ;
+        var option = new LanguageOption(displayName,
+            languageCode) ;
 
         // Act
         var result = option.ToString() ;
 
         // Assert
-        Assert.AreEqual(displayName, result) ;
+        Assert.AreEqual(displayName,
+            result) ;
     }
 
     [Test]
     public void ToString_ShouldReturnEmptyString_WhenDisplayNameIsEmpty()
     {
         // Arrange
-        var option = new LanguageOption(string.Empty, LanguageCode.En) ;
+        var option = new LanguageOption(string.Empty,
+            LanguageCode.En) ;
 
         // Act
         var result = option.ToString() ;
 
         // Assert
-        Assert.AreEqual(string.Empty, result) ;
+        Assert.AreEqual(string.Empty,
+            result) ;
     }
 
     [Test]
     public void Properties_ShouldBeReadOnly()
     {
         // Arrange
-        var option = new LanguageOption("English", LanguageCode.En) ;
+        var option = new LanguageOption("English",
+            LanguageCode.En) ;
 
         // Act & Assert
         // Properties should be get-only, so we can't set them
@@ -106,10 +119,13 @@ public class LanguageOptionTests
         foreach (var code in allCodes)
         {
             var displayName = $"Language {code}" ;
-            var option = new LanguageOption(displayName, code) ;
+            var option = new LanguageOption(displayName,
+                code) ;
 
-            Assert.AreEqual(displayName, option.DisplayName) ;
-            Assert.AreEqual(code, option.LanguageCode) ;
+            Assert.AreEqual(displayName,
+                option.DisplayName) ;
+            Assert.AreEqual(code,
+                option.LanguageCode) ;
         }
     }
 }
