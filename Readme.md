@@ -20,7 +20,6 @@ This project focuses on developing useful tools for the Revit community, with op
 * [Prerequisites](#prerequisites)
 * [Cloning the Repository](#cloning-the-repository)
 * [Solution Structure](#solution-structure)
-* [Managing Supported Revit Versions](#managing-supported-revit-versions)
 * [Learn More](#learn-more)
 * [Dependencies](#dependencies)
 * [Acknowledgments](#acknowledgments)
@@ -30,7 +29,9 @@ This project focuses on developing useful tools for the Revit community, with op
 
 - **Dependency Injection** - Using Microsoft.Extensions.DependencyInjection for IoC
 - **Unit Testing** - Writing tests with NUnit and NSubstitute
+- **Revit Integration Testing** - Testing Revit plugins with RevitTest framework
 - **MVVM Pattern** - Implementing MVVM with CommunityToolkit.Mvvm
+- **Resource Management / Localization** - Multi-language support with ResourceDictionary and WPFLocalizeExtension
 - **Multi-version Support** - Supporting multiple Revit versions (2021-2026)
 - **Multiple Units Support** - Handling different measurement units (feet, meters, inches, etc.)
 - **Async Programming** - Using async/await with Revit API
@@ -44,15 +45,15 @@ This project focuses on developing useful tools for the Revit community, with op
 
 ### AutoColumnDimension Demo
 
-<video src="assets/videos/AutoColumnDimension demo.mp4" controls width="800"></video>
+📹 [Watch Video](assets/videos/AutoColumnDimension%20demo.mp4)
 
 ### Unit Testing by Console
 
-<video src="assets/videos/UnitTest by console.mp4" controls width="800"></video>
+📹 [Watch Video](assets/videos/UnitTest%20by%20console.mp4)
 
 ### Unit Testing by Visual Studio
 
-<video src="assets/videos/UnitTest by visual studio.mp4" controls width="800"></video>
+📹 [Watch Video](assets/videos/UnitTest%20by%20visual%20studio.mp4)
 
 ## Prerequisites
 
@@ -70,8 +71,8 @@ After installation, clone this repository to your local machine and navigate to 
 This project uses **Git Submodule** to manage dependencies. The following libraries are included as submodules from their own repositories:
 
 - **Revit.Async** - Async utilities for Revit API
-- **EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
-- **SonnyRevitExtensions** - Revit API extension methods and utilities library
+- **Sonny.EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
+- **Sonny.RevitExtensions** - Revit API extension methods and utilities library
 
 ### Clone with Submodules
 
@@ -94,7 +95,7 @@ To update submodules to their latest commits:
 git submodule update --remote
 
 # Commit and push the submodule reference update to GitHub
-git add source/Revit.Async source/EasyRibbon source/SonnyRevitExtensions
+git add source/Revit.Async source/Sonny.EasyRibbon source/Sonny.RevitExtensions
 git commit -m "Update submodules to latest version"
 git push origin master
 ```
@@ -109,13 +110,13 @@ This project includes the following submodules:
 - The submodule tracks a specific commit from the Revit.Async repository
 - Changes to Revit.Async should be committed in its own repository, not in Sonny
 
-#### EasyRibbon
+#### Sonny.EasyRibbon
 - **Submodule location**: `source/Sonny.EasyRibbon`
 - **Submodule repository**: [Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)
 - The submodule tracks a specific commit from the Sonny.EasyRibbon repository
 - Changes to Sonny.EasyRibbon should be committed in its own repository, not in Sonny
 
-#### SonnyRevitExtensions
+#### Sonny.RevitExtensions
 - **Submodule location**: `source/Sonny.RevitExtensions`
 - **Submodule repository**: [Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)
 - The submodule tracks a specific commit from the Sonny.RevitExtensions repository
@@ -132,71 +133,6 @@ This project includes the following submodules:
 | install | Add-in installer, called implicitly by the Nuke build                      |
 | source  | Project source code folder. Contains all solution projects                 |
 | output  | Folder of generated files by the build system, such as bundles, installers |
-
-## Managing Supported Revit Versions
-
-To extend or reduce the range of supported Revit API versions, you need to update the solution and project configurations.
-
-### Solution configurations
-
-Solution configurations determine which projects are built and how they are configured.
-
-To support multiple Revit versions:
-- Open the `.sln` file.
-- Add or remove configurations for each Revit version.
-
-Example:
-
-```text
-GlobalSection(SolutionConfigurationPlatforms) = preSolution
-    Debug R24|Any CPU = Debug R24|Any CPU
-    Debug R25|Any CPU = Debug R25|Any CPU
-    Debug R26|Any CPU = Debug R26|Any CPU
-    Release R24|Any CPU = Release R24|Any CPU
-    Release R25|Any CPU = Release R25|Any CPU
-    Release R26|Any CPU = Release R26|Any CPU
-EndGlobalSection
-```
-
-For example `Debug R26` is the Debug configuration for Revit 2026 version.
-
-> [!TIP]
-> If you are just ending maintenance for some version, removing the Solution configurations without modifying the Project configurations is enough.
-
-### Project configurations
-
-Project configurations define build conditions for specific versions.
-
-To add or remove support:
-- Open `.csproj` file
-- Add or remove configurations for Debug and Release builds.
-
-Example:
-
-```xml
-<PropertyGroup>
-    <Configurations>Debug R24;Debug R25;Debug R26</Configurations>
-    <Configurations>$(Configurations);Release R24;Release R25;Release R26</Configurations>
-</PropertyGroup>
-```
-
-> [!IMPORTANT]
-> Edit the `.csproj` file only manually, IDEs often break configurations.
-
-Then simply map the solution configuration to the project configuration:
-
-![image](https://github.com/user-attachments/assets/9f357ded-d38c-4f0a-a21f-152de75f4abc)
-
-Solution and project configuration names may differ, this example uses the same naming style to avoid confusion.
-
-Then specify the framework and Revit version for each configuration, update the `.csproj` file with the following:
-
-```xml
-<PropertyGroup Condition="$(Configuration.Contains('R26'))">
-    <RevitVersion>2026</RevitVersion>
-    <TargetFramework>net8.0-windows</TargetFramework>
-</PropertyGroup>
-```
 
 ## Learn More
 
