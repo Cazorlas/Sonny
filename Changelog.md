@@ -11,8 +11,6 @@
 - 🏗️ **Dependency Injection** - Using Microsoft.Extensions.DependencyInjection
 - 🎨 **MVVM Pattern** - Implementing MVVM with CommunityToolkit.Mvvm
 - 🧪 **Unit Testing** - Testing framework with NUnit and NSubstitute
-- 🔄 **Revit Integration Testing** - Testing with RevitTest framework
-- 📝 **Structured Logging** - Logging with Serilog
 
 ## Build & Development
 - 🛠️ **Build Automation** - Build automation with Nuke
