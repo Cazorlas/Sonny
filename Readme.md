@@ -1,5 +1,10 @@
 # Sonny
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/)
+[![Revit](https://img.shields.io/badge/Revit-2021--2026-orange.svg)](https://www.autodesk.com/products/revit)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/your-username/Sonny/Compile.yml?branch=main)](https://github.com/your-username/Sonny/actions)
+
 Autodesk Revit plugin project organized into multiple solution files that target versions 2021 - 2026.
 
 ## Introduction
@@ -22,6 +27,9 @@ This project focuses on developing useful tools for the Revit community, with op
 * [Solution Structure](#solution-structure)
 * [Learn More](#learn-more)
 * [Dependencies](#dependencies)
+* [Contributing](#contributing)
+* [License](#license)
+* [Security](#security)
 * [Acknowledgments](#acknowledgments)
 <!-- TOC -->
 
@@ -153,6 +161,25 @@ This project uses the following libraries and tools:
 - **[RevitTest](https://github.com/ricaun-io/RevitTest)** - Testing framework for Revit applications
 - **[Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)** - Attribute-based framework for creating Revit Ribbon UI
 - **[Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)** - Revit API extension methods and utilities library
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on:
+
+- How to report bugs
+- How to suggest features
+- How to submit pull requests
+- Code style guidelines
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Security
+
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for information on how to report it.
 
 ## Acknowledgments
 
