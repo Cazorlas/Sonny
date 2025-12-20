@@ -34,13 +34,12 @@
             <Label Content="{DynamicResource LabelSnapDistance}" Grid.Column="0" />
             <TextBox Grid.Column="1"
                      Text="{Binding SnapDistanceDisplay, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="{Binding DisplayUnitName}" Grid.Column="2" Margin="5,5,0,5" VerticalAlignment="Center" />
+            <Label Content="{Binding DisplayUnitName}" Grid.Column="2" />
         </Grid>
 
         <!-- Run Button -->
         <Button Content="{DynamicResource ButtonRun}"
                 Command="{Binding RunCommand}"
-                HorizontalAlignment="Right"
-                Margin="0,10,0,0" />
+                HorizontalAlignment="Right" />
     </StackPanel>
 </Window>

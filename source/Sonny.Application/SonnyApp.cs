@@ -3,6 +3,7 @@ using Revit.Async ;
 using Sonny.Application.Core.Interfaces ;
 using Sonny.Application.Features ;
 using Sonny.Application.Modules ;
+using Sonny.Application.UI ;
 
 namespace Sonny.Application ;
 
@@ -18,6 +19,9 @@ public class SonnyApp : ExternalApplication
     {
         // Initialize RevitTask for async Revit API calls
         RevitTask.Initialize(Application) ;
+
+        // Load UI theme
+        UIStyleManager.LoadTheme() ;
 
         Host.Start() ;
         // Initialize resources if not already initialized

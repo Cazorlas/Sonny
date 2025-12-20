@@ -58,6 +58,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Sonny.Application.Core\Sonny.Application.Core.csproj" />
+      <ProjectReference Include="..\Sonny.Application.UI\Sonny.Application.UI.csproj" />
       <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj" />
     </ItemGroup>
 
