@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         x:Name="ThisWindow"
         Title="Settings"
-        Height="200" Width="400"
+        Height="220" Width="400"
         WindowStartupLocation="CenterOwner"
         d:DataContext="{d:DesignInstance {x:Type viewModel:SettingsViewModel}, IsDesignTimeCreatable=True}">
     <StackPanel Margin="20">
@@ -40,8 +40,7 @@
         <!-- Buttons -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save"
-                    Command="{Binding SaveCommand}"
-                    Margin="0,0,10,0" />
+                    Command="{Binding SaveCommand}" />
             <Button Content="Cancel"
                     Command="{Binding CancelCommand}" />
         </StackPanel>
