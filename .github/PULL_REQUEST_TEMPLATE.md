@@ -25,10 +25,10 @@ Related to #
 
 ## Testing
 <!-- Describe the tests you ran and how to verify your changes -->
-- [ ] Unit tests pass
-- [ ] Integration tests pass
-- [ ] Manual testing completed
-- [ ] Tested on Revit version(s): [e.g., 2024, 2025]
+- [ ] 2023
+- [ ] 2024
+- [ ] 2025
+- [ ] 2026
 
 ## Screenshots (if applicable)
 <!-- Add screenshots to help explain your changes -->
@@ -36,13 +36,8 @@ Related to #
 ## Checklist
 <!-- Mark completed items with an 'x' -->
 - [ ] My code follows the project's code style guidelines (see `.editorconfig`)
-- [ ] I have added/updated XML documentation comments for public APIs
-- [ ] I have added/updated tests that prove my fix is effective or that my feature works
 - [ ] I have updated the CHANGELOG.md (if applicable)
 - [ ] I have updated the README.md (if applicable)
-- [ ] My changes generate no new warnings
-- [ ] I have tested my changes locally
-- [ ] My code is self-documenting and easy to understand
 
 ## Additional Notes
 <!-- Any additional information that reviewers should know -->
