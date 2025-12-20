@@ -24,55 +24,88 @@ We love new ideas! Please create an issue with:
 - Why this would be useful for the Revit community
 - Any potential implementation considerations
 
+### Git Flow Workflow
+
+This project follows the **Git Flow** branching model with the following branches:
+
+- **`master`**: Production-ready code. Only stable, tested releases are merged here. This branch should always be deployable.
+- **`develop`**: Integration branch for features. All feature branches merge into this branch. This is the main development branch.
+- **`feature/*`**: Feature branches for new functionality. Created from and merged back into `develop`.
+- **`release/*`**: Release branches for preparing new production releases. Created from `develop` and merged into both `master` and `develop`.
+- **`hotfix/*`**: Hotfix branches for urgent production bug fixes. Created from `master` and merged into both `master` and `develop`.
+
+#### Git Flow Diagram
+
+![Git Flow Branching Model](assets/images/gitflow.png)
+
+*Visual representation of the Git Flow branching model showing how commits flow between master, develop, feature, release, and hotfix branches.*
+
+#### Branch Usage Guidelines
+
+**Feature Branches:**
+- Created from `develop`
+- Used for developing new features
+- Merged back into `develop` via Pull Request
+- Naming convention: `feature/feature-name` (e.g., `feature/add-new-tool`)
+
+**Release Branches:**
+- Created from `develop` when preparing a new release
+- Used for final bug fixes and release preparations
+- Merged into both `master` (with version tag) and `develop`
+- Naming convention: `release/version-number` (e.g., `release/v1.0.0`)
+- Only maintainers create release branches
+
+**Hotfix Branches:**
+- Created from `master` for urgent production fixes
+- Used for critical bug fixes that cannot wait for the next release
+- Merged into both `master` (with version tag) and `develop`
+- Naming convention: `hotfix/description` (e.g., `hotfix/critical-bug-fix`)
+- Only maintainers create hotfix branches
+
 ### Pull Requests
 
-1. **Fork the repository**
-   ```bash
-   git clone https://github.com/your-username/Sonny.git
-   cd Sonny
-   ```
+**Workflow Overview:**
+1. Fork the repository and clone it locally
+2. Create a feature branch from `develop` (see Git Flow diagram above)
+3. Make your changes and commit them
+4. Push your feature branch to your fork
+5. Create a Pull Request targeting `develop` branch
 
-2. **Initialize submodules**
-   ```bash
-   git submodule update --init --recursive
-   ```
+**Important Guidelines:**
+- **Always create feature branches from `develop`**, not from `master`
+- **Pull requests must target `develop` branch** (not `master`)
+- Only maintainers merge `develop` into `master` for releases
+- Keep your feature branch up to date with `develop` before creating PR
 
-3. **Create a feature branch**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+**Commit Message Format:**
+Use clear commit messages following this format:
+- `Add:` for new features
+- `Fix:` for bug fixes
+- `Update:` for updates to existing features
+- `Refactor:` for code refactoring
+- `Docs:` for documentation changes
+- `Test:` for test additions or changes
 
-4. **Make your changes**
-   - Write clean, readable code
-   - Follow the existing code style (see `.editorconfig`)
-   - Add XML documentation comments for public APIs
-   - Test your changes thoroughly
-   - Update documentation if needed
+**When Creating a Pull Request:**
+- Describe what your PR does
+- Reference any related issues (use `Closes #123` or `Fixes #123`)
+- Include screenshots if UI changes
+- Ensure all tests pass
+- Update CHANGELOG.md if applicable
 
-5. **Commit your changes**
-   ```bash
-   git commit -m "Add: brief description of your changes"
-   ```
+### Release & Hotfix Branches (Maintainers Only)
 
-   Use clear commit messages following this format:
-   - `Add:` for new features
-   - `Fix:` for bug fixes
-   - `Update:` for updates to existing features
-   - `Refactor:` for code refactoring
-   - `Docs:` for documentation changes
-   - `Test:` for test additions or changes
+**Release Branches:**
+- Created from `develop` when preparing a new release
+- Used for final bug fixes and release preparations
+- Merged into both `master` (with version tag) and `develop`
+- See Git Flow diagram above for visual workflow
 
-6. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-7. **Create a Pull Request**
-   - Describe what your PR does
-   - Reference any related issues (use `Closes #123` or `Fixes #123`)
-   - Include screenshots if UI changes
-   - Ensure all tests pass
-   - Update CHANGELOG.md if applicable
+**Hotfix Branches:**
+- Created from `master` for urgent production bug fixes
+- Used for critical fixes that cannot wait for the next release
+- Merged into both `master` (with version tag) and `develop`
+- See Git Flow diagram above for visual workflow
 
 ## Code Style Guidelines
 
@@ -128,11 +161,14 @@ public double FromInternalUnit(double value, ForgeTypeId displayUnit)
 2. Clone repository with submodules:
    ```bash
    git clone --recursive https://github.com/your-username/Sonny.git
+   cd Sonny
    ```
 
-3. Open solution in your IDE
+3. Checkout `develop` branch for development
 
-4. Build the project:
+4. Open solution in your IDE
+
+5. Build the project:
    ```bash
    ./.nuke/build.cmd
    ```
