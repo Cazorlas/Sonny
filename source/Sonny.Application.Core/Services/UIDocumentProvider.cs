@@ -8,8 +8,8 @@ namespace Sonny.Application.Core.Services ;
 /// </summary>
 public class UIDocumentProvider : IUIDocumentProvider
 {
-    private UIDocument? _uiDocument ;
     private readonly object _lock = new() ;
+    private UIDocument? _uiDocument ;
 
     /// <summary>
     ///     Gets the current active UIDocument

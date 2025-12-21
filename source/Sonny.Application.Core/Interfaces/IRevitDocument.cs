@@ -13,6 +13,11 @@ public interface IRevitDocument
     Document Document { get ; }
 
     /// <summary>
+    ///     Gets the Revit UIDocument
+    /// </summary>
+    UIDocument UIDocument { get ; }
+
+    /// <summary>
     ///     Gets the active view
     /// </summary>
     View ActiveView { get ; }

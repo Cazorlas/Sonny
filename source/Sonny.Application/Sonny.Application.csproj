@@ -90,17 +90,6 @@
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
     <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj"/>
     <ProjectReference Include="..\Sonny.EasyRibbon\Sonny.EasyRibbon\Sonny.EasyRibbon.csproj"/>
-
-    <!-- SonnyRevitExtensions reference -->
-    <!-- SonnyRevitExtensions is included as a git submodule from https://github.com/PhanCongVuDuc/SonnyRevitExtensions -->
-
-    <!-- Revit.Async reference -->
-    <!-- Use Revit.Async (net45) for all configurations -->
-    <!-- net45 is compatible with net48 (R21-R24) and can work with net8.0 (R25-R26) -->
-    <!-- All Revit.Async projects share the same logic via Shared Project, only differ in target framework -->
-
-    <!-- EasyRibbon reference -->
-    <!-- EasyRibbon is included as a git submodule from https://github.com/PhanCongVuDuc/EasyRibbon -->
   </ItemGroup>
 
 </Project>

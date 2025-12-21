@@ -35,18 +35,20 @@ public static class SonnyResourcesInitializer
     {
         var manager = ResourceDictionaryManager.Instance ;
 
+        // Register Common resource (must be loaded first for shared buttons)
+        manager.RegisterResource("Sonny.Application.Features",
+            "Resources/Languages/Common/Common",
+            languageCode) ;
+
         // Register AutoColumnDimension resource
         manager.RegisterResource("Sonny.Application.Features",
             "Resources/Languages/AutoColumnDimension/AutoColumnDimension",
-            defaultLanguageCode: languageCode) ;
+            languageCode) ;
 
-        // TODO: Add more resources here as needed
-        // Example:
-        // manager.RegisterResource(
-        //     assemblyName: "Sonny.Application.Features",
-        //     resourcePathPattern: "Languages/NewModule/NewResource",
-        //     defaultLanguageCode: LanguageCode.En
-        // );
+        // Register ColumnFromCad resource
+        manager.RegisterResource("Sonny.Application.Features",
+            "Resources/Languages/ColumnFromCad/ColumnFromCad",
+            languageCode) ;
     }
 
     /// <summary>

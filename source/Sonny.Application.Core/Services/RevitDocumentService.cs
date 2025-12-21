@@ -4,41 +4,16 @@ using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Core.Services ;
 
-/// <summary>
-///     Implementation of IRevitDocument using Revit API
-/// </summary>
-public class RevitDocumentService : IRevitDocument
+public class RevitDocumentService(IUIDocumentProvider uiDocumentProvider) : IRevitDocument
 {
-    private readonly UIDocument _uiDocument ;
+    public Document Document => UIDocument.Document ;
 
-    /// <summary>
-    ///     Initializes a new instance of RevitDocumentService
-    /// </summary>
-    /// <param name="uiDocumentProvider">The UIDocument provider</param>
-    public RevitDocumentService(IUIDocumentProvider uiDocumentProvider)
-    {
-        _uiDocument = uiDocumentProvider.GetUIDocument() ;
-    }
+    public UIDocument UIDocument { get ; } = uiDocumentProvider.GetUIDocument() ;
 
-    /// <summary>
-    ///     Gets the Revit Document
-    /// </summary>
-    public Document Document => _uiDocument.Document ;
+    public View ActiveView => UIDocument.ActiveView ;
 
-    /// <summary>
-    ///     Gets the active view
-    /// </summary>
-    public View ActiveView => _uiDocument.ActiveView ;
+    public UIApplication Application => UIDocument.Application ;
 
-    /// <summary>
-    ///     Gets the UIApplication
-    /// </summary>
-    public UIApplication Application => _uiDocument.Application ;
-
-    /// <summary>
-    ///     Gets dimension types from the document
-    /// </summary>
-    /// <returns>List of DimensionType</returns>
     public List<DimensionType> GetDimensionTypes() =>
         Document.GetAllElements<DimensionType>()
             .Where(x => x.StyleType == DimensionStyleType.Linear)

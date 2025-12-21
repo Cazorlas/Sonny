@@ -9,9 +9,6 @@
     <system:String x:Key="LabelDimensionType">Dimension Type:</system:String>
     <system:String x:Key="LabelSnapDistance">Snap Distance:</system:String>
 
-    <!-- Buttons -->
-    <system:String x:Key="ButtonRun">Run</system:String>
-
     <!-- Messages -->
     <system:String x:Key="MessageNoColumnsFound">No structural columns found in the active view.</system:String>
     <system:String x:Key="MessageErrorOccurred">An error occurred: {0}</system:String>

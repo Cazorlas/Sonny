@@ -12,6 +12,7 @@
         <ResourceDictionary Source="/Sonny.Application.UI;component/Styles/TextBoxStyles.xaml" />
         <ResourceDictionary Source="/Sonny.Application.UI;component/Styles/ComboBoxStyles.xaml" />
         <ResourceDictionary Source="/Sonny.Application.UI;component/Styles/LayoutStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UI;component/Styles/GroupBoxStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
