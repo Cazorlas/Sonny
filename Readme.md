@@ -51,6 +51,10 @@ This project focuses on developing useful tools for the Revit community, with op
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=ue2QgaLX7fE" target="_blank"><img src="http://img.youtube.com/vi/ue2QgaLX7fE/0.jpg" alt="AutoColumnDimension Demo" width="560" height="315" border="10" /></a>
 
+### ColumnFromCad Demo
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=D6tkBJeo9uo" target="_blank"><img src="http://img.youtube.com/vi/D6tkBJeo9uo/0.jpg" alt="ColumnFromCad Demo" width="560" height="315" border="10" /></a>
+
 ### Unit Testing by Console
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=L4UvIr6Km7g" target="_blank"><img src="http://img.youtube.com/vi/L4UvIr6Km7g/0.jpg" alt="Unit Testing by Console" width="560" height="315" border="10" /></a>
