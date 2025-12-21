@@ -37,8 +37,8 @@
             <Label Content="{Binding DisplayUnitName}" Grid.Column="2" />
         </Grid>
 
-        <!-- Run Button -->
-        <Button Content="{DynamicResource ButtonRun}"
+        <!-- OK Button -->
+        <Button Content="{DynamicResource ButtonOK}"
                 Command="{Binding RunCommand}"
                 HorizontalAlignment="Right" />
     </StackPanel>

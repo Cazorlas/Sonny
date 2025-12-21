@@ -9,9 +9,6 @@
     <system:String x:Key="LabelDimensionType">Loại Dimension:</system:String>
     <system:String x:Key="LabelSnapDistance">Khoảng cách Snap:</system:String>
 
-    <!-- Buttons -->
-    <system:String x:Key="ButtonRun">Chạy</system:String>
-
     <!-- Messages -->
     <system:String x:Key="MessageNoColumnsFound">Không tìm thấy cột kết cấu trong view hiện tại.</system:String>
     <system:String x:Key="MessageErrorOccurred">Đã xảy ra lỗi: {0}</system:String>

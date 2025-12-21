@@ -1,0 +1,54 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Window Title -->
+    <system:String x:Key="WindowTitle">Model Column from AutoCAD</system:String>
+
+    <!-- GroupBox Headers -->
+    <system:String x:Key="GroupBoxLayerSelection">Layer Selection</system:String>
+    <system:String x:Key="GroupBoxColumnFamily">Column Family</system:String>
+    <system:String x:Key="GroupBoxLevels">Levels</system:String>
+
+    <!-- Labels -->
+    <system:String x:Key="LabelSelectLayer">Select Layer:</system:String>
+    <system:String x:Key="LabelModelByHatch">Model by Hatch</system:String>
+    <system:String x:Key="LabelModelByBoundary">Model by Boundary</system:String>
+    <system:String x:Key="LabelRectangularColumnFamily">Rectangular Column Family:</system:String>
+    <system:String x:Key="LabelWidthParameter">Width Parameter:</system:String>
+    <system:String x:Key="LabelHeightParameter">Height Parameter:</system:String>
+    <system:String x:Key="LabelCircularColumnFamily">Circular Column Family:</system:String>
+    <system:String x:Key="LabelDiameterParameter">Diameter Parameter:</system:String>
+    <system:String x:Key="LabelBaseLevel">Base Level:</system:String>
+    <system:String x:Key="LabelBaseOffset">Base Offset:</system:String>
+    <system:String x:Key="LabelTopLevel">Top Level:</system:String>
+    <system:String x:Key="LabelTopOffset">Top Offset:</system:String>
+
+    <!-- Messages -->
+    <system:String x:Key="MessageNoColumnsFound">No columns found in the selected layer.</system:String>
+    <system:String x:Key="MessageSuccessfullyCreated">Successfully created {0} columns!</system:String>
+    <system:String x:Key="MessageNoColumnsCreated">No columns were created.</system:String>
+    <system:String x:Key="MessageCreatingColumns">Creating Columns from AutoCAD</system:String>
+    <system:String x:Key="MessageFailedToSelectCadLink">Failed to select CAD link.</system:String>
+    <system:String x:Key="MessageNoLayersFoundInCadLink">No layers found in CAD link.</system:String>
+    <system:String x:Key="MessageNoColumnFamiliesFound">No column families found in project. Please load column families before running this command.</system:String>
+    <system:String x:Key="MessageNoExtractedColumnsFound">No extracted columns found. Please extract column data first by calling ExtractColumnData method.</system:String>
+    
+    <!-- Transaction Names -->
+    <system:String x:Key="TransactionCreateColumns">Create Columns</system:String>
+    <system:String x:Key="TransactionCreateColumn">Create Column</system:String>
+
+    <!-- Selection Messages -->
+    <system:String x:Key="MessageSelectCadLink">Select a CAD link</system:String>
+
+    <!-- Validation Messages -->
+    <system:String x:Key="ValidationPleaseSelectLayer">Please select a layer.</system:String>
+    <system:String x:Key="ValidationPleaseSelectRectangularColumnFamily">Please select a rectangular column family.</system:String>
+    <system:String x:Key="ValidationPleaseSelectCircularColumnFamily">Please select a circular column family.</system:String>
+    <system:String x:Key="ValidationPleaseSelectWidthParameter">Please select width parameter.</system:String>
+    <system:String x:Key="ValidationPleaseSelectHeightParameter">Please select height parameter.</system:String>
+    <system:String x:Key="ValidationPleaseSelectDiameterParameter">Please select diameter parameter.</system:String>
+    <system:String x:Key="ValidationPleaseSelectBaseLevel">Please select base level.</system:String>
+    <system:String x:Key="ValidationPleaseSelectTopLevel">Please select top level.</system:String>
+
+</ResourceDictionary>

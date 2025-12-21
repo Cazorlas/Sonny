@@ -1,0 +1,54 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Window Title -->
+    <system:String x:Key="WindowTitle">Tạo Cột từ AutoCAD</system:String>
+
+    <!-- GroupBox Headers -->
+    <system:String x:Key="GroupBoxLayerSelection">Chọn Layer</system:String>
+    <system:String x:Key="GroupBoxColumnFamily">Họ Cột</system:String>
+    <system:String x:Key="GroupBoxLevels">Tầng</system:String>
+
+    <!-- Labels -->
+    <system:String x:Key="LabelSelectLayer">Chọn Layer:</system:String>
+    <system:String x:Key="LabelModelByHatch">Tạo từ Hatch</system:String>
+    <system:String x:Key="LabelModelByBoundary">Tạo từ Boundary</system:String>
+    <system:String x:Key="LabelRectangularColumnFamily">Họ Cột Hình Chữ Nhật:</system:String>
+    <system:String x:Key="LabelWidthParameter">Tham số Chiều Rộng:</system:String>
+    <system:String x:Key="LabelHeightParameter">Tham số Chiều Cao:</system:String>
+    <system:String x:Key="LabelCircularColumnFamily">Họ Cột Hình Tròn:</system:String>
+    <system:String x:Key="LabelDiameterParameter">Tham số Đường Kính:</system:String>
+    <system:String x:Key="LabelBaseLevel">Tầng Cơ Sở:</system:String>
+    <system:String x:Key="LabelBaseOffset">Offset Cơ Sở:</system:String>
+    <system:String x:Key="LabelTopLevel">Tầng Trên:</system:String>
+    <system:String x:Key="LabelTopOffset">Offset Trên:</system:String>
+
+    <!-- Messages -->
+    <system:String x:Key="MessageNoColumnsFound">Không tìm thấy cột trong layer đã chọn.</system:String>
+    <system:String x:Key="MessageSuccessfullyCreated">Đã tạo thành công {0} cột!</system:String>
+    <system:String x:Key="MessageNoColumnsCreated">Không có cột nào được tạo.</system:String>
+    <system:String x:Key="MessageCreatingColumns">Đang tạo cột từ AutoCAD</system:String>
+    <system:String x:Key="MessageFailedToSelectCadLink">Không thể chọn CAD link.</system:String>
+    <system:String x:Key="MessageNoLayersFoundInCadLink">Không tìm thấy layer nào trong CAD link.</system:String>
+    <system:String x:Key="MessageNoColumnFamiliesFound">Không tìm thấy họ cột nào trong dự án. Vui lòng load họ cột trước khi chạy lệnh này.</system:String>
+    <system:String x:Key="MessageNoExtractedColumnsFound">Không tìm thấy cột nào đã được trích xuất. Vui lòng trích xuất dữ liệu cột trước bằng cách gọi phương thức ExtractColumnData.</system:String>
+    
+    <!-- Transaction Names -->
+    <system:String x:Key="TransactionCreateColumns">Tạo Cột</system:String>
+    <system:String x:Key="TransactionCreateColumn">Tạo Cột</system:String>
+
+    <!-- Selection Messages -->
+    <system:String x:Key="MessageSelectCadLink">Chọn một CAD link</system:String>
+
+    <!-- Validation Messages -->
+    <system:String x:Key="ValidationPleaseSelectLayer">Vui lòng chọn một layer.</system:String>
+    <system:String x:Key="ValidationPleaseSelectRectangularColumnFamily">Vui lòng chọn họ cột hình chữ nhật.</system:String>
+    <system:String x:Key="ValidationPleaseSelectCircularColumnFamily">Vui lòng chọn họ cột hình tròn.</system:String>
+    <system:String x:Key="ValidationPleaseSelectWidthParameter">Vui lòng chọn tham số chiều rộng.</system:String>
+    <system:String x:Key="ValidationPleaseSelectHeightParameter">Vui lòng chọn tham số chiều cao.</system:String>
+    <system:String x:Key="ValidationPleaseSelectDiameterParameter">Vui lòng chọn tham số đường kính.</system:String>
+    <system:String x:Key="ValidationPleaseSelectBaseLevel">Vui lòng chọn tầng cơ sở.</system:String>
+    <system:String x:Key="ValidationPleaseSelectTopLevel">Vui lòng chọn tầng trên.</system:String>
+
+</ResourceDictionary>

@@ -1,0 +1,15 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Common Buttons -->
+    <system:String x:Key="ButtonOK">OK</system:String>
+    <system:String x:Key="ButtonCancel">Cancel</system:String>
+    <system:String x:Key="ButtonApply">Apply</system:String>
+    <system:String x:Key="ButtonClose">Close</system:String>
+    <system:String x:Key="ButtonSave">Save</system:String>
+    <system:String x:Key="ButtonDelete">Delete</system:String>
+    <system:String x:Key="ButtonEdit">Edit</system:String>
+    <system:String x:Key="ButtonAdd">Add</system:String>
+
+</ResourceDictionary>

@@ -33,15 +33,17 @@ public abstract class BaseViewModel : ObservableObject
     /// <summary>
     ///     Handle display unit changed event
     /// </summary>
-    private void OnDisplayUnitChanged(object? sender, ForgeTypeId newUnit)
+    private void OnDisplayUnitChanged(object? sender,
+        ForgeTypeId newUnit)
     {
         var oldUnit = DisplayUnit ;
         DisplayUnit = newUnit ;
-        OnPropertyChanged(nameof(DisplayUnit)) ;
-        OnPropertyChanged(nameof(DisplayUnitName)) ;
-        
+        OnPropertyChanged(nameof( DisplayUnit )) ;
+        OnPropertyChanged(nameof( DisplayUnitName )) ;
+
         // Allow derived classes to handle unit conversion
-        OnDisplayUnitChanged(oldUnit, newUnit) ;
+        OnDisplayUnitChanged(oldUnit,
+            newUnit) ;
     }
 
     /// <summary>
@@ -49,7 +51,8 @@ public abstract class BaseViewModel : ObservableObject
     /// </summary>
     /// <param name="oldUnit">Previous display unit</param>
     /// <param name="newUnit">New display unit</param>
-    protected virtual void OnDisplayUnitChanged(ForgeTypeId oldUnit, ForgeTypeId newUnit)
+    protected virtual void OnDisplayUnitChanged(ForgeTypeId oldUnit,
+        ForgeTypeId newUnit)
     {
         // Override in derived classes to convert values when unit changes
     }
@@ -147,6 +150,11 @@ public abstract class BaseViewModel : ObservableObject
     ///     Show info message to user
     /// </summary>
     protected void ShowInfo(string message) => MessageService.ShowInfo(message) ;
+
+    /// <summary>
+    ///     Show warning message to user
+    /// </summary>
+    protected void ShowWarning(string message) => MessageService.ShowWarning(message) ;
 
     #endregion
 }

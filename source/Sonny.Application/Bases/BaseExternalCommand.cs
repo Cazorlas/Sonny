@@ -1,5 +1,7 @@
+using Autodesk.Revit.DB ;
 using Autodesk.Revit.UI ;
 using Revit.Async ;
+using Serilog ;
 using Sonny.Application.Core.Interfaces ;
 
 namespace Sonny.Application.Bases ;
@@ -20,20 +22,54 @@ public abstract class BaseExternalCommand : IExternalCommand
         ref string message,
         ElementSet elements)
     {
-        // Initialize Host if not already initialized
-        Host.Start() ;
+        try
+        {
+            // Initialize Host if not already initialized
+            Host.Start() ;
 
-        // Set UIDocument in provider for DI container
-        var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
-        uiDocumentProvider.SetUIDocument(commandData.Application.ActiveUIDocument) ;
+            // Set UIDocument in provider for DI container
+            var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
+            uiDocumentProvider.SetUIDocument(commandData.Application.ActiveUIDocument) ;
 
-        // Initialize RevitTask in Command context (valid Revit API context)
-        RevitTask.Initialize(commandData.Application) ;
+            // Initialize RevitTask in Command context (valid Revit API context)
+            RevitTask.Initialize(commandData.Application) ;
 
-        // Call the derived class implementation
-        return ExecuteInternal(commandData,
-            ref message,
-            elements) ;
+            // Call the derived class implementation
+            return ExecuteInternal(commandData,
+                ref message,
+                elements) ;
+        }
+        catch (Exception ex)
+        {
+            // Log error
+            try
+            {
+                var logger = Host.GetService<ILogger>() ;
+                logger.Error(ex,
+                    "Error executing command: {CommandName}",
+                    GetType()
+                        .Name) ;
+            }
+            catch
+            {
+                // Ignore logging errors
+            }
+
+            // Show error message to user
+            try
+            {
+                var messageService = Host.GetService<IMessageService>() ;
+                messageService?.ShowError("Command Error",
+                    $"An error occurred while executing the command.\n\n{ex.Message}") ;
+            }
+            catch
+            {
+                // If message service fails, set message parameter
+                message = $"Error: {ex.Message}" ;
+            }
+
+            return Result.Failed ;
+        }
     }
 
     /// <summary>

@@ -20,8 +20,8 @@ public class SonnyTab
         /// </summary>
         [Button("Settings",
             typeof( SettingsCommand ),
-            Image = "/Sonny.Application;component/Resources/Icons/Setting16.png",
-            LargeImage = "/Sonny.Application;component/Resources/Icons/Setting32.png",
+            Image = "/Sonny.Application;component/Resources/Icons/SettingsCommand16.png",
+            LargeImage = "/Sonny.Application;component/Resources/Icons/SettingsCommand32.png",
             ToolTip = "Open application settings",
             LongDescription = "Configure application preferences including display units")]
         public class SettingsButton ;
@@ -38,10 +38,28 @@ public class SonnyTab
         /// </summary>
         [Button("Auto Column Dimension",
             typeof( AutoColumnDimensionCommand ),
-            Image = "/Sonny.Application;component/Resources/Icons/AutoColumnDimension16.png",
-            LargeImage = "/Sonny.Application;component/Resources/Icons/AutoColumnDimension32.png",
+            Image = "/Sonny.Application;component/Resources/Icons/AutoColumnDimensionCommand16.png",
+            LargeImage = "/Sonny.Application;component/Resources/Icons/AutoColumnDimensionCommand32.png",
             ToolTip = "Automatically create dimensions for columns",
             LongDescription = "This tool automatically creates dimensions for columns based on grids")]
         public class AutoColumnDimensionButton ;
+    }
+
+    /// <summary>
+    ///     Panel for column creation tools
+    /// </summary>
+    [Panel("Model from CAD")]
+    public class ColumnPanel
+    {
+        /// <summary>
+        ///     Button for column from CAD feature
+        /// </summary>
+        [Button("Column from CAD",
+            typeof( ColumnFromCadCommand ),
+            Image = "/Sonny.Application;component/Resources/Icons/ColumnFromCadCommand16.png",
+            LargeImage = "/Sonny.Application;component/Resources/Icons/ColumnFromCadCommand32.png",
+            ToolTip = "Create columns from AutoCAD",
+            LongDescription = "Model columns from AutoCAD CAD link by selecting layers and column families")]
+        public class ColumnFromCadButton ;
     }
 }
