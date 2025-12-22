@@ -1,6 +1,6 @@
-using Sonny.Application.Core.FailuresPreprocessors ;
-using Sonny.Application.Core.Managers ;
-using Sonny.Application.Core.Preprocessors ;
+using Sonny.Application.Domain.FailuresPreprocessors ;
+using Sonny.Application.Domain.Managers ;
+using Sonny.Application.Domain.Preprocessors ;
 using Sonny.Application.Features.ColumnFromCad.Contexts ;
 using Sonny.Application.Features.ColumnFromCad.Interfaces ;
 using Sonny.Application.Features.ColumnFromCad.Models ;

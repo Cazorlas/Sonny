@@ -2,8 +2,8 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Serilog ;
-using Sonny.Application.Core.Interfaces ;
-using Sonny.Application.Core.Services ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Services ;
 
 namespace Sonny.Application.Utils ;
 

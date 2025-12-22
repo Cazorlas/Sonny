@@ -2,8 +2,8 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection ;
-using Sonny.Application.Core.Interfaces ;
-using Sonny.Application.Core.Services ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Services ;
 using Sonny.Application.Features.AutoColumnDimension.ViewModels ;
@@ -15,7 +15,7 @@ using Sonny.Application.Features.ColumnFromCad.ViewModels ;
 using Sonny.Application.Features.ColumnFromCad.Views ;
 using Sonny.Application.Features.Settings.ViewModels ;
 using Sonny.Application.Features.Settings.Views ;
-using Sonny.Application.UI.Views ;
+using Sonny.Application.Features.Views ;
 
 namespace Sonny.Application.Features ;
 

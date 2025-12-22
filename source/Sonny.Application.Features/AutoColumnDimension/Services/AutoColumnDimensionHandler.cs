@@ -1,6 +1,6 @@
 using Serilog ;
-using Sonny.Application.Core.Interfaces ;
-using Sonny.Application.Core.Managers ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Managers ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Models ;
 using Sonny.ResourceManager ;

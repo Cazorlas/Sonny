@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel ;
-using Sonny.Application.Core.Bases ;
-using Sonny.Application.Core.Interfaces ;
+using Sonny.Application.Domain.Bases ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.Application.Features.Settings.Models ;
 using Sonny.ResourceManager ;
 

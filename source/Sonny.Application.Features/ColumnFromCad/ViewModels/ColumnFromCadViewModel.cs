@@ -1,12 +1,12 @@
 using System.Collections.ObjectModel ;
 using System.Windows.Threading ;
 using Revit.Async ;
-using Sonny.Application.Core.Bases ;
-using Sonny.Application.Core.Interfaces ;
+using Sonny.Application.Domain.Bases ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.Application.Features.ColumnFromCad.Contexts ;
 using Sonny.Application.Features.ColumnFromCad.Interfaces ;
 using Sonny.Application.Features.ColumnFromCad.Models ;
-using Sonny.Application.UI.Views ;
+using Sonny.Application.Features.Views ;
 using Sonny.RevitExtensions.Extensions ;
 using Sonny.ResourceManager ;
 

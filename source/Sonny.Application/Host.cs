@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
-using Sonny.Application.Core ;
+using Sonny.Application.Domain ;
 using Sonny.Application.Features ;
 
 namespace Sonny.Application ;

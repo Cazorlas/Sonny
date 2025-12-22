@@ -1,7 +1,7 @@
 using System ;
 using System.IO ;
 using NUnit.Framework ;
-using Sonny.Application.Core.Services ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Tests.Utils ;
 using Sonny.ResourceManager ;
 
