@@ -1,3 +1,12 @@
+# 1.1.0
+
+## Features
+
+- ✨ **ColumnFromCad** - Create columns from CAD link files (rectangular and circular columns)
+- 🎯 **CAD Link Integration** - Extract column geometry from linked CAD files
+- 🔄 **Multiple Column Types** - Support for both rectangular and circular column families
+- 💾 **Settings Persistence** - Save and restore ColumnFromCad settings
+
 # 1.0.0
 
 ## Features
