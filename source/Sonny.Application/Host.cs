@@ -18,15 +18,12 @@ public static class Host
     /// </summary>
     public static void Start()
     {
-        if (s_serviceProvider != null)
-        {
+        if (s_serviceProvider != null) {
             return ; // Already initialized
         }
 
-        lock (s_lock)
-        {
-            if (s_serviceProvider != null)
-            {
+        lock (s_lock) {
+            if (s_serviceProvider != null) {
                 return ; // Double-check locking
             }
 
@@ -45,8 +42,7 @@ public static class Host
     /// </summary>
     private static void EnsureInitialized()
     {
-        if (s_serviceProvider == null)
-        {
+        if (s_serviceProvider == null) {
             Start() ;
         }
     }

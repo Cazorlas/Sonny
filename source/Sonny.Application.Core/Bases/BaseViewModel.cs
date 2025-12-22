@@ -130,13 +130,11 @@ public abstract class BaseViewModel : ObservableObject
     protected void LogError(string message,
         Exception? ex = null)
     {
-        if (ex != null)
-        {
+        if (ex != null) {
             Logger.Error(ex,
                 message) ;
         }
-        else
-        {
+        else {
             Logger.Error(message) ;
         }
     }

@@ -18,4 +18,3 @@ public interface IUIDocumentProvider
     /// <param name="uidoc">The UIDocument to set</param>
     void SetUIDocument(UIDocument uidoc) ;
 }
-

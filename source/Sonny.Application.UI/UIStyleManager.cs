@@ -17,14 +17,12 @@ public static class UIStyleManager
     public static bool LoadTheme()
     {
         var app = GetOrCreateApplication() ;
-        if (app == null)
-        {
+        if (app == null) {
             return false ;
         }
 
-        try
-        {
-            var themeUri = new System.Uri("/Sonny.Application.UI;component/Themes.xaml",
+        try {
+            var themeUri = new Uri("/Sonny.Application.UI;component/Themes.xaml",
                 UriKind.RelativeOrAbsolute) ;
             var themeDictionary = new System.Windows.ResourceDictionary { Source = themeUri } ;
 
@@ -36,8 +34,7 @@ public static class UIStyleManager
 
             return true ;
         }
-        catch
-        {
+        catch {
             return false ;
         }
     }
@@ -48,20 +45,17 @@ public static class UIStyleManager
     /// <param name="app">The WPF Application instance</param>
     private static void RemoveTheme(System.Windows.Application app)
     {
-        var themeUri = new System.Uri("/Sonny.Application.UI;component/Themes.xaml",
+        var themeUri = new Uri("/Sonny.Application.UI;component/Themes.xaml",
             UriKind.RelativeOrAbsolute) ;
         var dictionariesToRemove = new List<System.Windows.ResourceDictionary>() ;
 
-        foreach (var dictionary in app.Resources.MergedDictionaries)
-        {
-            if (dictionary.Source == themeUri)
-            {
+        foreach (var dictionary in app.Resources.MergedDictionaries) {
+            if (dictionary.Source == themeUri) {
                 dictionariesToRemove.Add(dictionary) ;
             }
         }
 
-        foreach (var dictionary in dictionariesToRemove)
-        {
+        foreach (var dictionary in dictionariesToRemove) {
             app.Resources.MergedDictionaries.Remove(dictionary) ;
         }
     }
@@ -74,20 +68,17 @@ public static class UIStyleManager
     {
         // In Revit, System.Windows.Application.Current is usually initialized by Revit itself
         // If it exists, use it (this is the Revit's WPF Application)
-        if (System.Windows.Application.Current != null)
-        {
+        if (System.Windows.Application.Current != null) {
             return System.Windows.Application.Current ;
         }
 
         // If Application.Current is null, create a new one for standalone scenarios
         // This should rarely happen in Revit, but provides fallback for testing
-        try
-        {
+        try {
             var app = new System.Windows.Application { ShutdownMode = System.Windows.ShutdownMode.OnExplicitShutdown } ;
             return app ;
         }
-        catch
-        {
+        catch {
             // Application already exists in another thread or cannot be created
             return null ;
         }

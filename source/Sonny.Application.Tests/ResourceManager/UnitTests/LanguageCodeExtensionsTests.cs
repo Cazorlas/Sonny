@@ -171,8 +171,7 @@ public class LanguageCodeExtensionsTests
         // Act & Assert - Verify all language codes can create valid cultures
         var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
-        foreach (var code in allCodes)
-        {
+        foreach (var code in allCodes) {
             var culture = code.ToCultureInfo() ;
             Assert.IsNotNull(culture,
                 $"Culture should not be null for {code}") ;
@@ -181,4 +180,3 @@ public class LanguageCodeExtensionsTests
         }
     }
 }
-

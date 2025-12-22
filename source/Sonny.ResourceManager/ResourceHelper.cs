@@ -20,8 +20,7 @@ public static class ResourceHelper
     /// <returns>Localized string or key if not found</returns>
     public static string GetString(string key)
     {
-        if (Application.Current?.Resources.Contains(key) == true)
-        {
+        if (Application.Current?.Resources.Contains(key) == true) {
             return Application.Current
                        .Resources[key]
                        ?.ToString()

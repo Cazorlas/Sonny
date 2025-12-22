@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- Window Title -->
-    <system:String x:Key="WindowTitle">Tự động Column Dimension</system:String>
+    <system:String x:Key="AutoColumnDimensionWindowTitle">Tự động Column Dimension</system:String>
 
     <!-- Labels -->
     <system:String x:Key="LabelDimensionType">Loại Dimension:</system:String>

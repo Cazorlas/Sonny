@@ -34,8 +34,7 @@ public static class LanguageCodeExtensions
     /// <returns>LanguageCode enum value, defaults to En if not recognized</returns>
     public static LanguageCode ToLanguageCode(this string codeString)
     {
-        if (string.IsNullOrWhiteSpace(codeString))
-        {
+        if (string.IsNullOrWhiteSpace(codeString)) {
             return LanguageCode.En ;
         }
 
@@ -62,12 +61,10 @@ public static class LanguageCodeExtensions
     /// <returns>CultureInfo for the language code</returns>
     public static CultureInfo ToCultureInfo(this LanguageCode languageCode)
     {
-        try
-        {
+        try {
             return new CultureInfo(languageCode.ToCodeString()) ;
         }
-        catch
-        {
+        catch {
             return CultureInfo.GetCultureInfo("en") ;
         }
     }

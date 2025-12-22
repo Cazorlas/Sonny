@@ -11,25 +11,26 @@ public class ViewModelSettingsService<TSettings> : IViewModelSettingsService<TSe
 {
     private readonly string _settingsFilePath ;
 
-    public ViewModelSettingsService(string settingsFileName)
+    public ViewModelSettingsService()
     {
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) ;
         var sonnyFolder = Path.Combine(appDataPath,
             "Sonny") ;
         Directory.CreateDirectory(sonnyFolder) ;
+
+        // Automatically generate filename from TSettings type name
+        var settingsFileName = typeof( TSettings ).Name + ".json" ;
         _settingsFilePath = Path.Combine(sonnyFolder,
             settingsFileName) ;
     }
 
     public TSettings? LoadSettings()
     {
-        if (! File.Exists(_settingsFilePath))
-        {
+        if (! File.Exists(_settingsFilePath)) {
             return null ;
         }
 
-        try
-        {
+        try {
             var json = File.ReadAllText(_settingsFilePath) ;
 #if NETCOREAPP
             return JsonSerializer.Deserialize<TSettings>(json) ?? new TSettings() ;
@@ -37,8 +38,7 @@ public class ViewModelSettingsService<TSettings> : IViewModelSettingsService<TSe
             return JsonConvert.DeserializeObject<TSettings>(json) ?? new TSettings() ;
 #endif
         }
-        catch
-        {
+        catch {
             // If deserialization fails, return new instance
             return null ;
         }
@@ -46,19 +46,18 @@ public class ViewModelSettingsService<TSettings> : IViewModelSettingsService<TSe
 
     public void SaveSettings(TSettings settings)
     {
-        try
-        {
+        try {
 #if NETCOREAPP
             var json = JsonSerializer.Serialize(settings,
                 new JsonSerializerOptions { WriteIndented = true }) ;
 #else
-            var json = JsonConvert.SerializeObject(settings, Formatting.Indented) ;
+            var json = JsonConvert.SerializeObject(settings,
+                Formatting.Indented) ;
 #endif
             File.WriteAllText(_settingsFilePath,
                 json) ;
         }
-        catch
-        {
+        catch {
             // Log error but don't throw - settings are not critical
         }
     }

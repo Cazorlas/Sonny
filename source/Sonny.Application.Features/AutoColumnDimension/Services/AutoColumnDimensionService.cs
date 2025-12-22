@@ -44,10 +44,8 @@ public class AutoColumnDimensionService : IAutoColumnDimensionService
     {
         var allDimensions = new List<ElementWrapperBase>() ;
 
-        foreach (var columnWrapper in columnWrappers)
-        {
-            try
-            {
+        foreach (var columnWrapper in columnWrappers) {
+            try {
                 var dimensions = CreateDimensions(columnWrapper,
                     viewWrapper,
                     snapDistance,
@@ -55,8 +53,7 @@ public class AutoColumnDimensionService : IAutoColumnDimensionService
 
                 allDimensions.AddRange(dimensions) ;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 // Log error but continue processing other columns
                 _logger.Warning(ex,
                     "Failed to create dimensions for column") ;
@@ -82,8 +79,7 @@ public class AutoColumnDimensionService : IAutoColumnDimensionService
         // Use ColumnDimensionContext to calculate dimension parameters
         if (ColumnDimensionContext.Create(columnWrapper,
                 viewWrapper,
-                _gridFinder) is not { } context)
-        {
+                _gridFinder) is not { } context) {
             return [] ;
         }
 

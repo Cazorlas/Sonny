@@ -15,11 +15,13 @@ Sonny is an **open source** project built with the following goals:
 - 🤝 **Community**: Together we develop, share knowledge and experiences
 - 🆓 **Free**: Create free tools for everyone to use
 
-This project focuses on developing useful tools for the Revit community, with open source code so that everyone can learn, contribute, and use freely.
+This project focuses on developing useful tools for the Revit community, with open source code so that everyone can
+learn, contribute, and use freely.
 
 ## Table of content
 
 <!-- TOC -->
+
 * [What You Can Learn](#what-you-can-learn)
 * [Videos](#videos)
 * [Prerequisites](#prerequisites)
@@ -31,6 +33,7 @@ This project focuses on developing useful tools for the Revit community, with op
 * [License](#license)
 * [Security](#security)
 * [Acknowledgments](#acknowledgments)
+
 <!-- TOC -->
 
 ## What You Can Learn
@@ -80,7 +83,8 @@ After installation, clone this repository to your local machine and navigate to 
 
 ## Cloning the Repository
 
-This project uses **Git Submodule** to manage dependencies. The following libraries are included as submodules from their own repositories:
+This project uses **Git Submodule** to manage dependencies. The following libraries are included as submodules from
+their own repositories:
 
 - **Revit.Async** - Async utilities for Revit API
 - **Sonny.EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
@@ -117,25 +121,29 @@ git push origin master
 This project includes the following submodules:
 
 #### Revit.Async
+
 - **Submodule location**: `source/Revit.Async`
 - **Submodule repository**: [Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)
 - The submodule tracks a specific commit from the Revit.Async repository
 - Changes to Revit.Async should be committed in its own repository, not in Sonny
 
 #### Sonny.EasyRibbon
+
 - **Submodule location**: `source/Sonny.EasyRibbon`
 - **Submodule repository**: [Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)
 - The submodule tracks a specific commit from the Sonny.EasyRibbon repository
 - Changes to Sonny.EasyRibbon should be committed in its own repository, not in Sonny
 
 #### Sonny.RevitExtensions
+
 - **Submodule location**: `source/Sonny.RevitExtensions`
 - **Submodule repository**: [Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)
 - The submodule tracks a specific commit from the Sonny.RevitExtensions repository
 - Changes to Sonny.RevitExtensions should be committed in its own repository, not in Sonny
 
 > [!NOTE]
-> If you see empty submodule folders after cloning, you need to initialize submodules using `git submodule update --init --recursive`
+> If you see empty submodule folders after cloning, you need to initialize submodules using
+`git submodule update --init --recursive`
 
 ## Solution Structure
 
@@ -160,11 +168,14 @@ For detailed documentation, see [RevitTemplates Wiki](https://github.com/Nice3po
 
 This project uses the following libraries and tools:
 
-- **[RevitTemplates](https://github.com/Nice3point/RevitTemplates)** - Project templates and build system for Revit plugins
+- **[RevitTemplates](https://github.com/Nice3point/RevitTemplates)** - Project templates and build system for Revit
+  plugins
 - **[Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)** - Async utilities for Revit API
 - **[RevitTest](https://github.com/ricaun-io/RevitTest)** - Testing framework for Revit applications
-- **[Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)** - Attribute-based framework for creating Revit Ribbon UI
-- **[Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)** - Revit API extension methods and utilities library
+- **[Sonny.EasyRibbon](https://github.com/PhanCongVuDuc/Sonny.EasyRibbon)** - Attribute-based framework for creating
+  Revit Ribbon UI
+- **[Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)** - Revit API extension methods and
+  utilities library
 
 ## Contributing
 
@@ -183,12 +194,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Security
 
-If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for information on how to report it.
+If you discover a security vulnerability, please see our [Security Policy](SECURITY.md) for information on how to report
+it.
 
 ## Acknowledgments
 
 We would like to express our gratitude to the creators of the following open-source libraries:
 
-- **[RevitTemplates](https://github.com/Nice3point/RevitTemplates)** by [Nice3point](https://github.com/Nice3point) - Project templates and build system for Revit plugins
-- **[Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)** by [KennanChan](https://github.com/KennanChan) - Async utilities for Revit API
-- **[RevitTest](https://github.com/ricaun-io/RevitTest)** by [ricaun-io](https://github.com/ricaun-io) - Testing framework for Revit applications
+- **[RevitTemplates](https://github.com/Nice3point/RevitTemplates)** by [Nice3point](https://github.com/Nice3point) -
+  Project templates and build system for Revit plugins
+- **[Revit.Async](https://github.com/PhanCongVuDuc/Revit.Async)** by [KennanChan](https://github.com/KennanChan) - Async
+  utilities for Revit API
+- **[RevitTest](https://github.com/ricaun-io/RevitTest)** by [ricaun-io](https://github.com/ricaun-io) - Testing
+  framework for Revit applications

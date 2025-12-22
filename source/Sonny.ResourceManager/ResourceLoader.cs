@@ -31,13 +31,11 @@ internal class ResourceLoader
     public bool LoadResource(ResourceConfig config,
         LanguageCode languageCode)
     {
-        if (Application.Current == null)
-        {
+        if (Application.Current == null) {
             return false ;
         }
 
-        try
-        {
+        try {
             // Remove old resource if exists
             UnloadResource(config.ResourceId) ;
 
@@ -56,11 +54,9 @@ internal class ResourceLoader
 
             return true ;
         }
-        catch
-        {
+        catch {
             // Try fallback language
-            if (languageCode != config.DefaultLanguageCode)
-            {
+            if (languageCode != config.DefaultLanguageCode) {
                 return LoadResource(config,
                     config.DefaultLanguageCode) ;
             }
@@ -76,15 +72,13 @@ internal class ResourceLoader
     /// <returns>True if unloaded successfully</returns>
     public bool UnloadResource(string resourceId)
     {
-        if (Application.Current == null)
-        {
+        if (Application.Current == null) {
             return false ;
         }
 
         // Try to find by tracked resource first
         if (_loadedResources.TryGetValue(resourceId,
-                out var trackedDict))
-        {
+                out var trackedDict)) {
             Application.Current.Resources.MergedDictionaries.Remove(trackedDict) ;
             _loadedResources.Remove(resourceId) ;
             return true ;
@@ -96,8 +90,7 @@ internal class ResourceLoader
                 StringComparison.OrdinalIgnoreCase)
             >= 0) ;
 
-        if (oldDict != null)
-        {
+        if (oldDict != null) {
             Application.Current.Resources.MergedDictionaries.Remove(oldDict) ;
             return true ;
         }

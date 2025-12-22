@@ -22,8 +22,7 @@ public abstract class BaseExternalCommand : IExternalCommand
         ref string message,
         ElementSet elements)
     {
-        try
-        {
+        try {
             // Initialize Host if not already initialized
             Host.Start() ;
 
@@ -39,31 +38,26 @@ public abstract class BaseExternalCommand : IExternalCommand
                 ref message,
                 elements) ;
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // Log error
-            try
-            {
+            try {
                 var logger = Host.GetService<ILogger>() ;
                 logger.Error(ex,
                     "Error executing command: {CommandName}",
                     GetType()
                         .Name) ;
             }
-            catch
-            {
+            catch {
                 // Ignore logging errors
             }
 
             // Show error message to user
-            try
-            {
+            try {
                 var messageService = Host.GetService<IMessageService>() ;
                 messageService?.ShowError("Command Error",
                     $"An error occurred while executing the command.\n\n{ex.Message}") ;
             }
-            catch
-            {
+            catch {
                 // If message service fails, set message parameter
                 message = $"Error: {ex.Message}" ;
             }

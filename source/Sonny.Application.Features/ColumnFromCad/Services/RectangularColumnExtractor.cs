@@ -20,10 +20,8 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
                 cadInstance.Document))
             .ToList() ;
 
-        foreach (var polyLine in polyLines)
-        {
-            if (polyLine.NumberOfCoordinates == 5)
-            {
+        foreach (var polyLine in polyLines) {
+            if (polyLine.NumberOfCoordinates == 5) {
                 var coordinates = polyLine.GetCoordinates() ;
                 var line1 = Line.CreateBound(coordinates[0],
                     coordinates[1]) ;
@@ -50,11 +48,9 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
             .Where(x => x.IsOnLayer(selectedLayer,
                 cadInstance.Document)) ;
 
-        foreach (var planarFace in planarFaces)
-        {
+        foreach (var planarFace in planarFaces) {
             var curveLoops = planarFace.GetEdgesAsCurveLoops() ;
-            if (curveLoops.Count == 0)
-            {
+            if (curveLoops.Count == 0) {
                 continue ;
             }
 
@@ -62,8 +58,7 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
             var curves = curveLoop.GetCurves()
                 .ToList() ;
 
-            if (curves.Count == 4)
-            {
+            if (curves.Count == 4) {
                 columns.Add(new RectangularColumnModel(curves)) ;
             }
         }

@@ -9,13 +9,11 @@ public class TransactionGroupManager(Document document, string name) : IDisposab
 
     public void Dispose()
     {
-        if (_disposed)
-        {
+        if (_disposed) {
             return ;
         }
 
-        if (TransactionGroup.HasStarted())
-        {
+        if (TransactionGroup.HasStarted()) {
             TransactionGroup.RollBack() ;
         }
 

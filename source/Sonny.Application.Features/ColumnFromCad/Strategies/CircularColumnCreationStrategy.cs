@@ -12,12 +12,10 @@ public class CircularColumnCreationStrategy(
     ColumnCreationContext columnCreationContext) : ColumnCreationStrategy(circularColumnModel,
     columnCreationContext)
 {
-    protected override FamilySymbol? GetOrCreateFamilySymbol()
-    {
-        return GetOrCreateCircularFamilySymbol(ColumnCreationContext.SelectedCircularColumnFamily,
+    protected override FamilySymbol? GetOrCreateFamilySymbol() =>
+        GetOrCreateCircularFamilySymbol(ColumnCreationContext.SelectedCircularColumnFamily,
             circularColumnModel.Diameter,
             ColumnCreationContext.DiameterParameter) ;
-    }
 
     /// <summary>
     ///     Gets or creates a family symbol for circular column with specified diameter
@@ -30,33 +28,28 @@ public class CircularColumnCreationStrategy(
             .ToList() ;
 
         // Try to find existing symbol with matching diameter
-        foreach (var familySymbol in allFamilySymbols)
-        {
+        foreach (var familySymbol in allFamilySymbols) {
             var diameterParam = familySymbol.LookupParameter(diameterParameter) ;
-            if (diameterParam == null)
-            {
+            if (diameterParam == null) {
                 continue ;
             }
 
             var diameterValue = GetDoubleValue(diameterParam) ;
 
-            if (Math.Abs(diameterValue - diameter) < Tolerance)
-            {
+            if (Math.Abs(diameterValue - diameter) < Tolerance) {
                 return familySymbol ;
             }
         }
 
         // Create new symbol if not found
-        if (allFamilySymbols.Count == 0)
-        {
+        if (allFamilySymbols.Count == 0) {
             return null ;
         }
 
         var diameterMm = Math.Round(diameter.ToMillimeters(),
             0) ;
 
-        if (Math.Abs(diameterMm) < 1.0.ToMillimeters())
-        {
+        if (Math.Abs(diameterMm) < 1.0.ToMillimeters()) {
             return null ;
         }
 
@@ -64,8 +57,7 @@ public class CircularColumnCreationStrategy(
 
         // Check if symbol with this name already exists
         var existingSymbol = allFamilySymbols.FirstOrDefault(f => f.Name.Equals(name)) ;
-        if (existingSymbol != null)
-        {
+        if (existingSymbol != null) {
             return existingSymbol ;
         }
 

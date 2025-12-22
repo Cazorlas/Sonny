@@ -6,9 +6,11 @@ Only the latest version receives security patches.
 
 ## Reporting a Vulnerability
 
-Please report security vulnerabilities by creating a [GitHub Issue](https://github.com/PhanCongVuDuc/Sonny/issues/new) with the `security` label. **Do NOT create a public issue** - use private communication instead.
+Please report security vulnerabilities by creating a [GitHub Issue](https://github.com/PhanCongVuDuc/Sonny/issues/new)
+with the `security` label. **Do NOT create a public issue** - use private communication instead.
 
 Include:
+
 - Type of issue
 - Affected source code location
 - Steps to reproduce

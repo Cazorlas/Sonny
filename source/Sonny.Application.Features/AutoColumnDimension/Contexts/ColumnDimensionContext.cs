@@ -29,8 +29,7 @@ public class ColumnDimensionContext(
         ViewWrapperBase viewWrapper,
         IGridFinder gridFinder)
     {
-        if (columnWrapper.GetBoundingBoxXyz(viewWrapper) is not { } boundingBox)
-        {
+        if (columnWrapper.GetBoundingBoxXyz(viewWrapper) is not { } boundingBox) {
             return null ;
         }
 
@@ -46,8 +45,7 @@ public class ColumnDimensionContext(
         GridWrapperBase? firstGridWrapper = null ;
         GridWrapperBase? secondGridWrapper = null ;
 
-        if (viewWrapper.IsViewPlan)
-        {
+        if (viewWrapper.IsViewPlan) {
             firstDirection = columnWrapper.FamilyInstance.HandOrientation ;
             secondDirection = columnWrapper.FamilyInstance.FacingOrientation ;
 
@@ -61,21 +59,18 @@ public class ColumnDimensionContext(
                 secondDirection,
                 viewWrapper) ;
         }
-        else
-        {
+        else {
             firstDirection = viewWrapper.View.UpDirection ;
             secondDirection = viewWrapper.View.RightDirection ;
 
-            if (! firstDirection.IsParallel(XYZ.BasisZ))
-            {
+            if (! firstDirection.IsParallel(XYZ.BasisZ)) {
                 firstGridWrapper = gridFinder.GetNearestGrid(viewWrapper.View.ViewDirection,
                     midPoint,
                     firstDirection,
                     viewWrapper) ;
             }
 
-            if (! secondDirection.IsParallel(XYZ.BasisZ))
-            {
+            if (! secondDirection.IsParallel(XYZ.BasisZ)) {
                 secondGridWrapper = gridFinder.GetNearestGrid(viewWrapper.View.ViewDirection,
                     midPoint,
                     secondDirection,

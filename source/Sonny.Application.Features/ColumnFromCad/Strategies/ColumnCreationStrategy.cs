@@ -16,14 +16,12 @@ public abstract class ColumnCreationStrategy(ColumnModel columnModel, ColumnCrea
     public static ColumnCreationStrategy? CreateInstance(ColumnModel columnModel,
         ColumnCreationContext columnCreationContext)
     {
-        if (columnModel is CircularColumnModel circularColumnModel)
-        {
+        if (columnModel is CircularColumnModel circularColumnModel) {
             return new CircularColumnCreationStrategy(circularColumnModel,
                 columnCreationContext) ;
         }
 
-        if (columnModel is RectangularColumnModel rectangularColumnModel)
-        {
+        if (columnModel is RectangularColumnModel rectangularColumnModel) {
             return new RectangularColumnCreationStrategy(rectangularColumnModel,
                 columnCreationContext) ;
         }
@@ -33,13 +31,11 @@ public abstract class ColumnCreationStrategy(ColumnModel columnModel, ColumnCrea
 
     public Element? Execute()
     {
-        if (GetOrCreateFamilySymbol() is not { } familySymbol)
-        {
+        if (GetOrCreateFamilySymbol() is not { } familySymbol) {
             return null ;
         }
 
-        if (! familySymbol.IsActive)
-        {
+        if (! familySymbol.IsActive) {
             familySymbol.Activate() ;
         }
 

@@ -19,10 +19,7 @@ public class DimensionCreator : IDimensionCreator
     ///     Initializes a new instance of DimensionCreator
     /// </summary>
     /// <param name="logger">The logger</param>
-    public DimensionCreator(ILogger logger)
-    {
-        _logger = logger ;
-    }
+    public DimensionCreator(ILogger logger) => _logger = logger ;
 
     public List<ElementWrapperBase> DimensionByDirection(List<PlanarFace> planarFaces,
         XYZ direction,
@@ -41,8 +38,7 @@ public class DimensionCreator : IDimensionCreator
         // Remove coplanar faces to avoid duplicates
         planarFacesByDirection = planarFacesByDirection.RemoveCoplanarFaces()
             .ToList() ;
-        if (planarFacesByDirection.Count < 2)
-        {
+        if (planarFacesByDirection.Count < 2) {
             return dimensionWrappers ;
         }
 
@@ -61,14 +57,12 @@ public class DimensionCreator : IDimensionCreator
             && planarFacesByDirection.TrueForAll(x => ! PlanarFaceExtensions.AreFacesCoplanar(x.FaceNormal,
                 x.Origin,
                 direction,
-                gridWrapper.Line!.Origin)))
-        {
+                gridWrapper.Line!.Origin))) {
             var referenceArray = new ReferenceArray() ;
             planarFacesByDirection.ForEach(x => referenceArray.Append(x.Reference)) ;
             referenceArray.Append(new Reference(gridWrapper.Element)) ;
 
-            try
-            {
+            try {
                 var newDimension = CreateElement.CreateDimension(viewWrapper.View,
                     line,
                     referenceArray,
@@ -80,8 +74,7 @@ public class DimensionCreator : IDimensionCreator
                 line = Line.CreateUnbound(point + 2 * offset,
                     direction) ;
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 // Log error but continue to create dimension without grid reference
                 _logger.Warning(ex,
                     "Failed to create dimension with grid reference") ;
@@ -91,8 +84,7 @@ public class DimensionCreator : IDimensionCreator
         var referenceArray1 = new ReferenceArray() ;
         planarFacesByDirection.ForEach(x => referenceArray1.Append(x.Reference)) ;
 
-        try
-        {
+        try {
             var newDimension1 = CreateElement.CreateDimension(viewWrapper.View,
                 line,
                 referenceArray1,
@@ -101,8 +93,7 @@ public class DimensionCreator : IDimensionCreator
 
             dimensionWrappers.Add(new DimensionWrapperBase(newDimension1)) ;
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             // Log error but return partial results
             _logger.Warning(ex,
                 "Failed to create dimension") ;

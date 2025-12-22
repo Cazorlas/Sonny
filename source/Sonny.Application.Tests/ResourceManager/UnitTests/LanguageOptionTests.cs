@@ -117,8 +117,7 @@ public class LanguageOptionTests
         // Act & Assert - Verify constructor works with all language codes
         var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
-        foreach (var code in allCodes)
-        {
+        foreach (var code in allCodes) {
             var displayName = $"Language {code}" ;
             var option = new LanguageOption(displayName,
                 code) ;
@@ -130,4 +129,3 @@ public class LanguageOptionTests
         }
     }
 }
-

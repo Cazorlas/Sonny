@@ -9,6 +9,15 @@ namespace Sonny.Application.Features.AutoColumnDimension.ViewModels ;
 
 public partial class AutoColumnDimensionViewModel : BaseViewModel
 {
+    #region Services
+
+    /// <summary>
+    ///     Handler for auto column dimension feature
+    /// </summary>
+    private IAutoColumnDimensionHandler Handler { get ; }
+
+    #endregion
+
     #region Constructor
 
     public AutoColumnDimensionViewModel(ICommonServices commonServices,
@@ -22,129 +31,7 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
 
     #endregion
 
-    #region Feature-Specific Services
-
-    /// <summary>
-    ///     Handler for auto column dimension feature
-    /// </summary>
-    private IAutoColumnDimensionHandler Handler { get ; }
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    private async Task Run()
-    {
-        try
-        {
-            // Convert display unit to internal unit (feet) before passing to handler
-            await RevitTask.RunAsync(() => Handler.Execute(RevitDocument,
-                SnapDistanceInternal * RevitDocument.ActiveView.Scale,
-                SelectedDimensionType)) ;
-
-            // Close window after successful execution
-            CloseWindow() ;
-        }
-        catch (Exception ex)
-        {
-            LogError("Error occurred during dimension creation",
-                ex) ;
-            ShowError(ResourceHelper.GetString("MessageErrorOccurred", ex.Message)) ;
-        }
-    }
-
-    #endregion
-
-    #region Event Handlers
-
-    partial void OnSelectedDimensionTypeChanged(DimensionType? value) => UpdateSnapDistanceFromDimensionType() ;
-
-    /// <summary>
-    ///     Handle display unit changed event to convert snap distance value
-    /// </summary>
-    /// <param name="oldUnit">Previous display unit</param>
-    /// <param name="newUnit">New display unit</param>
-    protected override void OnDisplayUnitChanged(ForgeTypeId oldUnit, ForgeTypeId newUnit)
-    {
-        base.OnDisplayUnitChanged(oldUnit, newUnit) ;
-
-        // Convert snap distance from old unit to new unit
-        if (SnapDistanceDisplay != 0)
-        {
-            try
-            {
-                // Convert current value to internal unit (feet), then to new display unit
-                var valueInFeet = UnitConverter.ToInternalUnit(SnapDistanceDisplay, oldUnit) ;
-                SnapDistanceDisplay = UnitConverter.FromInternalUnit(valueInFeet, newUnit) ;
-            }
-            catch (Exception ex)
-            {
-                LogWarning($"Failed to convert snap distance when unit changed: {ex.Message}") ;
-            }
-        }
-    }
-
-    #endregion
-
-    #region Private Methods - Initialization
-
-    private void InitializeData()
-    {
-        try
-        {
-            // Get dimension types using RevitDocument service (already in Revit API context)
-            var dimensionTypes = RevitDocument.GetDimensionTypes() ;
-
-            DimensionTypes = new ObservableCollection<DimensionType>(dimensionTypes) ;
-            SelectedDimensionType = DimensionTypes.LastOrDefault() ;
-
-            // Update snap distance
-            UpdateSnapDistanceFromDimensionType() ;
-        }
-        catch (Exception ex)
-        {
-            LogError("Failed to initialize dimension types",
-                ex) ;
-            ShowError(ResourceHelper.GetString("MessageFailedToInitialize", ex.Message)) ;
-        }
-    }
-
-    #endregion
-
-    #region Private Methods - UI Updates
-
-    private void UpdateSnapDistanceFromDimensionType()
-    {
-        if (SelectedDimensionType is not { } dimensionType)
-        {
-            return ;
-        }
-
-        try
-        {
-            var parameter = dimensionType.FindParameter(BuiltInParameter.DIM_STYLE_DIM_LINE_SNAP_DIST) ;
-            if (parameter is not { StorageType: StorageType.Double })
-            {
-                return ;
-            }
-
-            // Get value in feet from Revit parameter
-            var snapDistanceFeet = parameter.AsDouble() ;
-
-            // Convert from internal unit (feet) to display unit (mm, cm, etc.)
-            SnapDistanceDisplay = UnitConverter.FromInternalUnit(snapDistanceFeet,
-                DisplayUnit) ;
-        }
-        catch (Exception ex)
-        {
-            LogWarning($"Failed to update snap distance: {ex.Message}") ;
-        }
-    }
-
-    #endregion
-
-    #region MVVM Bindings (Properties for UI Binding)
+    #region Properties for UI Binding
 
     [ObservableProperty]
     private DimensionType? selectedDimensionType ;
@@ -163,6 +50,114 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
     private double SnapDistanceInternal =>
         UnitConverter.ToInternalUnit(snapDistanceDisplay,
             DisplayUnit) ;
+
+    #endregion
+
+    #region Commands
+
+    [RelayCommand]
+    private async Task Run()
+    {
+        try {
+            // Convert display unit to internal unit (feet) before passing to handler
+            await RevitTask.RunAsync(() => Handler.Execute(RevitDocument,
+                SnapDistanceInternal * RevitDocument.ActiveView.Scale,
+                SelectedDimensionType)) ;
+
+            // Close window after successful execution
+            CloseWindow() ;
+        }
+        catch (Exception ex) {
+            LogError("Error occurred during dimension creation",
+                ex) ;
+            ShowError(ResourceHelper.GetString("MessageErrorOccurred",
+                ex.Message)) ;
+        }
+    }
+
+    #endregion
+
+    #region Event Handlers
+
+    partial void OnSelectedDimensionTypeChanged(DimensionType? value) => UpdateSnapDistanceFromDimensionType() ;
+
+    /// <summary>
+    ///     Handle display unit changed event to convert snap distance value
+    /// </summary>
+    /// <param name="oldUnit">Previous display unit</param>
+    /// <param name="newUnit">New display unit</param>
+    protected override void OnDisplayUnitChanged(ForgeTypeId oldUnit,
+        ForgeTypeId newUnit)
+    {
+        base.OnDisplayUnitChanged(oldUnit,
+            newUnit) ;
+
+        // Convert snap distance from old unit to new unit
+        if (SnapDistanceDisplay != 0) {
+            try {
+                // Convert current value to internal unit (feet), then to new display unit
+                var valueInFeet = UnitConverter.ToInternalUnit(SnapDistanceDisplay,
+                    oldUnit) ;
+                SnapDistanceDisplay = UnitConverter.FromInternalUnit(valueInFeet,
+                    newUnit) ;
+            }
+            catch (Exception ex) {
+                LogWarning($"Failed to convert snap distance when unit changed: {ex.Message}") ;
+            }
+        }
+    }
+
+    #endregion
+
+    #region Private Methods - Initialization
+
+    private void InitializeData()
+    {
+        try {
+            // Get dimension types using RevitDocument service (already in Revit API context)
+            var dimensionTypes = RevitDocument.GetDimensionTypes() ;
+
+            DimensionTypes = new ObservableCollection<DimensionType>(dimensionTypes) ;
+            SelectedDimensionType = DimensionTypes.LastOrDefault() ;
+
+            // Update snap distance
+            UpdateSnapDistanceFromDimensionType() ;
+        }
+        catch (Exception ex) {
+            LogError("Failed to initialize dimension types",
+                ex) ;
+            ShowError(ResourceHelper.GetString("MessageFailedToInitialize",
+                ex.Message)) ;
+        }
+    }
+
+    #endregion
+
+    #region Private Methods - UI Updates
+
+    private void UpdateSnapDistanceFromDimensionType()
+    {
+        if (SelectedDimensionType is not { } dimensionType) {
+            return ;
+        }
+
+        try {
+            var parameter = dimensionType.FindParameter(BuiltInParameter.DIM_STYLE_DIM_LINE_SNAP_DIST) ;
+            if (parameter is not { StorageType: StorageType.Double }) {
+                return ;
+            }
+
+            // Get value in feet from Revit parameter
+            var snapDistanceFeet = parameter.AsDouble() ;
+
+            // Convert from internal unit (feet) to display unit (mm, cm, etc.)
+            SnapDistanceDisplay = UnitConverter.FromInternalUnit(snapDistanceFeet,
+                DisplayUnit) ;
+        }
+        catch (Exception ex) {
+            LogWarning($"Failed to update snap distance: {ex.Message}") ;
+        }
+    }
 
     #endregion
 }

@@ -69,8 +69,7 @@ public abstract class SonnyRevitTestBase
         var view = doc.GetAllElements<ViewPlan>()
             .FirstOrDefault(v => v.Name == viewName) ;
 
-        if (view == null)
-        {
+        if (view == null) {
             return null ;
         }
 
@@ -113,8 +112,7 @@ public abstract class SonnyRevitTestBase
     protected string? GetTestRevitFilePath(string? fileName,
         string subDirectory = "Resources/RevitFiles")
     {
-        if (string.IsNullOrEmpty(fileName))
-        {
+        if (string.IsNullOrEmpty(fileName)) {
             return null ;
         }
 
@@ -123,28 +121,24 @@ public abstract class SonnyRevitTestBase
         var assembly = Assembly.GetExecutingAssembly() ;
         var assemblyLocation = assembly.Location ;
 
-        if (string.IsNullOrEmpty(assemblyLocation))
-        {
+        if (string.IsNullOrEmpty(assemblyLocation)) {
             // Fallback: try CodeBase if Location is empty (only for .NET Framework)
 #if NETFRAMEWORK
             var codeBase = assembly.CodeBase ;
-            if (! string.IsNullOrEmpty(codeBase))
-            {
+            if (! string.IsNullOrEmpty(codeBase)) {
                 var uri = new Uri(codeBase) ;
                 assemblyLocation = uri.LocalPath ;
             }
 #endif
         }
 
-        if (string.IsNullOrEmpty(assemblyLocation))
-        {
+        if (string.IsNullOrEmpty(assemblyLocation)) {
             Log("Warning: Could not determine assembly location, will create new document") ;
             return null ;
         }
 
         var assemblyDirectory = Path.GetDirectoryName(assemblyLocation) ;
-        if (string.IsNullOrEmpty(assemblyDirectory))
-        {
+        if (string.IsNullOrEmpty(assemblyDirectory)) {
             Log("Warning: Could not determine assembly directory, will create new document") ;
             return null ;
         }
@@ -160,8 +154,7 @@ public abstract class SonnyRevitTestBase
         Log($"Looking for test file at: {testFilePath}") ;
 
         // Return path if file exists, otherwise return null to create new document
-        if (File.Exists(testFilePath))
-        {
+        if (File.Exists(testFilePath)) {
             Log($"✓ Found test file: {testFilePath}") ;
             return testFilePath ;
         }

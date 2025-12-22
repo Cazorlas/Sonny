@@ -26,48 +26,7 @@ public partial class SettingsViewModel : BaseViewModel
 
     #endregion
 
-    #region Commands
-
-    /// <summary>
-    ///     Save settings command
-    /// </summary>
-    [RelayCommand]
-    private void Save()
-    {
-        try
-        {
-            if (SelectedUnitOption != null)
-            {
-                SettingsService.SetDisplayUnit(SelectedUnitOption.UnitTypeId) ;
-            }
-
-            if (SelectedLanguageOption != null)
-            {
-                SettingsService.SetLanguage(SelectedLanguageOption.LanguageCode) ;
-                // Change language in ResourceDictionaryManager
-                ResourceDictionaryManager.Instance.ChangeLanguage(SelectedLanguageOption.LanguageCode) ;
-            }
-
-            ShowInfo("Settings saved successfully") ;
-            CloseWindow() ;
-        }
-        catch (Exception ex)
-        {
-            LogError("Failed to save settings",
-                ex) ;
-            ShowError($"Failed to save settings: {ex.Message}") ;
-        }
-    }
-
-    /// <summary>
-    ///     Cancel command
-    /// </summary>
-    [RelayCommand]
-    private void Cancel() => CloseWindow() ;
-
-    #endregion
-
-    #region Properties
+    #region Properties for UI Binding
 
     /// <summary>
     ///     Available unit options
@@ -93,13 +52,49 @@ public partial class SettingsViewModel : BaseViewModel
 
     #endregion
 
+    #region Commands
+
+    /// <summary>
+    ///     Save settings command
+    /// </summary>
+    [RelayCommand]
+    private void Save()
+    {
+        try {
+            if (SelectedUnitOption != null) {
+                SettingsService.SetDisplayUnit(SelectedUnitOption.UnitTypeId) ;
+            }
+
+            if (SelectedLanguageOption != null) {
+                SettingsService.SetLanguage(SelectedLanguageOption.LanguageCode) ;
+                // Change language in ResourceDictionaryManager
+                ResourceDictionaryManager.Instance.ChangeLanguage(SelectedLanguageOption.LanguageCode) ;
+            }
+
+            ShowInfo("Settings saved successfully") ;
+            CloseWindow() ;
+        }
+        catch (Exception ex) {
+            LogError("Failed to save settings",
+                ex) ;
+            ShowError($"Failed to save settings: {ex.Message}") ;
+        }
+    }
+
+    /// <summary>
+    ///     Cancel command
+    /// </summary>
+    [RelayCommand]
+    private void Cancel() => CloseWindow() ;
+
+    #endregion
+
     #region Private Methods
 
     /// <summary>
     ///     Initialize available unit options
     /// </summary>
-    private void InitializeUnitOptions()
-    {
+    private void InitializeUnitOptions() =>
         UnitOptions = new ObservableCollection<UnitOption>
         {
             new("Millimeters (mm)",
@@ -113,13 +108,11 @@ public partial class SettingsViewModel : BaseViewModel
             new("Inches (in)",
                 UnitTypeId.Inches)
         } ;
-    }
 
     /// <summary>
     ///     Initialize available language options
     /// </summary>
-    private void InitializeLanguageOptions()
-    {
+    private void InitializeLanguageOptions() =>
         LanguageOptions =
         [
             new LanguageOption("English",
@@ -127,7 +120,6 @@ public partial class SettingsViewModel : BaseViewModel
             new LanguageOption("Vietnamese",
                 LanguageCode.Vi)
         ] ;
-    }
 
     /// <summary>
     ///     Load current settings

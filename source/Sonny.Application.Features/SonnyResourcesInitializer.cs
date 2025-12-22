@@ -17,8 +17,7 @@ public static class SonnyResourcesInitializer
     /// <param name="languageCode">Language code to load resources</param>
     public static void Initialize(LanguageCode languageCode = LanguageCode.En)
     {
-        if (s_isInitialized)
-        {
+        if (s_isInitialized) {
             return ;
         }
 

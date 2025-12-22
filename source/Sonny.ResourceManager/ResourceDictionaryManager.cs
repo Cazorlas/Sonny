@@ -45,8 +45,7 @@ public class ResourceDictionaryManager
     /// <summary>
     ///     Event raised when culture is changed
     /// </summary>
-    public event EventHandler<CultureChangedEventArgs>? CultureChanged
-    {
+    public event EventHandler<CultureChangedEventArgs>? CultureChanged {
         add => _cultureManager.CultureChanged += value ;
         remove => _cultureManager.CultureChanged -= value ;
     }
@@ -102,8 +101,7 @@ public class ResourceDictionaryManager
     /// <remarks>
     ///     When set, automatically reloads all registered resources and updates WPFLocalizeExtension
     /// </remarks>
-    public CultureInfo CurrentCulture
-    {
+    public CultureInfo CurrentCulture {
         get => _cultureManager.CurrentCulture ;
         set => _cultureManager.CurrentCulture = value ;
     }
@@ -130,15 +128,13 @@ public class ResourceDictionaryManager
     {
         var langCode = languageCode ?? CurrentLanguageCodeEnum ;
 
-        if (Application.Current == null)
-        {
+        if (Application.Current == null) {
             return ;
         }
 
         var configs = _registry.GetAllConfigs() ;
 
-        foreach (var config in configs)
-        {
+        foreach (var config in configs) {
             _loader.LoadResource(config,
                 langCode) ;
         }
@@ -191,8 +187,7 @@ public class ResourceDictionaryManager
         var langCode = languageCode ?? CurrentLanguageCodeEnum ;
 
         var config = _registry.GetConfig(resourceId) ;
-        if (config == null)
-        {
+        if (config == null) {
             return false ;
         }
 
@@ -205,8 +200,7 @@ public class ResourceDictionaryManager
     /// </summary>
     private void ReloadAllResources()
     {
-        foreach (var resourceId in _registry.GetRegisteredResourceIds())
-        {
+        foreach (var resourceId in _registry.GetRegisteredResourceIds()) {
             LoadResource(resourceId,
                 CurrentLanguageCodeEnum) ;
         }

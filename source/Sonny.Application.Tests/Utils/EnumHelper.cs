@@ -18,8 +18,7 @@ public static class EnumHelper
 #if NETCOREAPP
         return Enum.GetValues<T>() ;
 #else
-        return (T[])Enum.GetValues(typeof(T)) ;
+        return (T[])Enum.GetValues(typeof( T )) ;
 #endif
     }
 }
-

@@ -15,13 +15,11 @@ public class TransactionManager(
 
     public void Dispose()
     {
-        if (_disposed)
-        {
+        if (_disposed) {
             return ;
         }
 
-        if (Transaction.HasStarted())
-        {
+        if (Transaction.HasStarted()) {
             Transaction.RollBack() ;
         }
 
@@ -38,19 +36,16 @@ public class TransactionManager(
 
     public bool Commit()
     {
-        if (failuresPreprocessor != null)
-        {
+        if (failuresPreprocessor != null) {
             var failureOptions = Transaction.GetFailureHandlingOptions() ;
             failureOptions.SetFailuresPreprocessor(failuresPreprocessor) ;
             Transaction.Commit(failureOptions) ;
         }
-        else
-        {
+        else {
             Transaction.Commit() ;
         }
 
-        if (GetStatus() == TransactionStatus.RolledBack)
-        {
+        if (GetStatus() == TransactionStatus.RolledBack) {
             throw new TransactionCommitFailedException() ;
         }
 

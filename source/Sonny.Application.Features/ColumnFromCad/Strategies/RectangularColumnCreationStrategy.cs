@@ -15,8 +15,7 @@ public class RectangularColumnCreationStrategy(
     protected override FamilySymbol? GetOrCreateFamilySymbol()
     {
         if (Math.Abs(rectangularColumnModel.ShortSide) < Tolerance
-            || Math.Abs(rectangularColumnModel.LongSide) < Tolerance)
-        {
+            || Math.Abs(rectangularColumnModel.LongSide) < Tolerance) {
             return null ;
         }
 
@@ -33,16 +32,14 @@ public class RectangularColumnCreationStrategy(
     protected override void RotateElement(Element element)
     {
         // Rotate column if needed
-        if (rectangularColumnModel.RotationAngle >= 0)
-        {
+        if (rectangularColumnModel.RotationAngle >= 0) {
             ElementTransformUtils.RotateElement(element.Document,
                 element.Id,
                 Line.CreateBound(ColumnModel.Center,
                     ColumnModel.Center.Add(XYZ.BasisZ)),
                 rectangularColumnModel.RotationAngle) ;
         }
-        else
-        {
+        else {
             ElementTransformUtils.RotateElement(element.Document,
                 element.Id,
                 Line.CreateBound(ColumnModel.Center,
@@ -61,14 +58,12 @@ public class RectangularColumnCreationStrategy(
             .ToList() ;
 
         // Try to find existing symbol with matching dimensions
-        foreach (var familySymbol in allFamilySymbols)
-        {
+        foreach (var familySymbol in allFamilySymbols) {
             var widthParam = familySymbol.LookupParameter(widthParameter) ;
             var heightParam = familySymbol.LookupParameter(heightParameter) ;
 
             if (widthParam == null
-                || heightParam == null)
-            {
+                || heightParam == null) {
                 continue ;
             }
 
@@ -76,15 +71,13 @@ public class RectangularColumnCreationStrategy(
             var heightValue = GetDoubleValue(heightParam) ;
 
             if (Math.Abs(widthValue - width) < Tolerance
-                && Math.Abs(heightValue - height) < Tolerance)
-            {
+                && Math.Abs(heightValue - height) < Tolerance) {
                 return familySymbol ;
             }
         }
 
         // Create new symbol if not found
-        if (allFamilySymbols.Count == 0)
-        {
+        if (allFamilySymbols.Count == 0) {
             return null ;
         }
 
@@ -94,8 +87,7 @@ public class RectangularColumnCreationStrategy(
             0) ;
 
         if (Math.Abs(widthMm) < Tolerance
-            || Math.Abs(heightMm) < Tolerance)
-        {
+            || Math.Abs(heightMm) < Tolerance) {
             return null ;
         }
 

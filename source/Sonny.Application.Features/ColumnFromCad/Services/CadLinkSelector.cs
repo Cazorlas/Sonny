@@ -10,8 +10,7 @@ public class CadLinkSelector : ICadLinkSelector
 {
     public ImportInstance? SelectCadLink(UIDocument uiDocument)
     {
-        try
-        {
+        try {
             var typesFilter = new List<Type> { typeof( ImportInstance ) } ;
 
             var reference = uiDocument.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element,
@@ -20,8 +19,7 @@ public class CadLinkSelector : ICadLinkSelector
 
             return uiDocument.Document.GetElementById<ImportInstance>(reference) ;
         }
-        catch (Exception)
-        {
+        catch (Exception) {
             return null ;
         }
     }
