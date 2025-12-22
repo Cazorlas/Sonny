@@ -6,7 +6,7 @@
         xmlns:viewModel="clr-namespace:Sonny.Application.Features.AutoColumnDimension.ViewModels"
         mc:Ignorable="d"
         x:Name="ThisWindow"
-        Title="{DynamicResource WindowTitle}"
+        Title="{DynamicResource AutoColumnDimensionWindowTitle}"
         Height="200" Width="400"
         WindowStartupLocation="CenterOwner"
         d:DataContext="{d:DesignInstance {x:Type viewModel:AutoColumnDimensionViewModel}, IsDesignTimeCreatable=True}">

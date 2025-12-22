@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewModel="clr-namespace:Sonny.Application.Features.ColumnFromCad.ViewModels"
         mc:Ignorable="d"
-        Title="{DynamicResource WindowTitle}"
+        Title="{DynamicResource ColumnFromCadWindowTitle}"
         Height="580"
         Width="500"
         ResizeMode="CanResize"

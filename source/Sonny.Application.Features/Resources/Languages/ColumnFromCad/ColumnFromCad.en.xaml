@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!-- Window Title -->
-    <system:String x:Key="WindowTitle">Model Column from AutoCAD</system:String>
+    <system:String x:Key="ColumnFromCadWindowTitle">Model Column from AutoCAD</system:String>
 
     <!-- GroupBox Headers -->
     <system:String x:Key="GroupBoxLayerSelection">Layer Selection</system:String>
