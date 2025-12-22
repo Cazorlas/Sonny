@@ -14,6 +14,14 @@ namespace Sonny.Application.Features.ColumnFromCad.ViewModels ;
 
 public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFromCadSettings>
 {
+    #region Services
+
+    private IColumnFromCadOrchestrator ColumnFromCadOrchestrator { get ; }
+
+    private IColumnFromCadContext Context { get ; }
+
+    #endregion
+
     #region Constructor
 
     public ColumnFromCadViewModel(ICommonServices commonServices,
@@ -30,15 +38,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     #endregion
 
-    #region Services
-
-    private IColumnFromCadOrchestrator ColumnFromCadOrchestrator { get ; }
-
-    private IColumnFromCadContext Context { get ; }
-
-    #endregion
-
-    #region Properties
+    #region Properties for UI Binding
 
     /// <summary>
     ///     All available layers from CAD link
@@ -239,80 +239,26 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     #endregion
 
-    #region Data Initialization
+    #region Event Handlers
 
-    /// <summary>
-    ///     Initializes data for the view model
-    /// </summary>
-    protected override void OnDataInitialized()
+    partial void OnSelectedRectangularColumnFamilyChanged(Family? value)
     {
-        AllLayerNames = new ObservableCollection<string>(Context.LayerNames) ;
-        SelectedLayer = AllLayerNames[0] ;
-
-        LoadColumnFamilies() ;
-
-        LoadLevels() ;
-    }
-
-    /// <summary>
-    ///     Loads column families from context (business data already extracted)
-    /// </summary>
-    private void LoadColumnFamilies()
-    {
-        AllColumnFamilies = new ObservableCollection<Family>(Context.ColumnFamilies) ;
-        SelectedRectangularColumnFamily = AllColumnFamilies.First() ;
-        SelectedCircularColumnFamily = AllColumnFamilies.First() ;
-
-        LoadRectangularColumnParameters(SelectedRectangularColumnFamily) ;
-        LoadCircularColumnParameters(SelectedCircularColumnFamily) ;
-    }
-
-    /// <summary>
-    ///     Loads rectangular column type parameters from context (business data already extracted)
-    /// </summary>
-    private void LoadRectangularColumnParameters(Family family)
-    {
-        // Get parameters from context (business data already extracted)
-        var allParameters = Context.FamilyNumericParameters[family.Id] ;
-        AllRectangularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
-
-        WidthParameter = AllRectangularColumnTypeParameters[0] ;
-        HeightParameter = AllRectangularColumnTypeParameters.Count > 1
-            ? AllRectangularColumnTypeParameters[1]
-            : AllRectangularColumnTypeParameters[0] ;
-    }
-
-    /// <summary>
-    ///     Loads circular column type parameters from context (business data already extracted)
-    /// </summary>
-    private void LoadCircularColumnParameters(Family family)
-    {
-        // Get parameters from context (business data already extracted)
-        var allParameters = Context.FamilyNumericParameters[family.Id] ;
-        AllCircularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
-
-        DiameterParameter = AllCircularColumnTypeParameters[0] ;
-    }
-
-    /// <summary>
-    ///     Loads levels from document
-    /// </summary>
-    private void LoadLevels()
-    {
-        var levels = RevitDocument.Document
-            .GetAllElements<Level>()
-            .OrderBy(level => level.Elevation)
-            .ToList() ;
-
-        AllLevels = new ObservableCollection<Level>(levels) ;
-
-        if (AllLevels.Count <= 0)
+        if (value == null)
         {
             return ;
         }
 
-        BaseLevel = AllLevels[0] ;
-        TopLevel = AllLevels.Count > 1 ? AllLevels[1] : AllLevels[0] ;
+        LoadRectangularColumnParameters(value) ;
+    }
+
+    partial void OnSelectedCircularColumnFamilyChanged(Family? value)
+    {
+        if (value == null)
+        {
+            return ;
+        }
+
+        LoadCircularColumnParameters(value) ;
     }
 
     #endregion
@@ -457,6 +403,84 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     #endregion
 
+    #region Private Methods - Initialization
+
+    /// <summary>
+    ///     Initializes data for the view model
+    /// </summary>
+    protected override void OnDataInitialized()
+    {
+        AllLayerNames = new ObservableCollection<string>(Context.LayerNames) ;
+        SelectedLayer = AllLayerNames[0] ;
+
+        LoadColumnFamilies() ;
+
+        LoadLevels() ;
+    }
+
+    /// <summary>
+    ///     Loads column families from context (business data already extracted)
+    /// </summary>
+    private void LoadColumnFamilies()
+    {
+        AllColumnFamilies = new ObservableCollection<Family>(Context.ColumnFamilies) ;
+        SelectedRectangularColumnFamily = AllColumnFamilies.First() ;
+        SelectedCircularColumnFamily = AllColumnFamilies.First() ;
+
+        LoadRectangularColumnParameters(SelectedRectangularColumnFamily) ;
+        LoadCircularColumnParameters(SelectedCircularColumnFamily) ;
+    }
+
+    /// <summary>
+    ///     Loads rectangular column type parameters from context (business data already extracted)
+    /// </summary>
+    private void LoadRectangularColumnParameters(Family family)
+    {
+        // Get parameters from context (business data already extracted)
+        var allParameters = Context.FamilyNumericParameters[family.Id] ;
+        AllRectangularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
+
+        WidthParameter = AllRectangularColumnTypeParameters[0] ;
+        HeightParameter = AllRectangularColumnTypeParameters.Count > 1
+            ? AllRectangularColumnTypeParameters[1]
+            : AllRectangularColumnTypeParameters[0] ;
+    }
+
+    /// <summary>
+    ///     Loads circular column type parameters from context (business data already extracted)
+    /// </summary>
+    private void LoadCircularColumnParameters(Family family)
+    {
+        // Get parameters from context (business data already extracted)
+        var allParameters = Context.FamilyNumericParameters[family.Id] ;
+        AllCircularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
+
+        DiameterParameter = AllCircularColumnTypeParameters[0] ;
+    }
+
+    /// <summary>
+    ///     Loads levels from document
+    /// </summary>
+    private void LoadLevels()
+    {
+        var levels = RevitDocument.Document
+            .GetAllElements<Level>()
+            .OrderBy(level => level.Elevation)
+            .ToList() ;
+
+        AllLevels = new ObservableCollection<Level>(levels) ;
+
+        if (AllLevels.Count <= 0)
+        {
+            return ;
+        }
+
+        BaseLevel = AllLevels[0] ;
+        TopLevel = AllLevels.Count > 1 ? AllLevels[1] : AllLevels[0] ;
+    }
+
+    #endregion
+
     #region Validation
 
     /// <summary>
@@ -513,30 +537,6 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
         }
 
         return true ;
-    }
-
-    #endregion
-
-    #region Event Handlers
-
-    partial void OnSelectedRectangularColumnFamilyChanged(Family? value)
-    {
-        if (value == null)
-        {
-            return ;
-        }
-
-        LoadRectangularColumnParameters(value) ;
-    }
-
-    partial void OnSelectedCircularColumnFamilyChanged(Family? value)
-    {
-        if (value == null)
-        {
-            return ;
-        }
-
-        LoadCircularColumnParameters(value) ;
     }
 
     #endregion

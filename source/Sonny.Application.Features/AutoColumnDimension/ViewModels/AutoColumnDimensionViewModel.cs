@@ -9,6 +9,15 @@ namespace Sonny.Application.Features.AutoColumnDimension.ViewModels ;
 
 public partial class AutoColumnDimensionViewModel : BaseViewModel
 {
+    #region Services
+
+    /// <summary>
+    ///     Handler for auto column dimension feature
+    /// </summary>
+    private IAutoColumnDimensionHandler Handler { get ; }
+
+    #endregion
+
     #region Constructor
 
     public AutoColumnDimensionViewModel(ICommonServices commonServices,
@@ -22,12 +31,25 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
 
     #endregion
 
-    #region Feature-Specific Services
+    #region Properties for UI Binding
+
+    [ObservableProperty]
+    private DimensionType? selectedDimensionType ;
+
+    public ObservableCollection<DimensionType> DimensionTypes { get ; set ; } = [] ;
 
     /// <summary>
-    ///     Handler for auto column dimension feature
+    ///     Snap distance in display unit (mm, cm, m, etc.) for UI binding
     /// </summary>
-    private IAutoColumnDimensionHandler Handler { get ; }
+    [ObservableProperty]
+    private double snapDistanceDisplay ;
+
+    /// <summary>
+    ///     Snap distance in internal unit (feet) for calculation
+    /// </summary>
+    private double SnapDistanceInternal =>
+        UnitConverter.ToInternalUnit(snapDistanceDisplay,
+            DisplayUnit) ;
 
     #endregion
 
@@ -141,28 +163,6 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
             LogWarning($"Failed to update snap distance: {ex.Message}") ;
         }
     }
-
-    #endregion
-
-    #region MVVM Bindings (Properties for UI Binding)
-
-    [ObservableProperty]
-    private DimensionType? selectedDimensionType ;
-
-    public ObservableCollection<DimensionType> DimensionTypes { get ; set ; } = [] ;
-
-    /// <summary>
-    ///     Snap distance in display unit (mm, cm, m, etc.) for UI binding
-    /// </summary>
-    [ObservableProperty]
-    private double snapDistanceDisplay ;
-
-    /// <summary>
-    ///     Snap distance in internal unit (feet) for calculation
-    /// </summary>
-    private double SnapDistanceInternal =>
-        UnitConverter.ToInternalUnit(snapDistanceDisplay,
-            DisplayUnit) ;
 
     #endregion
 }

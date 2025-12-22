@@ -11,12 +11,15 @@ public class ViewModelSettingsService<TSettings> : IViewModelSettingsService<TSe
 {
     private readonly string _settingsFilePath ;
 
-    public ViewModelSettingsService(string settingsFileName)
+    public ViewModelSettingsService()
     {
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) ;
         var sonnyFolder = Path.Combine(appDataPath,
             "Sonny") ;
         Directory.CreateDirectory(sonnyFolder) ;
+        
+        // Automatically generate filename from TSettings type name
+        var settingsFileName = typeof(TSettings).Name + ".json" ;
         _settingsFilePath = Path.Combine(sonnyFolder,
             settingsFileName) ;
     }

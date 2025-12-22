@@ -26,6 +26,32 @@ public partial class SettingsViewModel : BaseViewModel
 
     #endregion
 
+    #region Properties for UI Binding
+
+    /// <summary>
+    ///     Available unit options
+    /// </summary>
+    public ObservableCollection<UnitOption> UnitOptions { get ; private set ; } = [] ;
+
+    /// <summary>
+    ///     Selected unit option
+    /// </summary>
+    [ObservableProperty]
+    private UnitOption? selectedUnitOption ;
+
+    /// <summary>
+    ///     Available language options
+    /// </summary>
+    public ObservableCollection<LanguageOption> LanguageOptions { get ; private set ; } = [] ;
+
+    /// <summary>
+    ///     Selected language option
+    /// </summary>
+    [ObservableProperty]
+    private LanguageOption? selectedLanguageOption ;
+
+    #endregion
+
     #region Commands
 
     /// <summary>
@@ -64,32 +90,6 @@ public partial class SettingsViewModel : BaseViewModel
     /// </summary>
     [RelayCommand]
     private void Cancel() => CloseWindow() ;
-
-    #endregion
-
-    #region Properties
-
-    /// <summary>
-    ///     Available unit options
-    /// </summary>
-    public ObservableCollection<UnitOption> UnitOptions { get ; private set ; } = [] ;
-
-    /// <summary>
-    ///     Selected unit option
-    /// </summary>
-    [ObservableProperty]
-    private UnitOption? selectedUnitOption ;
-
-    /// <summary>
-    ///     Available language options
-    /// </summary>
-    public ObservableCollection<LanguageOption> LanguageOptions { get ; private set ; } = [] ;
-
-    /// <summary>
-    ///     Selected language option
-    /// </summary>
-    [ObservableProperty]
-    private LanguageOption? selectedLanguageOption ;
 
     #endregion
 

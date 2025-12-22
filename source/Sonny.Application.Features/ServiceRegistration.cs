@@ -42,7 +42,7 @@ public static class ServiceRegistration
 
         // ViewModel settings service for ColumnFromCad
         services.AddTransient<IViewModelSettingsService<ColumnFromCadSettings>>(_ =>
-            new ViewModelSettingsService<ColumnFromCadSettings>("ColumnFromCadSettings.json")) ;
+            new ViewModelSettingsService<ColumnFromCadSettings>()) ;
 
         services.AddTransient<ColumnFromCadViewModel>() ;
         services.AddTransient<ColumnFromCadView>() ;
