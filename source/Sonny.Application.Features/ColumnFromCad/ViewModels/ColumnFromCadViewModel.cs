@@ -152,8 +152,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     [RelayCommand]
     public async Task Execute()
     {
-        if (! ValidateInput())
-        {
+        if (! ValidateInput()) {
             return ;
         }
 
@@ -166,8 +165,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
             SelectedLayer!,
             IsModelByHatch)) ;
 
-        if (columnsData.Count == 0)
-        {
+        if (columnsData.Count == 0) {
             ShowInfo(ResourceHelper.GetString("MessageNoColumnsFound")) ;
             return ;
         }
@@ -217,16 +215,14 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
         processWindow.Dispatcher.Invoke(() => { processWindow.Close() ; }) ;
 
         // Show result and select columns
-        if (createdIds.Count > 0)
-        {
+        if (createdIds.Count > 0) {
             // Select created columns to highlight them in Revit UI
             await RevitTask.RunAsync(() => { RevitDocument.UIDocument.Selection.SetElementIds(createdIds) ; }) ;
 
             ShowInfo(ResourceHelper.GetString("MessageSuccessfullyCreated",
                 createdIds.Count)) ;
         }
-        else
-        {
+        else {
             ShowWarning(ResourceHelper.GetString("MessageNoColumnsCreated")) ;
         }
     }
@@ -243,8 +239,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     partial void OnSelectedRectangularColumnFamilyChanged(Family? value)
     {
-        if (value == null)
-        {
+        if (value == null) {
             return ;
         }
 
@@ -253,8 +248,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     partial void OnSelectedCircularColumnFamilyChanged(Family? value)
     {
-        if (value == null)
-        {
+        if (value == null) {
             return ;
         }
 
@@ -309,8 +303,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     {
         // Load layer selection
         if (! string.IsNullOrEmpty(settings.SelectedLayer)
-            && AllLayerNames.Contains(settings.SelectedLayer))
-        {
+            && AllLayerNames.Contains(settings.SelectedLayer)) {
             SelectedLayer = settings.SelectedLayer ;
         }
 
@@ -319,58 +312,47 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
         IsModelByBoundary = ! settings.IsModelByHatch ;
 
         // Load column families (must be after LoadColumnFamilies is called)
-        if (! string.IsNullOrEmpty(settings.RectangularColumnFamilyId))
-        {
+        if (! string.IsNullOrEmpty(settings.RectangularColumnFamilyId)) {
             var rectangularFamily =
                 AllColumnFamilies.FirstOrDefault(f => f.UniqueId == settings.RectangularColumnFamilyId) ;
-            if (rectangularFamily != null)
-            {
+            if (rectangularFamily != null) {
                 SelectedRectangularColumnFamily = rectangularFamily ;
                 LoadRectangularColumnParameters(rectangularFamily) ;
             }
         }
 
-        if (! string.IsNullOrEmpty(settings.CircularColumnFamilyId))
-        {
+        if (! string.IsNullOrEmpty(settings.CircularColumnFamilyId)) {
             var circularFamily = AllColumnFamilies.FirstOrDefault(f => f.UniqueId == settings.CircularColumnFamilyId) ;
-            if (circularFamily != null)
-            {
+            if (circularFamily != null) {
                 SelectedCircularColumnFamily = circularFamily ;
                 LoadCircularColumnParameters(circularFamily) ;
             }
         }
 
         // Load parameters
-        if (! string.IsNullOrEmpty(settings.WidthParameter))
-        {
+        if (! string.IsNullOrEmpty(settings.WidthParameter)) {
             WidthParameter = settings.WidthParameter ;
         }
 
-        if (! string.IsNullOrEmpty(settings.HeightParameter))
-        {
+        if (! string.IsNullOrEmpty(settings.HeightParameter)) {
             HeightParameter = settings.HeightParameter ;
         }
 
-        if (! string.IsNullOrEmpty(settings.DiameterParameter))
-        {
+        if (! string.IsNullOrEmpty(settings.DiameterParameter)) {
             DiameterParameter = settings.DiameterParameter ;
         }
 
         // Load levels (must be after LoadLevels is called)
-        if (! string.IsNullOrEmpty(settings.BaseLevelId))
-        {
+        if (! string.IsNullOrEmpty(settings.BaseLevelId)) {
             var baseLevel = AllLevels.FirstOrDefault(l => l.UniqueId == settings.BaseLevelId) ;
-            if (baseLevel != null)
-            {
+            if (baseLevel != null) {
                 BaseLevel = baseLevel ;
             }
         }
 
-        if (! string.IsNullOrEmpty(settings.TopLevelId))
-        {
+        if (! string.IsNullOrEmpty(settings.TopLevelId)) {
             var topLevel = AllLevels.FirstOrDefault(l => l.UniqueId == settings.TopLevelId) ;
-            if (topLevel != null)
-            {
+            if (topLevel != null) {
                 TopLevel = topLevel ;
             }
         }
@@ -383,9 +365,8 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// <summary>
     ///     Creates settings object from current ViewModel state
     /// </summary>
-    protected override ColumnFromCadSettings CreateSettings()
-    {
-        return new ColumnFromCadSettings
+    protected override ColumnFromCadSettings CreateSettings() =>
+        new()
         {
             SelectedLayer = SelectedLayer,
             IsModelByHatch = IsModelByHatch,
@@ -399,7 +380,6 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
             BaseOffsetDisplay = BaseOffsetDisplay,
             TopOffsetDisplay = TopOffsetDisplay
         } ;
-    }
 
     #endregion
 
@@ -470,8 +450,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
         AllLevels = new ObservableCollection<Level>(levels) ;
 
-        if (AllLevels.Count <= 0)
-        {
+        if (AllLevels.Count <= 0) {
             return ;
         }
 
@@ -488,50 +467,42 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// </summary>
     private bool ValidateInput()
     {
-        if (string.IsNullOrEmpty(SelectedLayer))
-        {
+        if (string.IsNullOrEmpty(SelectedLayer)) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectLayer")) ;
             return false ;
         }
 
-        if (SelectedRectangularColumnFamily == null)
-        {
+        if (SelectedRectangularColumnFamily == null) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectRectangularColumnFamily")) ;
             return false ;
         }
 
-        if (SelectedCircularColumnFamily == null)
-        {
+        if (SelectedCircularColumnFamily == null) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectCircularColumnFamily")) ;
             return false ;
         }
 
-        if (string.IsNullOrEmpty(WidthParameter))
-        {
+        if (string.IsNullOrEmpty(WidthParameter)) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectWidthParameter")) ;
             return false ;
         }
 
-        if (string.IsNullOrEmpty(HeightParameter))
-        {
+        if (string.IsNullOrEmpty(HeightParameter)) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectHeightParameter")) ;
             return false ;
         }
 
-        if (string.IsNullOrEmpty(DiameterParameter))
-        {
+        if (string.IsNullOrEmpty(DiameterParameter)) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectDiameterParameter")) ;
             return false ;
         }
 
-        if (BaseLevel == null)
-        {
+        if (BaseLevel == null) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectBaseLevel")) ;
             return false ;
         }
 
-        if (TopLevel == null)
-        {
+        if (TopLevel == null) {
             ShowError(ResourceHelper.GetString("ValidationPleaseSelectTopLevel")) ;
             return false ;
         }

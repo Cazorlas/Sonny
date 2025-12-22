@@ -16,10 +16,8 @@ public class UIDocumentProvider : IUIDocumentProvider
     /// </summary>
     public UIDocument GetUIDocument()
     {
-        lock (_lock)
-        {
-            if (_uiDocument == null)
-            {
+        lock (_lock) {
+            if (_uiDocument == null) {
                 throw new InvalidOperationException(
                     "UIDocument is not available. Make sure to set it in command context.") ;
             }
@@ -34,8 +32,7 @@ public class UIDocumentProvider : IUIDocumentProvider
     /// <param name="uidoc">The UIDocument to set</param>
     public void SetUIDocument(UIDocument uidoc)
     {
-        lock (_lock)
-        {
+        lock (_lock) {
             _uiDocument = uidoc ;
         }
     }

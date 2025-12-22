@@ -23,8 +23,7 @@ public class CircularColumnExtractor : ICircularColumnExtractor
                 cadInstance.Document))
             .ToList() ;
 
-        foreach (var arc in arcs)
-        {
+        foreach (var arc in arcs) {
             columns.Add(new CircularColumnModel(arc)) ;
         }
 
@@ -40,11 +39,9 @@ public class CircularColumnExtractor : ICircularColumnExtractor
             .Where(x => x.IsOnLayer(selectedLayer,
                 cadInstance.Document)) ;
 
-        foreach (var planarFace in planarFaces)
-        {
+        foreach (var planarFace in planarFaces) {
             var curveLoops = planarFace.GetEdgesAsCurveLoops() ;
-            if (curveLoops.Count == 0)
-            {
+            if (curveLoops.Count == 0) {
                 continue ;
             }
 
@@ -53,16 +50,14 @@ public class CircularColumnExtractor : ICircularColumnExtractor
                 .ToList() ;
 
             // Skip rectangular (4 curves)
-            if (curves.Count == 4)
-            {
+            if (curves.Count == 4) {
                 continue ;
             }
 
             // Try to detect circular column
             var points = curves.GetXYZPoints()
                 .ToList() ;
-            if (points.Count >= 3)
-            {
+            if (points.Count >= 3) {
                 var arc = Arc.Create(points[1],
                     points[3],
                     points[2]) ;
@@ -77,8 +72,7 @@ public class CircularColumnExtractor : ICircularColumnExtractor
                     return abs < Tolerance ;
                 }) ;
 
-                if (allPointsSameDistance)
-                {
+                if (allPointsSameDistance) {
                     columns.Add(new CircularColumnModel(arc)) ;
                 }
             }

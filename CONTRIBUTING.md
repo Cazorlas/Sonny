@@ -28,27 +28,34 @@ We love new ideas! Please create an issue with:
 
 This project follows the **Git Flow** branching model with the following branches:
 
-- **`master`**: Production-ready code. Only stable, tested releases are merged here. This branch should always be deployable.
-- **`develop`**: Integration branch for features. All feature branches merge into this branch. This is the main development branch.
+- **`master`**: Production-ready code. Only stable, tested releases are merged here. This branch should always be
+  deployable.
+- **`develop`**: Integration branch for features. All feature branches merge into this branch. This is the main
+  development branch.
 - **`feature/*`**: Feature branches for new functionality. Created from and merged back into `develop`.
-- **`release/*`**: Release branches for preparing new production releases. Created from `develop` and merged into both `master` and `develop`.
-- **`hotfix/*`**: Hotfix branches for urgent production bug fixes. Created from `master` and merged into both `master` and `develop`.
+- **`release/*`**: Release branches for preparing new production releases. Created from `develop` and merged into both
+  `master` and `develop`.
+- **`hotfix/*`**: Hotfix branches for urgent production bug fixes. Created from `master` and merged into both `master`
+  and `develop`.
 
 #### Git Flow Diagram
 
 ![Git Flow Branching Model](assets/images/gitflow.png)
 
-*Visual representation of the Git Flow branching model showing how commits flow between master, develop, feature, release, and hotfix branches.*
+*Visual representation of the Git Flow branching model showing how commits flow between master, develop, feature,
+release, and hotfix branches.*
 
 #### Branch Usage Guidelines
 
 **Feature Branches:**
+
 - Created from `develop`
 - Used for developing new features
 - Merged back into `develop` via Pull Request
 - Naming convention: `feature/feature-name` (e.g., `feature/add-new-tool`)
 
 **Release Branches:**
+
 - Created from `develop` when preparing a new release
 - Used for final bug fixes and release preparations
 - Merged into both `master` (with version tag) and `develop`
@@ -56,6 +63,7 @@ This project follows the **Git Flow** branching model with the following branche
 - Only maintainers create release branches
 
 **Hotfix Branches:**
+
 - Created from `master` for urgent production fixes
 - Used for critical bug fixes that cannot wait for the next release
 - Merged into both `master` (with version tag) and `develop`
@@ -65,6 +73,7 @@ This project follows the **Git Flow** branching model with the following branche
 ### Pull Requests
 
 **Workflow Overview:**
+
 1. Fork the repository and clone it locally
 2. Create a feature branch from `develop` (see Git Flow diagram above)
 3. Make your changes and commit them
@@ -72,6 +81,7 @@ This project follows the **Git Flow** branching model with the following branche
 5. Create a Pull Request targeting `develop` branch
 
 **Important Guidelines:**
+
 - **Always create feature branches from `develop`**, not from `master`
 - **Pull requests must target `develop` branch** (not `master`)
 - Only maintainers merge `develop` into `master` for releases
@@ -79,6 +89,7 @@ This project follows the **Git Flow** branching model with the following branche
 
 **Commit Message Format:**
 Use clear commit messages following this format:
+
 - `Add:` for new features
 - `Fix:` for bug fixes
 - `Update:` for updates to existing features
@@ -87,6 +98,7 @@ Use clear commit messages following this format:
 - `Test:` for test additions or changes
 
 **When Creating a Pull Request:**
+
 - Describe what your PR does
 - Reference any related issues (use `Closes #123` or `Fixes #123`)
 - Include screenshots if UI changes
@@ -96,12 +108,14 @@ Use clear commit messages following this format:
 ### Release & Hotfix Branches (Maintainers Only)
 
 **Release Branches:**
+
 - Created from `develop` when preparing a new release
 - Used for final bug fixes and release preparations
 - Merged into both `master` (with version tag) and `develop`
 - See Git Flow diagram above for visual workflow
 
 **Hotfix Branches:**
+
 - Created from `master` for urgent production bug fixes
 - Used for critical fixes that cannot wait for the next release
 - Merged into both `master` (with version tag) and `develop`
@@ -114,9 +128,9 @@ Use clear commit messages following this format:
 - Follow the `.editorconfig` settings
 - Use meaningful variable and method names
 - Follow C# naming conventions:
-  - PascalCase for classes, methods, properties
-  - camelCase for local variables
-  - _camelCase for private fields
+    - PascalCase for classes, methods, properties
+    - camelCase for local variables
+    - _camelCase for private fields
 - Add XML documentation comments for public APIs
 - Keep methods focused and small
 - Use `var` when type is apparent
@@ -153,10 +167,10 @@ public double FromInternalUnit(double value, ForgeTypeId displayUnit)
 ## Development Setup
 
 1. Install prerequisites:
-   - .NET Framework 4.8
-   - .NET 9 SDK
-   - Visual Studio or JetBrains Rider
-   - Revit (for testing)
+    - .NET Framework 4.8
+    - .NET 9 SDK
+    - Visual Studio or JetBrains Rider
+    - Revit (for testing)
 
 2. Clone repository with submodules:
    ```bash
@@ -182,6 +196,7 @@ public double FromInternalUnit(double value, ForgeTypeId displayUnit)
 ## Questions?
 
 If you have questions about contributing, please:
+
 - Open an issue with the `question` label
 - Check existing issues and discussions
 - Review the README.md for more information

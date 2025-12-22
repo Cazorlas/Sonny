@@ -25,14 +25,12 @@ internal class ResourceRegistry
         string resourcePathPattern,
         LanguageCode defaultLanguageCode = LanguageCode.En)
     {
-        if (string.IsNullOrWhiteSpace(assemblyName))
-        {
+        if (string.IsNullOrWhiteSpace(assemblyName)) {
             throw new ArgumentException("AssemblyName cannot be null or empty",
                 nameof( assemblyName )) ;
         }
 
-        if (string.IsNullOrWhiteSpace(resourcePathPattern))
-        {
+        if (string.IsNullOrWhiteSpace(resourcePathPattern)) {
             throw new ArgumentException(
                 "ResourcePathPattern cannot be null or empty. Please provide a base path without extension. Example: \"Languages/AlphaRibbon/AlphaRibbon\"",
                 nameof( resourcePathPattern )) ;

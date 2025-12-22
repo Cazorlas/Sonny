@@ -30,9 +30,16 @@ public class ExecutionResult
     {
         var total = SuccessCount + FailureCount ;
         var completedTime = ExecutionTime.ToString("yyyy-MM-dd HH:mm:ss") ;
-        return ResourceHelper.GetString("ExecutionResultCompleted", completedTime) + "\n\n"
-               + ResourceHelper.GetString("ExecutionResultTotalColumns", total) + "\n"
-               + ResourceHelper.GetString("ExecutionResultSuccess", SuccessCount) + "\n"
-               + ResourceHelper.GetString("ExecutionResultFailed", FailureCount) ;
+        return ResourceHelper.GetString("ExecutionResultCompleted",
+                   completedTime)
+               + "\n\n"
+               + ResourceHelper.GetString("ExecutionResultTotalColumns",
+                   total)
+               + "\n"
+               + ResourceHelper.GetString("ExecutionResultSuccess",
+                   SuccessCount)
+               + "\n"
+               + ResourceHelper.GetString("ExecutionResultFailed",
+                   FailureCount) ;
     }
 }

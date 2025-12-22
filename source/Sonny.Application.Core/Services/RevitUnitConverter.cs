@@ -15,8 +15,7 @@ public class RevitUnitConverter : IUnitConverter
     public double ToInternalUnit(double value,
         ForgeTypeId displayUnit)
     {
-        if (displayUnit == s_internalUnit)
-        {
+        if (displayUnit == s_internalUnit) {
             return value ;
         }
 
@@ -31,8 +30,7 @@ public class RevitUnitConverter : IUnitConverter
     public double FromInternalUnit(double value,
         ForgeTypeId displayUnit)
     {
-        if (displayUnit == s_internalUnit)
-        {
+        if (displayUnit == s_internalUnit) {
             return value ;
         }
 

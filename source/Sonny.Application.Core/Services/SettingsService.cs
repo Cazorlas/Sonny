@@ -25,9 +25,11 @@ public class SettingsService : ISettingsService
     {
         // Store settings in user's AppData folder
         var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) ;
-        var sonnyFolder = Path.Combine(appDataPath, "Sonny") ;
+        var sonnyFolder = Path.Combine(appDataPath,
+            "Sonny") ;
         Directory.CreateDirectory(sonnyFolder) ;
-        _settingsFilePath = Path.Combine(sonnyFolder, SettingsFileName) ;
+        _settingsFilePath = Path.Combine(sonnyFolder,
+            SettingsFileName) ;
     }
 
     /// <summary>
@@ -46,27 +48,22 @@ public class SettingsService : ISettingsService
     public ForgeTypeId GetDisplayUnit(Document document)
     {
         // Return cached value if available
-        if (_cachedDisplayUnit != null)
-        {
+        if (_cachedDisplayUnit != null) {
             return _cachedDisplayUnit ;
         }
 
         // Try to load from file
-        if (File.Exists(_settingsFilePath))
-        {
-            try
-            {
+        if (File.Exists(_settingsFilePath)) {
+            try {
                 var settings = LoadSettingsData() ;
 
-                if (settings?.DisplayUnitTypeId != null)
-                {
+                if (settings?.DisplayUnitTypeId != null) {
                     var unitTypeId = new ForgeTypeId(settings.DisplayUnitTypeId) ;
                     _cachedDisplayUnit = unitTypeId ;
                     return unitTypeId ;
                 }
             }
-            catch
-            {
+            catch {
                 // If deserialization fails, fall back to default
             }
         }
@@ -84,8 +81,7 @@ public class SettingsService : ISettingsService
     {
         _cachedDisplayUnit = displayUnit ;
 
-        try
-        {
+        try {
             // Load existing settings to preserve other settings
             var settings = LoadSettingsData() ;
             settings.DisplayUnitTypeId = displayUnit.TypeId ;
@@ -93,10 +89,10 @@ public class SettingsService : ISettingsService
             SaveSettingsData(settings) ;
 
             // Raise event to notify subscribers
-            DisplayUnitChanged?.Invoke(this, displayUnit) ;
+            DisplayUnitChanged?.Invoke(this,
+                displayUnit) ;
         }
-        catch
-        {
+        catch {
             // Log error but don't throw - settings are not critical
         }
     }
@@ -107,26 +103,23 @@ public class SettingsService : ISettingsService
     public LanguageCode GetLanguage()
     {
         // Return cached value if available
-        if (_cachedLanguage != null)
-        {
+        if (_cachedLanguage != null) {
             return _cachedLanguage.Value ;
         }
 
         // Try to load from file
-        if (File.Exists(_settingsFilePath))
-        {
-            try
-            {
+        if (File.Exists(_settingsFilePath)) {
+            try {
                 var settings = LoadSettingsData() ;
 
-                if (settings.LanguageCode != null && Enum.TryParse<LanguageCode>(settings.LanguageCode, out var languageCode))
-                {
+                if (settings.LanguageCode != null
+                    && Enum.TryParse<LanguageCode>(settings.LanguageCode,
+                        out var languageCode)) {
                     _cachedLanguage = languageCode ;
                     return languageCode ;
                 }
             }
-            catch
-            {
+            catch {
                 // If deserialization fails, fall back to default
             }
         }
@@ -144,8 +137,7 @@ public class SettingsService : ISettingsService
     {
         _cachedLanguage = languageCode ;
 
-        try
-        {
+        try {
             // Load existing settings to preserve other settings
             var settings = LoadSettingsData() ;
             settings.LanguageCode = languageCode.ToString() ;
@@ -153,10 +145,10 @@ public class SettingsService : ISettingsService
             SaveSettingsData(settings) ;
 
             // Raise event to notify subscribers
-            LanguageChanged?.Invoke(this, languageCode) ;
+            LanguageChanged?.Invoke(this,
+                languageCode) ;
         }
-        catch
-        {
+        catch {
             // Log error but don't throw - settings are not critical
         }
     }
@@ -177,10 +169,8 @@ public class SettingsService : ISettingsService
     /// </summary>
     private SettingsData LoadSettingsData()
     {
-        if (File.Exists(_settingsFilePath))
-        {
-            try
-            {
+        if (File.Exists(_settingsFilePath)) {
+            try {
                 var json = File.ReadAllText(_settingsFilePath) ;
 #if NETCOREAPP
                 return JsonSerializer.Deserialize<SettingsData>(json) ?? new SettingsData() ;
@@ -188,8 +178,7 @@ public class SettingsService : ISettingsService
                 return JsonConvert.DeserializeObject<SettingsData>(json) ?? new SettingsData() ;
 #endif
             }
-            catch
-            {
+            catch {
                 return new SettingsData() ;
             }
         }
@@ -205,9 +194,11 @@ public class SettingsService : ISettingsService
 #if NETCOREAPP
         var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }) ;
 #else
-        var json = JsonConvert.SerializeObject(settings, Formatting.Indented) ;
+        var json = JsonConvert.SerializeObject(settings,
+            Formatting.Indented) ;
 #endif
-        File.WriteAllText(_settingsFilePath, json) ;
+        File.WriteAllText(_settingsFilePath,
+            json) ;
     }
 
     /// <summary>
@@ -221,4 +212,3 @@ public class SettingsService : ISettingsService
 
     #endregion
 }
-

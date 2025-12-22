@@ -26,8 +26,7 @@ public class ColumnFamilyLoader : IColumnFamilyLoader
     public HashSet<string> GetNumericParameters(Family family)
     {
         if (family.GetFamilySymbols()
-                .FirstOrDefault() is not { } familySymbol)
-        {
+                .FirstOrDefault() is not { } familySymbol) {
             return [] ;
         }
 

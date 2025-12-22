@@ -15,13 +15,11 @@ public class CompositeFailurePreprocessor : IFailuresPreprocessor
     /// </returns>
     public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
     {
-        foreach (var preprocessor in _preprocessors)
-        {
+        foreach (var preprocessor in _preprocessors) {
             var result = preprocessor.PreprocessFailures(failuresAccessor) ;
 
             // Stop chain if preprocessor wants to commit or wait for user
-            if (result == FailureProcessingResult.Continue)
-            {
+            if (result == FailureProcessingResult.Continue) {
                 continue ;
             }
 

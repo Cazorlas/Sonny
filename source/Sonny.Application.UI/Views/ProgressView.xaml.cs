@@ -24,14 +24,12 @@ public partial class ProgressView : Window
     public void UpdateProgress(int current,
         int total)
     {
-        if (Dispatcher.CheckAccess())
-        {
+        if (Dispatcher.CheckAccess()) {
             ProgressBar.Maximum = total ;
             ProgressBar.Value = current ;
             Title = $"{_title} ({current} / {total})" ;
         }
-        else
-        {
+        else {
             Dispatcher.Invoke(() =>
                 {
                     ProgressBar.Maximum = total ;

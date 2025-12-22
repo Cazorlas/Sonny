@@ -33,7 +33,7 @@
     <system:String x:Key="MessageNoLayersFoundInCadLink">Không tìm thấy layer nào trong CAD link.</system:String>
     <system:String x:Key="MessageNoColumnFamiliesFound">Không tìm thấy họ cột nào trong dự án. Vui lòng load họ cột trước khi chạy lệnh này.</system:String>
     <system:String x:Key="MessageNoExtractedColumnsFound">Không tìm thấy cột nào đã được trích xuất. Vui lòng trích xuất dữ liệu cột trước bằng cách gọi phương thức ExtractColumnData.</system:String>
-    
+
     <!-- Transaction Names -->
     <system:String x:Key="TransactionCreateColumns">Tạo Cột</system:String>
     <system:String x:Key="TransactionCreateColumn">Tạo Cột</system:String>

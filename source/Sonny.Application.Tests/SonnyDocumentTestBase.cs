@@ -20,8 +20,7 @@ public abstract class SonnyDocumentTestBase : SonnyRevitTestBase
     {
         base.OnSetup() ;
 
-        if (! string.IsNullOrEmpty(DocumentFilePath))
-        {
+        if (! string.IsNullOrEmpty(DocumentFilePath)) {
             UIDocument = OpenDocument(DocumentFilePath!)! ;
             Document = UIDocument.Document ;
         }

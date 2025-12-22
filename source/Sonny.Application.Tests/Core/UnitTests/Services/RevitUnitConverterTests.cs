@@ -13,10 +13,7 @@ public class RevitUnitConverterTests
     private RevitUnitConverter _converter ;
 
     [SetUp]
-    public void Setup()
-    {
-        _converter = new RevitUnitConverter() ;
-    }
+    public void Setup() => _converter = new RevitUnitConverter() ;
 
     [Test]
     public void ToInternalUnit_ShouldConvertMillimetersToFeet()

@@ -23,13 +23,11 @@ internal class CultureManager
     /// <summary>
     ///     Gets or sets the current culture
     /// </summary>
-    public CultureInfo CurrentCulture
-    {
+    public CultureInfo CurrentCulture {
         get => _currentCulture ;
         set
         {
-            if (_currentCulture.Equals(value))
-            {
+            if (_currentCulture.Equals(value)) {
                 return ;
             }
 
@@ -71,12 +69,10 @@ internal class CultureManager
     /// </summary>
     private void InitializeLocalizeExtension()
     {
-        try
-        {
+        try {
             LocalizeDictionary.Instance.Culture = _currentCulture ;
         }
-        catch
-        {
+        catch {
             // WPFLocalizeExtension not available or failed to initialize
             // Continue without it
         }
@@ -87,14 +83,12 @@ internal class CultureManager
     /// </summary>
     private void UpdateLocalizeExtensionCulture()
     {
-        try
-        {
+        try {
             LocalizeDictionary.Instance.Culture = _currentCulture ;
             CultureChanged?.Invoke(this,
                 new CultureChangedEventArgs(_currentCulture)) ;
         }
-        catch
-        {
+        catch {
             // WPFLocalizeExtension not available
         }
     }

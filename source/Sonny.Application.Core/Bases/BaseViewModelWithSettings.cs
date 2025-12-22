@@ -21,10 +21,8 @@ public abstract class BaseViewModelWithSettings<TSettings> : BaseViewModel where
     /// <param name="commonServices">Common services</param>
     /// <param name="settingsService">Settings service</param>
     protected BaseViewModelWithSettings(ICommonServices commonServices,
-        IViewModelSettingsService<TSettings> settingsService) : base(commonServices)
-    {
+        IViewModelSettingsService<TSettings> settingsService) : base(commonServices) =>
         _settingsService = settingsService ;
-    }
 
     /// <summary>
     ///     Called after all data is initialized, before loading settings.
@@ -62,18 +60,15 @@ public abstract class BaseViewModelWithSettings<TSettings> : BaseViewModel where
     private void LoadSettings()
     {
         var settings = _settingsService.LoadSettings() ;
-        if (settings == null)
-        {
+        if (settings == null) {
             return ;
         }
 
         _isLoadingSettings = true ;
-        try
-        {
+        try {
             ApplySettings(settings) ;
         }
-        finally
-        {
+        finally {
             _isLoadingSettings = false ;
         }
     }
@@ -84,8 +79,7 @@ public abstract class BaseViewModelWithSettings<TSettings> : BaseViewModel where
     /// </summary>
     protected void SaveSettings()
     {
-        if (_isLoadingSettings)
-        {
+        if (_isLoadingSettings) {
             return ; // Don't save while loading
         }
 

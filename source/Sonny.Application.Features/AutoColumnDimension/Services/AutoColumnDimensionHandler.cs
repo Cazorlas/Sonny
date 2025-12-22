@@ -61,8 +61,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
         _logger.Information("Found {Count} column wrappers",
             columnWrappers.Count) ;
 
-        if (! ValidateColumns(columnWrappers))
-        {
+        if (! ValidateColumns(columnWrappers)) {
             return ;
         }
 
@@ -86,8 +85,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
     /// <returns>True if validation passes, false otherwise</returns>
     private bool ValidateColumns(List<ColumnWrapperBase> wrappers)
     {
-        if (wrappers.Count == 0)
-        {
+        if (wrappers.Count == 0) {
             _logger.Warning("No valid columns found for dimensioning") ;
             _messageService.ShowInfo(ResourceHelper.GetString("MessageNoColumnsFound")) ;
             return false ;

@@ -29,8 +29,7 @@ public class SettingsServiceLanguageTests
             "SonnySettings.json") ;
 
         // Clean up test file if it exists
-        if (File.Exists(_testSettingsFilePath))
-        {
+        if (File.Exists(_testSettingsFilePath)) {
             File.Delete(_testSettingsFilePath) ;
         }
     }
@@ -39,8 +38,7 @@ public class SettingsServiceLanguageTests
     public void TearDown()
     {
         // Clean up test file after each test
-        if (File.Exists(_testSettingsFilePath))
-        {
+        if (File.Exists(_testSettingsFilePath)) {
             File.Delete(_testSettingsFilePath) ;
         }
     }
@@ -113,8 +111,7 @@ public class SettingsServiceLanguageTests
         // Act & Assert - Verify SetLanguage works with all language codes
         var allCodes = EnumHelper.GetValues<LanguageCode>() ;
 
-        foreach (var code in allCodes)
-        {
+        foreach (var code in allCodes) {
             _settingsService.SetLanguage(code) ;
             var result = _settingsService.GetLanguage() ;
             Assert.AreEqual(code,
@@ -180,4 +177,3 @@ public class SettingsServiceLanguageTests
             result) ;
     }
 }
-

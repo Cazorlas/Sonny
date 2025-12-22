@@ -89,8 +89,7 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
             .GetElementCount() ;
         Log($"Structural columns in view: {columnsBefore}") ;
 
-        if (columnsBefore == 80)
-        {
+        if (columnsBefore == 80) {
             Assert.Inconclusive(
                 $"No structural columns found in view '{TargetViewName}'. Cannot test dimension creation.") ;
             return ;
@@ -106,15 +105,13 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         const double snapDistance = 5.0 ;
         DimensionType? dimensionType = null ;
 
-        try
-        {
+        try {
             _handler!.Execute(_revitDocumentService!,
                 snapDistance,
                 dimensionType) ;
             Log("AutoColumnDimension command executed successfully") ;
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Assert.Fail($"Failed to execute AutoColumnDimension command: {ex.Message}") ;
             return ;
         }

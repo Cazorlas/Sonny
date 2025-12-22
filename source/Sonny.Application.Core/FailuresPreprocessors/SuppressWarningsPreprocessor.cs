@@ -13,11 +13,9 @@ public class SuppressWarningsPreprocessor : IFailuresPreprocessor
     public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
     {
         var failures = failuresAccessor.GetFailureMessages() ;
-        foreach (var failure in failures)
-        {
+        foreach (var failure in failures) {
             var severity = failure.GetSeverity() ;
-            if (severity == FailureSeverity.Warning)
-            {
+            if (severity == FailureSeverity.Warning) {
                 failuresAccessor.DeleteWarning(failure) ;
             }
         }

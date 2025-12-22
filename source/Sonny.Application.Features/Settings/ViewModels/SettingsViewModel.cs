@@ -60,15 +60,12 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private void Save()
     {
-        try
-        {
-            if (SelectedUnitOption != null)
-            {
+        try {
+            if (SelectedUnitOption != null) {
                 SettingsService.SetDisplayUnit(SelectedUnitOption.UnitTypeId) ;
             }
 
-            if (SelectedLanguageOption != null)
-            {
+            if (SelectedLanguageOption != null) {
                 SettingsService.SetLanguage(SelectedLanguageOption.LanguageCode) ;
                 // Change language in ResourceDictionaryManager
                 ResourceDictionaryManager.Instance.ChangeLanguage(SelectedLanguageOption.LanguageCode) ;
@@ -77,8 +74,7 @@ public partial class SettingsViewModel : BaseViewModel
             ShowInfo("Settings saved successfully") ;
             CloseWindow() ;
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             LogError("Failed to save settings",
                 ex) ;
             ShowError($"Failed to save settings: {ex.Message}") ;
@@ -98,8 +94,7 @@ public partial class SettingsViewModel : BaseViewModel
     /// <summary>
     ///     Initialize available unit options
     /// </summary>
-    private void InitializeUnitOptions()
-    {
+    private void InitializeUnitOptions() =>
         UnitOptions = new ObservableCollection<UnitOption>
         {
             new("Millimeters (mm)",
@@ -113,13 +108,11 @@ public partial class SettingsViewModel : BaseViewModel
             new("Inches (in)",
                 UnitTypeId.Inches)
         } ;
-    }
 
     /// <summary>
     ///     Initialize available language options
     /// </summary>
-    private void InitializeLanguageOptions()
-    {
+    private void InitializeLanguageOptions() =>
         LanguageOptions =
         [
             new LanguageOption("English",
@@ -127,7 +120,6 @@ public partial class SettingsViewModel : BaseViewModel
             new LanguageOption("Vietnamese",
                 LanguageCode.Vi)
         ] ;
-    }
 
     /// <summary>
     ///     Load current settings
