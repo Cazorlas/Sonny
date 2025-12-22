@@ -86,6 +86,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj" />
+    <ProjectReference Include="..\Sonny.Application.Infrastructure\Sonny.Application.Infrastructure.csproj"/>
     <ProjectReference Include="..\Sonny.Application.Features\Sonny.Application.Features.csproj"/>
     <ProjectReference Include="..\Sonny.Application.UI\Sonny.Application.UI.csproj" />
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>

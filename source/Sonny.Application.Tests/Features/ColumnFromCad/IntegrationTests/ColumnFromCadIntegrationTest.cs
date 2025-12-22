@@ -166,7 +166,8 @@ public class ColumnFromCadIntegrationTest : SonnyDocumentTestBase
         // Step 8: Convert display offsets to internal units (feet)
         Log("Step 8: Converting offsets") ;
         var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
-        var revitDocumentService = new RevitDocumentService(uiDocumentProvider) ;
+        var documentQuery = Host.GetService<IDocumentQuery>() ;
+        var revitDocumentService = new RevitDocumentService(uiDocumentProvider, documentQuery) ;
         var mockMessageService = Substitute.For<IMessageService>() ;
 
         var commonServices = new CommonServices(revitDocumentService,

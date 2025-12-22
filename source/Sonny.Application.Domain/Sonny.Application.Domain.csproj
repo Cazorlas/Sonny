@@ -63,8 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj"/>
-    <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
+    <!-- Sonny.ResourceManager kept for LanguageCode enum (acceptable exception) -->
     <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
   </ItemGroup>
 

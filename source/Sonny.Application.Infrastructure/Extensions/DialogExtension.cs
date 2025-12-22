@@ -2,7 +2,7 @@ using System.Windows ;
 using System.Windows.Interop ;
 using Autodesk.Windows ;
 
-namespace Sonny.Application.Domain.RevitExtensions ;
+namespace Sonny.Application.Infrastructure.Extensions ;
 
 /// <summary>
 ///     Extension methods for Window dialogs
