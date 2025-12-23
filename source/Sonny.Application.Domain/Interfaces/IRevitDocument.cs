@@ -1,6 +1,6 @@
 using Autodesk.Revit.UI ;
 
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Interface to abstract Revit Document operations

@@ -2,16 +2,15 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection ;
+using Sonny.Application.Presenters.AutoColumnDimension.ViewModels ;
 using Sonny.Application.Presenters.AutoColumnDimension.Views ;
+using Sonny.Application.Presenters.ColumnFromCad.ViewModels ;
 using Sonny.Application.Presenters.ColumnFromCad.Views ;
+using Sonny.Application.Presenters.Settings.ViewModels ;
 using Sonny.Application.Presenters.Settings.Views ;
 using Sonny.Application.Presenters.Views ;
 
 namespace Sonny.Application.Presenters ;
-
-using AutoColumnDimensionViewModel = AutoColumnDimension.ViewModels.AutoColumnDimensionViewModel ;
-using ColumnFromCadViewModel = ColumnFromCad.ViewModels.ColumnFromCadViewModel ;
-using SettingsViewModel = Settings.ViewModels.SettingsViewModel ;
 
 /// <summary>
 ///     Service registration for Sonny.Application.Presenters Layer
@@ -22,7 +21,7 @@ public static class ServiceRegistration
     ///     Adds Sonny.Application.Presenters Layer services to the service collection
     /// </summary>
     /// <param name="services">The service collection</param>
-    public static void AddPresentationServices(this IServiceCollection services)
+    public static void AddPresentersServices(this IServiceCollection services)
     {
         // Register Views
         services.AddTransient<AutoColumnDimensionViewModel>() ;

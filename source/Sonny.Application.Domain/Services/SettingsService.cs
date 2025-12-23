@@ -3,10 +3,10 @@ using System.Text.Json ;
 #else
 using Newtonsoft.Json ;
 #endif
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.ResourceManager ;
 
-namespace Sonny.Application.UseCases.Services ;
+namespace Sonny.Application.Domain.Services ;
 
 /// <summary>
 ///     Settings service implementation using JSON file storage

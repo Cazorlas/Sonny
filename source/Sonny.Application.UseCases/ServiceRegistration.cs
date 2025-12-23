@@ -2,8 +2,8 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection ;
-using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.UseCases.Services ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
@@ -14,7 +14,7 @@ namespace Sonny.Application.UseCases ;
 
 public static class ServiceRegistration
 {
-    public static void AddFeatureServices(this IServiceCollection services)
+    public static void AddUseCaseServices(this IServiceCollection services)
     {
         // AutoColumnDimension services
         services.AddSingleton<IGridFinder, GridFinder>() ;

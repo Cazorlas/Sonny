@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
+using Sonny.Application.Domain ;
 using Sonny.Application.UseCases ;
 using Sonny.Application.UseCases ;
 using Sonny.Application.Infrastructure ;
@@ -34,9 +35,9 @@ public static class Host
             // Infrastructure implementations must be registered before Domain services
             // because Domain services (like RevitDocumentService) depend on Infrastructure interfaces (IDocumentQuery)
             services.AddInfrastructureServices() ; // Infrastructure implementations
-            services.AddCoreServices() ; // Domain services
-            services.AddFeatureServices() ; // Application services
-            services.AddPresentationServices() ; // Presentation services (Views)
+            services.AddDomainServices() ; // Domain services
+            services.AddUseCaseServices() ; // Application services
+            services.AddPresentersServices() ; // Presentation services (Views)
 
             s_serviceProvider = services.BuildServiceProvider() ;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException ;

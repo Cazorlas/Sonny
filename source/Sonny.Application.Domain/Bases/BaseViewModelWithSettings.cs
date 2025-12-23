@@ -1,6 +1,6 @@
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 
-namespace Sonny.Application.UseCases.Bases ;
+namespace Sonny.Application.Domain.Bases ;
 
 /// <summary>
 ///     Base class for ViewModels that need settings management

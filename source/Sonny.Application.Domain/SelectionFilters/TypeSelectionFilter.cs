@@ -3,7 +3,7 @@
 
 using Autodesk.Revit.UI.Selection ;
 
-namespace Sonny.Application.UseCases.SelectionFilters ;
+namespace Sonny.Application.Domain.SelectionFilters ;
 
 public class TypeSelectionFilter : ISelectionFilter
 {

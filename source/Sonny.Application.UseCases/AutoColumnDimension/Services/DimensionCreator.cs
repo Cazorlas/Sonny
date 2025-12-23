@@ -1,4 +1,5 @@
 using Serilog ;
+using Sonny.Application.Domain ;
 using Sonny.Application.UseCases ;
 using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
 using Sonny.RevitExtensions.Extensions.GeometryObjects.Faces.PlanarFaces ;

@@ -1,4 +1,4 @@
-namespace Sonny.Application.UseCases.FailuresPreprocessors ;
+namespace Sonny.Application.Domain.FailuresPreprocessors ;
 
 /// <summary>
 ///     Failure preprocessor to delete warnings

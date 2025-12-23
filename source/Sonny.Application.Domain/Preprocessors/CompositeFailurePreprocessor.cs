@@ -1,4 +1,4 @@
-namespace Sonny.Application.UseCases.Preprocessors ;
+namespace Sonny.Application.Domain.Preprocessors ;
 
 public class CompositeFailurePreprocessor : IFailuresPreprocessor
 {

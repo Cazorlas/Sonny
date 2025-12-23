@@ -1,6 +1,6 @@
 using Sonny.ResourceManager ;
 
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Interface for application settings management

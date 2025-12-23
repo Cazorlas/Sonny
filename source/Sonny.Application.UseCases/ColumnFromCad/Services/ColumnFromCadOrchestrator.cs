@@ -1,7 +1,7 @@
-using Sonny.Application.UseCases.FailuresPreprocessors ;
-using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.UseCases.Managers ;
-using Sonny.Application.UseCases.Preprocessors ;
+using Sonny.Application.Domain.FailuresPreprocessors ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Managers ;
+using Sonny.Application.Domain.Preprocessors ;
 using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
 using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
 using Sonny.Application.UseCases.ColumnFromCad.Models ;

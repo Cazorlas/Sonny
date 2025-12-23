@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel ;
 using Revit.Async ;
-using Sonny.Application.UseCases.Bases ;
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Bases ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
 using Sonny.ResourceManager ;
 

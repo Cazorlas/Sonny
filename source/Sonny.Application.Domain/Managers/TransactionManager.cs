@@ -1,7 +1,7 @@
-using Sonny.Application.UseCases.Exceptions ;
-using Sonny.Application.UseCases.Preprocessors ;
+using Sonny.Application.Domain.Exceptions ;
+using Sonny.Application.Domain.Preprocessors ;
 
-namespace Sonny.Application.UseCases.Managers ;
+namespace Sonny.Application.Domain.Managers ;
 
 public class TransactionManager(
     Document document,

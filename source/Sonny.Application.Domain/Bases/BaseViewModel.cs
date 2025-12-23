@@ -1,8 +1,8 @@
 using System.Windows ;
 using Serilog ;
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 
-namespace Sonny.Application.UseCases.Bases ;
+namespace Sonny.Application.Domain.Bases ;
 
 /// <summary>
 ///     Base ViewModel with common dependencies for Sonny Application

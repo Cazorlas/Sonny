@@ -1,4 +1,4 @@
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Interface for unit conversion operations

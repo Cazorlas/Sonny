@@ -1,6 +1,6 @@
 using Serilog ;
 
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Common services container for ViewModels

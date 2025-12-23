@@ -1,4 +1,4 @@
-namespace Sonny.Application.UseCases.Managers ;
+namespace Sonny.Application.Domain.Managers ;
 
 public class TransactionGroupManager(Document document, string name) : IDisposable
 {

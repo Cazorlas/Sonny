@@ -1,4 +1,4 @@
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Infrastructure.Services ;

@@ -3,7 +3,7 @@ using Serilog ;
 using Serilog.Core ;
 using Serilog.Events ;
 
-namespace Sonny.Application.UseCases.Config.Logging ;
+namespace Sonny.Application.Domain.Config.Logging ;
 
 /// <summary>
 ///     Application logging configuration

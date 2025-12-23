@@ -2,15 +2,15 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection ;
-using Sonny.Application.UseCases.Config.Logging ;
-using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.UseCases.Services ;
+using Sonny.Application.Domain.Config.Logging ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Services ;
 
-namespace Sonny.Application.UseCases ;
+namespace Sonny.Application.Domain ;
 
 public static class ServiceRegistration
 {
-    public static void AddCoreServices(this IServiceCollection services)
+    public static void AddDomainServices(this IServiceCollection services)
     {
         // Logging
         services.AddSerilogConfiguration() ;

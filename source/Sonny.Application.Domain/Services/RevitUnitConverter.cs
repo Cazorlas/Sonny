@@ -1,6 +1,6 @@
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 
-namespace Sonny.Application.UseCases.Services ;
+namespace Sonny.Application.Domain.Services ;
 
 /// <summary>
 ///     Unit converter implementation using Revit UnitUtils

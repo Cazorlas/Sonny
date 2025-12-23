@@ -1,6 +1,4 @@
-using Autodesk.Revit.DB ;
-
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Interface for querying elements from Revit Document

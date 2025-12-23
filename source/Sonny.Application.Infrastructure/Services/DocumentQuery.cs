@@ -1,5 +1,5 @@
 using Autodesk.Revit.DB ;
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Infrastructure.Services ;

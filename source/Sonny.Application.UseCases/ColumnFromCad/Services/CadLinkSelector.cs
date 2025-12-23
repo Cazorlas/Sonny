@@ -1,6 +1,6 @@
 using Autodesk.Revit.UI ;
-using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.UseCases.SelectionFilters ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.SelectionFilters ;
 using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
 using Sonny.RevitExtensions.Extensions ;
 

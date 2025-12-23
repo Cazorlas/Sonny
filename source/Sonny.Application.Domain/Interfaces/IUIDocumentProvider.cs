@@ -1,6 +1,6 @@
 using Autodesk.Revit.UI ;
 
-namespace Sonny.Application.UseCases.Interfaces ;
+namespace Sonny.Application.Domain.Interfaces ;
 
 /// <summary>
 ///     Interface for providing UIDocument from Revit context

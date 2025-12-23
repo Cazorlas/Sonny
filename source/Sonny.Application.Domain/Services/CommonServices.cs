@@ -1,7 +1,7 @@
 using Serilog ;
-using Sonny.Application.UseCases.Interfaces ;
+using Sonny.Application.Domain.Interfaces ;
 
-namespace Sonny.Application.UseCases.Services ;
+namespace Sonny.Application.Domain.Services ;
 
 /// <summary>
 ///     Implementation of common services container
