@@ -3,7 +3,7 @@ using Autodesk.Revit.DB ;
 using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Services ;
 

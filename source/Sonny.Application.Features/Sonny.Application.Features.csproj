@@ -57,15 +57,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj" />
+    <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj" />
     <ProjectReference Include="..\Sonny.Application.Infrastructure\Sonny.Application.Infrastructure.csproj" />
     <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
   </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="Views\ProgressView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-
 </Project>

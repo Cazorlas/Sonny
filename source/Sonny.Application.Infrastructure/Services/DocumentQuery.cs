@@ -1,5 +1,5 @@
 using Autodesk.Revit.DB ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.Interfaces ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Infrastructure.Services ;
@@ -30,4 +30,5 @@ public class DocumentQuery : IDocumentQuery
         return _document.GetAllElements<TElement>() ; // Extension method from Sonny.RevitExtensions
     }
 }
+
 

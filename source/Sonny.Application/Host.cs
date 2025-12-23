@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
-using Sonny.Application.Domain ;
+using Sonny.Application.UseCases ;
 using Sonny.Application.Features ;
 using Sonny.Application.Infrastructure ;
+using Sonny.Application.Presenters ;
 
 namespace Sonny.Application ;
 
@@ -35,6 +36,7 @@ public static class Host
             services.AddInfrastructureServices() ; // Infrastructure implementations
             services.AddCoreServices() ; // Domain services
             services.AddFeatureServices() ; // Application services
+            services.AddPresentationServices() ; // Presentation services (Views)
 
             s_serviceProvider = services.BuildServiceProvider() ;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException ;

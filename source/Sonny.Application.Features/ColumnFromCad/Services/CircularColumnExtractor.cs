@@ -82,3 +82,4 @@ public class CircularColumnExtractor : ICircularColumnExtractor
     }
 }
 
+

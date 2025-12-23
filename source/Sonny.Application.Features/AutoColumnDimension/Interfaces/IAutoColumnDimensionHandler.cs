@@ -1,4 +1,4 @@
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.Interfaces ;
 
 namespace Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 

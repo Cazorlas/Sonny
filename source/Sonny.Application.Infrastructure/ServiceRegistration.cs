@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.Infrastructure.Services ;
 
 namespace Sonny.Application.Infrastructure ;
@@ -23,4 +23,5 @@ public static class ServiceRegistration
         }) ;
     }
 }
+
 

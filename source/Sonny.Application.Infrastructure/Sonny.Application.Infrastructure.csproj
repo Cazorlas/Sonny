@@ -50,17 +50,9 @@
     <ItemGroup>
         <!-- Reference Domain Layer to implement interfaces -->
         <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
-        <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj"/>
+        <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj" />
         
         <!-- Reference opensource library -->
         <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
     </ItemGroup>
-
-  <!-- WPF references for net48 (needed for Window, HwndSource, DependencyObject) -->
-  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
-    <Reference Include="PresentationCore"/>
-    <Reference Include="PresentationFramework"/>
-    <Reference Include="WindowsBase"/>
-  </ItemGroup>
-
 </Project>

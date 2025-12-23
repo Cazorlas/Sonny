@@ -41,5 +41,4 @@
     <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
     <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
   </ItemGroup>
-
 </Project>

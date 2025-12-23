@@ -19,3 +19,4 @@ public interface IColumnFamilyLoader
     /// <returns>List of parameter names (excluding Assembly, OmniClass, Material, Category, Type)</returns>
     HashSet<string> GetNumericParameters(Family family) ;
 }
+

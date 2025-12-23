@@ -2,7 +2,7 @@ using Autodesk.Revit.DB ;
 using Autodesk.Revit.UI ;
 using Revit.Async ;
 using Serilog ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.Interfaces ;
 
 namespace Sonny.Application.Bases ;
 
