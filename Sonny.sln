@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonny.RevitExtensions", "so
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonny.Application.Domain", "source\Sonny.Application.Domain\Sonny.Application.Domain.csproj", "{CA42040B-B443-4EBD-A7F3-3A39A38AFC89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonny.Application.Features", "source\Sonny.Application.Features\Sonny.Application.Features.csproj", "{A4F81F44-C9A7-41CE-BBD5-A973E918522D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonny.Application.UseCases", "source\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj", "{A4F81F44-C9A7-41CE-BBD5-A973E918522D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sonny.ResourceManager", "source\Sonny.ResourceManager\Sonny.ResourceManager.csproj", "{13F5B375-9EE4-48C0-A62F-7291420D0D92}"
 EndProject

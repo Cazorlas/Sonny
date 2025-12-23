@@ -5,9 +5,9 @@ using NUnit.Framework ;
 using Serilog ;
 using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.UseCases.Services ;
-using Sonny.Application.Features.ColumnFromCad.Contexts ;
-using Sonny.Application.Features.ColumnFromCad.Interfaces ;
-using Sonny.Application.Features.ColumnFromCad.Models ;
+using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
+using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
+using Sonny.Application.UseCases.ColumnFromCad.Models ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Tests.Features.ColumnFromCad.IntegrationTests ;

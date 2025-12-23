@@ -1,7 +1,7 @@
 using System.Collections.ObjectModel ;
 using Sonny.Application.UseCases.Bases ;
 using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.Features.Settings.Models ;
+using Sonny.Application.UseCases.Settings.Models ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Presenters.Settings.ViewModels ;

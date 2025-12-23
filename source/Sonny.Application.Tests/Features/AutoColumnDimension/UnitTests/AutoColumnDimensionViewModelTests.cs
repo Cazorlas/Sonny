@@ -5,7 +5,7 @@ using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
 using Sonny.Application.UseCases.Interfaces ;
-using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
+using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Presenters.AutoColumnDimension.ViewModels ;
 
 namespace Sonny.Application.Tests.Features.AutoColumnDimension.UnitTests ;

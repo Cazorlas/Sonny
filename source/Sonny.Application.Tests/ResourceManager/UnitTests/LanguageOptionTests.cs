@@ -1,6 +1,6 @@
 using System ;
 using NUnit.Framework ;
-using Sonny.Application.Features.Settings.Models ;
+using Sonny.Application.UseCases.Settings.Models ;
 using Sonny.Application.Tests.Utils ;
 using Sonny.ResourceManager ;
 

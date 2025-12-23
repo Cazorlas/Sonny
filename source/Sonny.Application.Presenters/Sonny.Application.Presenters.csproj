@@ -44,7 +44,7 @@
 
     <!-- MVVM -->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
-    
+
     <!-- IOC -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3"/>
   </ItemGroup>
@@ -57,7 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sonny.Application.Features\Sonny.Application.Features.csproj"/>
+    <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj"/>
   </ItemGroup>
 
 </Project>
