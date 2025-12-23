@@ -1,17 +1,18 @@
 using Sonny.Application.UseCases.FailuresPreprocessors ;
+using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.UseCases.Managers ;
 using Sonny.Application.UseCases.Preprocessors ;
 using Sonny.Application.Features.ColumnFromCad.Contexts ;
 using Sonny.Application.Features.ColumnFromCad.Interfaces ;
 using Sonny.Application.Features.ColumnFromCad.Models ;
 using Sonny.Application.Features.ColumnFromCad.Strategies ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Features.ColumnFromCad.Services ;
 
 public class ColumnFromCadOrchestrator(
     IRectangularColumnExtractor rectangularExtractor,
-    ICircularColumnExtractor circularExtractor) : IColumnFromCadOrchestrator
+    ICircularColumnExtractor circularExtractor,
+    IResourceHelper resourceHelper) : IColumnFromCadOrchestrator
 {
     private readonly List<ColumnModel> _extractedColumns = [] ;
 
@@ -40,7 +41,7 @@ public class ColumnFromCadOrchestrator(
     public List<ElementId> CreateColumns(ColumnCreationContext columnCreationContext)
     {
         if (_extractedColumns.Count == 0) {
-            throw new InvalidOperationException(ResourceHelper.GetString("MessageNoExtractedColumnsFound")) ;
+            throw new InvalidOperationException(resourceHelper.GetString("MessageNoExtractedColumnsFound")) ;
         }
 
         var createdIds = new List<ElementId>() ;
@@ -48,7 +49,7 @@ public class ColumnFromCadOrchestrator(
         var current = 0 ;
 
         using var transactionGroup = new TransactionGroupManager(columnCreationContext.Document,
-            ResourceHelper.GetString("TransactionCreateColumns")) ;
+            resourceHelper.GetString("TransactionCreateColumns")) ;
         transactionGroup.Start() ;
 
         foreach (var columnModel in _extractedColumns) {
@@ -60,7 +61,7 @@ public class ColumnFromCadOrchestrator(
                 var compositeFailurePreprocessor = new CompositeFailurePreprocessor() ;
                 compositeFailurePreprocessor.AddPreprocessor(new SuppressWarningsPreprocessor()) ;
                 using var transactionManager = new TransactionManager(columnCreationContext.Document,
-                    ResourceHelper.GetString("TransactionCreateColumn"),
+                    resourceHelper.GetString("TransactionCreateColumn"),
                     compositeFailurePreprocessor) ;
                 transactionManager.Start() ;
 

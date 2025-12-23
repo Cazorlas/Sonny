@@ -44,7 +44,8 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         var autoColumnDimensionService = Host.GetService<IAutoColumnDimensionService>() ;
         _handler = new AutoColumnDimensionHandler(mockMessageService,
             logger,
-            autoColumnDimensionService) ;
+            autoColumnDimensionService,
+            Host.GetService<IResourceHelper>()) ;
     }
 
     [Test]

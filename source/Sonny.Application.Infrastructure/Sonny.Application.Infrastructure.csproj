@@ -52,7 +52,8 @@
         <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
         <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj" />
         
-        <!-- Reference opensource library -->
+        <!-- Reference Infrastructure libraries -->
+        <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
         <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
     </ItemGroup>
 </Project>

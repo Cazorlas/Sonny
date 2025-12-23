@@ -3,7 +3,6 @@ using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.UseCases.Managers ;
 using Sonny.Application.Features.AutoColumnDimension.Interfaces ;
 using Sonny.Application.Features.AutoColumnDimension.Models ;
-using Sonny.ResourceManager ;
 using Sonny.RevitExtensions.Extensions.Elements ;
 using Sonny.RevitExtensions.RevitWrapper ;
 
@@ -19,6 +18,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
     private readonly IAutoColumnDimensionService _autoColumnDimensionService ;
     private readonly ILogger _logger ;
     private readonly IMessageService _messageService ;
+    private readonly IResourceHelper _resourceHelper ;
 
     /// <summary>
     ///     Initializes a new instance of AutoColumnDimensionHandler
@@ -26,13 +26,16 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
     /// <param name="messageService">The message service</param>
     /// <param name="logger">The logger</param>
     /// <param name="autoColumnDimensionService">The auto column dimension service</param>
+    /// <param name="resourceHelper">The resource helper</param>
     public AutoColumnDimensionHandler(IMessageService messageService,
         ILogger logger,
-        IAutoColumnDimensionService autoColumnDimensionService)
+        IAutoColumnDimensionService autoColumnDimensionService,
+        IResourceHelper resourceHelper)
     {
         _messageService = messageService ;
         _logger = logger ;
         _autoColumnDimensionService = autoColumnDimensionService ;
+        _resourceHelper = resourceHelper ;
     }
 
     /// <summary>
@@ -87,7 +90,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
     {
         if (wrappers.Count == 0) {
             _logger.Warning("No valid columns found for dimensioning") ;
-            _messageService.ShowInfo(ResourceHelper.GetString("MessageNoColumnsFound")) ;
+            _messageService.ShowInfo(_resourceHelper.GetString("MessageNoColumnsFound")) ;
             return false ;
         }
 
@@ -139,7 +142,7 @@ public class AutoColumnDimensionHandler : IAutoColumnDimensionHandler
                 expectedDimensionCount - createdDimensions.Count)
         } ;
 
-        var logMessage = result.GetLogMessage() ;
+        var logMessage = result.GetLogMessage(_resourceHelper) ;
         _messageService.ShowInfo(logMessage) ;
     }
 }

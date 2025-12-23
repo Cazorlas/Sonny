@@ -1,4 +1,4 @@
-using Sonny.ResourceManager ;
+using Sonny.Application.UseCases.Interfaces ;
 
 namespace Sonny.Application.Features.AutoColumnDimension.Models ;
 
@@ -25,21 +25,22 @@ public class ExecutionResult
     /// <summary>
     ///     Gets formatted log message for display
     /// </summary>
+    /// <param name="resourceHelper">Resource helper for localization</param>
     /// <returns>Formatted log message</returns>
-    public string GetLogMessage()
+    public string GetLogMessage(IResourceHelper resourceHelper)
     {
         var total = SuccessCount + FailureCount ;
         var completedTime = ExecutionTime.ToString("yyyy-MM-dd HH:mm:ss") ;
-        return ResourceHelper.GetString("ExecutionResultCompleted",
+        return resourceHelper.GetString("ExecutionResultCompleted",
                    completedTime)
                + "\n\n"
-               + ResourceHelper.GetString("ExecutionResultTotalColumns",
+               + resourceHelper.GetString("ExecutionResultTotalColumns",
                    total)
                + "\n"
-               + ResourceHelper.GetString("ExecutionResultSuccess",
+               + resourceHelper.GetString("ExecutionResultSuccess",
                    SuccessCount)
                + "\n"
-               + ResourceHelper.GetString("ExecutionResultFailed",
+               + resourceHelper.GetString("ExecutionResultFailed",
                    FailureCount) ;
     }
 }

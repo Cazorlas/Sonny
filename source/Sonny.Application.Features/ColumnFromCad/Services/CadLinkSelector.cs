@@ -1,13 +1,20 @@
 using Autodesk.Revit.UI ;
+using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.UseCases.SelectionFilters ;
 using Sonny.Application.Features.ColumnFromCad.Interfaces ;
 using Sonny.RevitExtensions.Extensions ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Features.ColumnFromCad.Services ;
 
 public class CadLinkSelector : ICadLinkSelector
 {
+    private readonly IResourceHelper _resourceHelper ;
+
+    public CadLinkSelector(IResourceHelper resourceHelper)
+    {
+        _resourceHelper = resourceHelper ;
+    }
+
     public ImportInstance? SelectCadLink(UIDocument uiDocument)
     {
         try {
@@ -15,7 +22,7 @@ public class CadLinkSelector : ICadLinkSelector
 
             var reference = uiDocument.Selection.PickObject(Autodesk.Revit.UI.Selection.ObjectType.Element,
                 new TypeSelectionFilter(typesFilter),
-                ResourceHelper.GetString("MessageSelectCadLink")) ;
+                _resourceHelper.GetString("MessageSelectCadLink")) ;
 
             return uiDocument.Document.GetElementById<ImportInstance>(reference) ;
         }

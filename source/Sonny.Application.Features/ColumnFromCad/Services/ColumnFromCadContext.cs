@@ -1,7 +1,6 @@
 using Sonny.Application.UseCases.Interfaces ;
 using Sonny.Application.Features.ColumnFromCad.Interfaces ;
 using Sonny.RevitExtensions.Extensions ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Features.ColumnFromCad.Services ;
 
@@ -14,23 +13,24 @@ public class ColumnFromCadContext : IColumnFromCadContext
 
     public ColumnFromCadContext(ICadLinkSelector cadLinkSelector,
         IColumnFamilyLoader columnFamilyLoader,
-        IRevitDocument revitDocument)
+        IRevitDocument revitDocument,
+        IResourceHelper resourceHelper)
     {
         var uiDocument = revitDocument.UIDocument ;
 
         if (cadLinkSelector.SelectCadLink(uiDocument) is not { } selectedCadLink) {
-            throw new InvalidOperationException(ResourceHelper.GetString("MessageFailedToSelectCadLink")) ;
+            throw new InvalidOperationException(resourceHelper.GetString("MessageFailedToSelectCadLink")) ;
         }
 
         if (selectedCadLink.GetAllLayerNames(true) is not { Count: > 0 } layerNames) {
-            throw new InvalidOperationException(ResourceHelper.GetString("MessageNoLayersFoundInCadLink")) ;
+            throw new InvalidOperationException(resourceHelper.GetString("MessageNoLayersFoundInCadLink")) ;
         }
 
         var document = uiDocument.Document ;
         var families = columnFamilyLoader.GetAllColumnFamilies(document) ;
 
         if (families.Count == 0) {
-            throw new InvalidOperationException(ResourceHelper.GetString("MessageNoColumnFamiliesFound")) ;
+            throw new InvalidOperationException(resourceHelper.GetString("MessageNoColumnFamiliesFound")) ;
         }
 
         // Load parameters for all families

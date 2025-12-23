@@ -14,10 +14,10 @@ public class DocumentQuery : IDocumentQuery
     /// <summary>
     ///     Initializes a new instance of DocumentQuery
     /// </summary>
-    /// <param name="document">Revit Document instance</param>
-    public DocumentQuery(Document document)
+    /// <param name="revitDocument">Revit document service</param>
+    public DocumentQuery(IRevitDocument revitDocument)
     {
-        _document = document ;
+        _document = revitDocument.Document ;
     }
 
     /// <summary>
