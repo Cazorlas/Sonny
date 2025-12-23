@@ -48,9 +48,6 @@
     <!-- Revit References -->
     <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
     <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
 
     <!-- IOC -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3"/>
@@ -58,7 +55,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj" />
-    <ProjectReference Include="..\Sonny.Application.Infrastructure\Sonny.Application.Infrastructure.csproj" />
-    <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
   </ItemGroup>
 </Project>

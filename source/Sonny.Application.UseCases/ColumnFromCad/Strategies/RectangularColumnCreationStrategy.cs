@@ -1,17 +1,24 @@
 ﻿// Licensed to the.NET Foundation under one or more agreements.
 // The.NET Foundation licenses this file to you under the MIT license.
 
-using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
-using Sonny.Application.UseCases.ColumnFromCad.Models ;
-using Sonny.RevitExtensions.Extensions.Families ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.Entities.ColumnFromCad.Contexts ;
 
 namespace Sonny.Application.UseCases.ColumnFromCad.Strategies ;
 
 public class RectangularColumnCreationStrategy(
     RectangularColumnModel rectangularColumnModel,
-    ColumnCreationContext columnCreationContext) : ColumnCreationStrategy(rectangularColumnModel,
-    columnCreationContext)
+    ColumnCreationContext columnCreationContext,
+    IFamilySymbolProvider familySymbolProvider,
+    IGeometryHelper geometryHelper,
+    IPoint3DConverter point3DConverter) : ColumnCreationStrategy(rectangularColumnModel,
+    columnCreationContext,
+    point3DConverter)
 {
+    private readonly IFamilySymbolProvider _familySymbolProvider = familySymbolProvider ;
+    private readonly IGeometryHelper _geometryHelper = geometryHelper ;
+
     protected override FamilySymbol? GetOrCreateFamilySymbol()
     {
         if (Math.Abs(rectangularColumnModel.ShortSide) < Tolerance
@@ -32,18 +39,19 @@ public class RectangularColumnCreationStrategy(
     protected override void RotateElement(Element element)
     {
         // Rotate column if needed
+        var centerXyz = Point3DConverter.ToXyz(ColumnModel.Center) ;
         if (rectangularColumnModel.RotationAngle >= 0) {
             ElementTransformUtils.RotateElement(element.Document,
                 element.Id,
-                Line.CreateBound(ColumnModel.Center,
-                    ColumnModel.Center.Add(XYZ.BasisZ)),
+                Line.CreateBound(centerXyz,
+                    centerXyz.Add(XYZ.BasisZ)),
                 rectangularColumnModel.RotationAngle) ;
         }
         else {
             ElementTransformUtils.RotateElement(element.Document,
                 element.Id,
-                Line.CreateBound(ColumnModel.Center,
-                    ColumnModel.Center.Add(XYZ.BasisZ)),
+                Line.CreateBound(centerXyz,
+                    centerXyz.Add(XYZ.BasisZ)),
                 -rectangularColumnModel.RotationAngle + Math.PI / 2) ;
         }
     }
@@ -54,7 +62,7 @@ public class RectangularColumnCreationStrategy(
         string widthParameter,
         string heightParameter)
     {
-        var allFamilySymbols = family.GetFamilySymbols()
+        var allFamilySymbols = _familySymbolProvider.GetFamilySymbols(family)
             .ToList() ;
 
         // Try to find existing symbol with matching dimensions
@@ -81,9 +89,9 @@ public class RectangularColumnCreationStrategy(
             return null ;
         }
 
-        var widthMm = Math.Round(width.ToMillimeters(),
+        var widthMm = Math.Round(_geometryHelper.ToMillimeters(width),
             0) ;
-        var heightMm = Math.Round(height.ToMillimeters(),
+        var heightMm = Math.Round(_geometryHelper.ToMillimeters(height),
             0) ;
 
         if (Math.Abs(widthMm) < Tolerance

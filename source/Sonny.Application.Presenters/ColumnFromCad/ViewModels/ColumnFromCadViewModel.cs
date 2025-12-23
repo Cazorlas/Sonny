@@ -1,14 +1,13 @@
 using System.Collections.ObjectModel ;
 using System.Windows.Threading ;
 using Revit.Async ;
-using Sonny.Application.Domain.Bases ;
+using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
-using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
-using Sonny.Application.UseCases.ColumnFromCad.Models ;
+using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.Entities.ColumnFromCad.Contexts ;
+using Sonny.Application.Presenters.Bases ;
 using Sonny.Application.Presenters.Views ;
 using Sonny.ResourceManager ;
-using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Presenters.ColumnFromCad.ViewModels ;
 
@@ -16,22 +15,26 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 {
     #region Services
 
-    private IColumnFromCadOrchestrator ColumnFromCadOrchestrator { get ; }
+    private IColumnFromCadInteractor ColumnFromCadInteractor { get ; }
 
     private IColumnFromCadContext Context { get ; }
+
+    private IDocumentQuery DocumentQuery { get ; }
 
     #endregion
 
     #region Constructor
 
     public ColumnFromCadViewModel(ICommonServices commonServices,
-        IColumnFromCadOrchestrator columnFromCadOrchestrator,
+        IColumnFromCadInteractor columnFromCadInteractor,
         IColumnFromCadContext context,
-        IViewModelSettingsService<ColumnFromCadSettings> settingsService) : base(commonServices,
+        IViewModelSettingsService<ColumnFromCadSettings> settingsService,
+        IDocumentQuery documentQuery) : base(commonServices,
         settingsService)
     {
-        ColumnFromCadOrchestrator = columnFromCadOrchestrator ;
+        ColumnFromCadInteractor = columnFromCadInteractor ;
         Context = context ;
+        DocumentQuery = documentQuery ;
 
         InitializeWithSettings() ;
     }
@@ -160,7 +163,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
         SaveSettings() ;
 
         // Extract column data
-        var columnsData = await RevitTask.RunAsync(() => ColumnFromCadOrchestrator.ExtractColumnData(
+        var columnsData = await RevitTask.RunAsync(() => ColumnFromCadInteractor.ExtractColumnData(
             Context.SelectedCadLink,
             SelectedLayer!,
             IsModelByHatch)) ;
@@ -208,7 +211,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
                 }
             } ;
 
-            return ColumnFromCadOrchestrator.CreateColumns(context) ;
+            return ColumnFromCadInteractor.CreateColumns(context) ;
         }) ;
 
         // Close progress window
@@ -443,7 +446,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// </summary>
     private void LoadLevels()
     {
-        var levels = RevitDocument.Document
+        var levels = DocumentQuery
             .GetAllElements<Level>()
             .OrderBy(level => level.Elevation)
             .ToList() ;

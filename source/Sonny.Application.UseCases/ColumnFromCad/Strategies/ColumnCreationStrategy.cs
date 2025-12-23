@@ -2,28 +2,39 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Autodesk.Revit.DB.Structure ;
-using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
-using Sonny.Application.UseCases.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.Entities.ColumnFromCad.Contexts ;
 
 namespace Sonny.Application.UseCases.ColumnFromCad.Strategies ;
 
-public abstract class ColumnCreationStrategy(ColumnModel columnModel, ColumnCreationContext columnCreationContext)
+public abstract class ColumnCreationStrategy(ColumnModel columnModel, ColumnCreationContext columnCreationContext, IPoint3DConverter point3DConverter)
 {
     protected const double Tolerance = 0.001 ;
     protected readonly ColumnCreationContext ColumnCreationContext = columnCreationContext ;
     protected readonly ColumnModel ColumnModel = columnModel ;
+    protected readonly IPoint3DConverter Point3DConverter = point3DConverter ;
 
     public static ColumnCreationStrategy? CreateInstance(ColumnModel columnModel,
-        ColumnCreationContext columnCreationContext)
+        ColumnCreationContext columnCreationContext,
+        IFamilySymbolProvider familySymbolProvider,
+        IGeometryHelper geometryHelper,
+        IPoint3DConverter point3DConverter)
     {
         if (columnModel is CircularColumnModel circularColumnModel) {
             return new CircularColumnCreationStrategy(circularColumnModel,
-                columnCreationContext) ;
+                columnCreationContext,
+                familySymbolProvider,
+                geometryHelper,
+                point3DConverter) ;
         }
 
         if (columnModel is RectangularColumnModel rectangularColumnModel) {
             return new RectangularColumnCreationStrategy(rectangularColumnModel,
-                columnCreationContext) ;
+                columnCreationContext,
+                familySymbolProvider,
+                geometryHelper,
+                point3DConverter) ;
         }
 
         return null ;
@@ -40,7 +51,8 @@ public abstract class ColumnCreationStrategy(ColumnModel columnModel, ColumnCrea
         }
 
         var document = ColumnCreationContext.Document ;
-        var instance = document.Create.NewFamilyInstance(ColumnModel.Center,
+        var centerXyz = Point3DConverter.ToXyz(ColumnModel.Center) ;
+        var instance = document.Create.NewFamilyInstance(centerXyz,
             familySymbol,
             ColumnCreationContext.BaseLevel,
             StructuralType.Column) ;

@@ -3,11 +3,11 @@ using Autodesk.Revit.DB ;
 using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
+using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
 using Sonny.Application.Domain.Interfaces ;
 using Sonny.Application.Domain.Services ;
-using Sonny.Application.UseCases.ColumnFromCad.Contexts ;
-using Sonny.Application.UseCases.ColumnFromCad.Interfaces ;
-using Sonny.Application.UseCases.ColumnFromCad.Models ;
+using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.Entities.ColumnFromCad.Contexts ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Tests.Features.ColumnFromCad.IntegrationTests ;
@@ -59,7 +59,7 @@ public class ColumnFromCadIntegrationTest : SonnyDocumentTestBase
             "CAD link with specified UniqueId should be found") ;
         Log($"✓ Found CAD link: Id={importInstance!.Id}, UniqueId={importInstance.UniqueId}") ;
 
-        var columnFromCadOrchestrator = Host.GetService<IColumnFromCadOrchestrator>() ;
+        var columnFromCadOrchestrator = Host.GetService<IColumnFromCadInteractor>() ;
 
         // Test data from JSON
         const string testSelectedLayer = "S-COLS" ;

@@ -57,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
     <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj"/>
   </ItemGroup>
 

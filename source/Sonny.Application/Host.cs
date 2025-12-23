@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
 using Sonny.Application.Domain ;
 using Sonny.Application.UseCases ;
-using Sonny.Application.UseCases ;
 using Sonny.Application.Infrastructure ;
 using Sonny.Application.Presenters ;
 
