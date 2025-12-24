@@ -1,8 +1,8 @@
 using System ;
 using System.IO ;
 using NUnit.Framework ;
-using Sonny.Application.Domain.Services ;
 using Sonny.Application.Tests.Utils ;
+using Sonny.Application.UseCases.Services ;
 using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Tests.Core.UnitTests.Services ;

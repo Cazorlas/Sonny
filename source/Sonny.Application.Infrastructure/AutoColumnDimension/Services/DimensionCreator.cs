@@ -1,27 +1,14 @@
 using Serilog ;
 using Sonny.Application.Domain ;
-using Sonny.Application.UseCases ;
-using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
 using Sonny.RevitExtensions.Extensions.GeometryObjects.Faces.PlanarFaces ;
 using Sonny.RevitExtensions.Extensions.XYZs ;
 using Sonny.RevitExtensions.RevitWrapper ;
 using Sonny.RevitExtensions.Utilities ;
 
-namespace Sonny.Application.UseCases.AutoColumnDimension.Services ;
+namespace Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
 
-/// <summary>
-///     Service for creating dimensions by direction
-/// </summary>
-public class DimensionCreator : IDimensionCreator
+public class DimensionCreator(ILogger logger) : IDimensionCreator
 {
-    private readonly ILogger _logger ;
-
-    /// <summary>
-    ///     Initializes a new instance of DimensionCreator
-    /// </summary>
-    /// <param name="logger">The logger</param>
-    public DimensionCreator(ILogger logger) => _logger = logger ;
-
     public List<ElementWrapperBase> DimensionByDirection(List<PlanarFace> planarFaces,
         XYZ direction,
         XYZ offsetDirection,
@@ -77,7 +64,7 @@ public class DimensionCreator : IDimensionCreator
             }
             catch (Exception ex) {
                 // Log error but continue to create dimension without grid reference
-                _logger.Warning(ex,
+                logger.Warning(ex,
                     "Failed to create dimension with grid reference") ;
             }
         }
@@ -96,7 +83,7 @@ public class DimensionCreator : IDimensionCreator
         }
         catch (Exception ex) {
             // Log error but return partial results
-            _logger.Warning(ex,
+            logger.Warning(ex,
                 "Failed to create dimension") ;
         }
 

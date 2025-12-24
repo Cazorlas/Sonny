@@ -58,11 +58,8 @@
 
   <ItemGroup>
     <!-- Entities Layer - Domain entities and value objects -->
-    <ProjectReference Include="..\Sonny.Application.Entities\Sonny.Application.Entities.csproj"/>
     
     <!-- Sonny.ResourceManager kept for LanguageCode enum (acceptable exception) -->
     <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
   </ItemGroup>
-  
-
 </Project>

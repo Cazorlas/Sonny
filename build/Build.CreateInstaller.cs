@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis ;
-using Serilog.Events ;
 using Nuke.Common.Tooling ;
-using Nuke.Common.Utilities ;
 using Nuke.Common.Tools.DotNet ;
+using Nuke.Common.Utilities ;
+using Serilog.Events ;
 using static Nuke.Common.Tools.DotNet.DotNetTasks ;
+
+namespace Build ;
 
 sealed partial class Build
 {

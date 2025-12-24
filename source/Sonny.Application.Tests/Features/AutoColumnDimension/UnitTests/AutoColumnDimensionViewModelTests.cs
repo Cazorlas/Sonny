@@ -5,8 +5,8 @@ using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
-using Sonny.Application.Presenters.AutoColumnDimension.ViewModels ;
+using Sonny.Application.Presentation.AutoColumnDimension.ViewModels ;
+using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 
 namespace Sonny.Application.Tests.Features.AutoColumnDimension.UnitTests ;
 
@@ -21,7 +21,7 @@ public class AutoColumnDimensionViewModelTests
     public void Setup()
     {
         // Create mocks using NSubstitute
-        _handler = Substitute.For<IAutoColumnDimensionHandler>() ;
+        _interactor = Substitute.For<IAutoColumnDimensionInteractor>() ;
         _revitDocument = Substitute.For<IRevitDocument>() ;
         _messageService = Substitute.For<IMessageService>() ;
         _logger = Substitute.For<ILogger>() ;
@@ -47,7 +47,7 @@ public class AutoColumnDimensionViewModelTests
     }
 
     private ICommonServices _commonServices ;
-    private IAutoColumnDimensionHandler _handler ;
+    private IAutoColumnDimensionInteractor _interactor ;
     private IRevitDocument _revitDocument ;
     private IMessageService _messageService ;
     private ILogger _logger ;
@@ -64,7 +64,7 @@ public class AutoColumnDimensionViewModelTests
 
         // Act
         _viewModel = new AutoColumnDimensionViewModel(_commonServices,
-            _handler) ;
+            _interactor) ;
 
         // Assert
         Assert.IsNotNull(_viewModel) ;
@@ -83,7 +83,7 @@ public class AutoColumnDimensionViewModelTests
 
         // Act
         _viewModel = new AutoColumnDimensionViewModel(_commonServices,
-            _handler) ;
+            _interactor) ;
 
         // Assert
         Assert.IsNull(_viewModel.SelectedDimensionType) ;
@@ -99,7 +99,7 @@ public class AutoColumnDimensionViewModelTests
 
         // Act
         _viewModel = new AutoColumnDimensionViewModel(_commonServices,
-            _handler) ;
+            _interactor) ;
 
         // Assert
         _logger.Received()

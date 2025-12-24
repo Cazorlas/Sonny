@@ -2,6 +2,8 @@ using System.Text ;
 using Nuke.Common.Tools.Git ;
 using Nuke.Common.Tools.GitHub ;
 
+namespace Build ;
+
 sealed partial class Build
 {
     /// <summary>

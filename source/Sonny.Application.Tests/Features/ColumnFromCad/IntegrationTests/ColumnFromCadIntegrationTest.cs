@@ -3,11 +3,11 @@ using Autodesk.Revit.DB ;
 using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
-using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Contexts ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Domain.Services ;
-using Sonny.Application.Entities.ColumnFromCad ;
-using Sonny.Application.Entities.ColumnFromCad.Contexts ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
+using Sonny.Application.UseCases.Services ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Tests.Features.ColumnFromCad.IntegrationTests ;
@@ -167,7 +167,7 @@ public class ColumnFromCadIntegrationTest : SonnyDocumentTestBase
         Log("Step 8: Converting offsets") ;
         var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
         var documentQuery = Host.GetService<IDocumentQuery>() ;
-        var revitDocumentService = new RevitDocumentService(uiDocumentProvider, documentQuery) ;
+        var revitDocumentService = new RevitDocument(uiDocumentProvider, documentQuery) ;
         var mockMessageService = Substitute.For<IMessageService>() ;
 
         var commonServices = new CommonServices(revitDocumentService,

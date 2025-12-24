@@ -1,4 +1,4 @@
-using Sonny.Application.Entities ;
+using Sonny.Application.Domain.Entites ;
 
 namespace Sonny.Application.Domain.Interfaces ;
 

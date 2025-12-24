@@ -1,5 +1,5 @@
-using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
 using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
 
 namespace Sonny.Application.Infrastructure.Services ;
 

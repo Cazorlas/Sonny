@@ -1,6 +1,8 @@
 using Nuke.Common.Tools.GitHub ;
 using Octokit ;
 
+namespace Build ;
+
 sealed partial class Build
 {
     /// <summary>

@@ -1,4 +1,4 @@
-using Sonny.Application.Entities;
+using Sonny.Application.Domain.Entites ;
 
 namespace Sonny.Application.Domain.Interfaces;
 
@@ -21,4 +21,5 @@ public interface IPoint3DConverter
     /// <returns>The equivalent Point3D</returns>
     Point3D FromXyz(XYZ xyz);
 }
+
 

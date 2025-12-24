@@ -1,9 +1,16 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
-using Sonny.Application.Domain ;
-using Sonny.Application.UseCases ;
-using Sonny.Application.Infrastructure ;
-using Sonny.Application.Presenters ;
+using Sonny.Application.Domain.Config.Logging ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
+using Sonny.Application.Infrastructure.Managers ;
+using Sonny.Application.Infrastructure.Services ;
+using Sonny.Application.Presentation ;
+using Sonny.Application.UseCases.AutoColumnDimension.Services ;
+using Sonny.Application.UseCases.ColumnFromCad.Implements ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
+using Sonny.Application.UseCases.Services ;
 
 namespace Sonny.Application ;
 
@@ -31,12 +38,51 @@ public static class Host
 
             var services = new ServiceCollection() ;
 
-            // Infrastructure implementations must be registered before Domain services
-            // because Domain services (like RevitDocumentService) depend on Infrastructure interfaces (IDocumentQuery)
-            services.AddInfrastructureServices() ; // Infrastructure implementations
-            services.AddDomainServices() ; // Domain services
-            services.AddUseCaseServices() ; // Application services
-            services.AddPresentersServices() ; // Presentation services (Views)
+            // Logging
+            services.AddSerilogConfiguration() ;
+            services.AddSingleton<IResourceHelper, ResourceHelper>() ;
+            services.AddSingleton<ITransactionManagerFactory, TransactionManagerFactory>() ;
+            services.AddSingleton<IFamilySymbolProvider, FamilySymbolProvider>() ;
+            services.AddSingleton<ICadLayerProvider, CadLayerProvider>() ;
+            services.AddSingleton<IGeometryHelper, GeometryHelper>() ;
+            services.AddSingleton<IFailurePreprocessorFactory, FailurePreprocessorFactory>() ;
+            services.AddSingleton<IPoint3DConverter, Point3DConverter>() ;
+
+            // Common services
+            services.AddSingleton<IMessageService, MessageService>() ;
+            services.AddSingleton<IUnitConverter, UnitConverter>() ;
+            services.AddSingleton<ISettingsService, SettingsService>() ;
+
+            // UIDocument Provider (Singleton - stores current UIDocument)
+            services.AddSingleton<IUIDocumentProvider, UIDocumentProvider>() ;
+            services.AddScoped<IDocumentQuery, DocumentQuery>() ;
+
+
+            // RevitDocument (Singleton - gets UIDocument from provider each time, no caching)
+            services.AddTransient<IRevitDocument, RevitDocument>() ;
+
+            // CommonServices (Singleton - gets fresh UIDocument from provider via IRevitDocument)
+            services.AddTransient<ICommonServices, CommonServices>() ;
+
+            // ColumnFromCadFromCad
+            services.AddSingleton<ICadLinkSelector, CadLinkSelector>() ;
+            services.AddSingleton<IColumnFamilyLoader, ColumnFamilyLoader>() ;
+            services.AddSingleton<IColumnModelFactory, ColumnModelFactory>() ;
+
+            services.AddSingleton<IRectangularColumnExtractor, RectangularColumnExtractor>() ;
+            services.AddSingleton<ICircularColumnExtractor, CircularColumnExtractor>() ;
+            services.AddTransient<IColumnFromCadContext, ColumnFromCadContext>() ;
+            services.AddTransient<IColumnFromCadInteractor, ColumnFromCadInteractor>() ;
+
+            // AutoColumnDimension
+            services.AddSingleton<IGridFinder, GridFinder>() ;
+            services.AddSingleton<IDimensionCreator, DimensionCreator>() ;
+            services.AddSingleton<IAutoColumnDimension, AutoColumnDimension>() ;
+            services.AddSingleton<IAutoColumnDimensionInteractor, AutoColumnDimensionInteractor>() ;
+            services.AddTransient<IViewModelSettingsService<ColumnFromCadSettings>>(_ =>
+                new ViewModelSettingsService<ColumnFromCadSettings>()) ;
+
+            services.AddPresentationsServices() ; // Presentation services (Views)
 
             s_serviceProvider = services.BuildServiceProvider() ;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException ;

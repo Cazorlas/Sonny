@@ -1,6 +1,6 @@
-using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
 using Sonny.RevitExtensions.Extensions ;
 using Sonny.RevitExtensions.Extensions.CurveLoops ;
 using Sonny.RevitExtensions.Extensions.Elements ;
@@ -9,15 +9,8 @@ using Sonny.RevitExtensions.Extensions.GeometryObjects.Solids ;
 
 namespace Sonny.Application.Infrastructure.Services ;
 
-public class RectangularColumnExtractor : IRectangularColumnExtractor
+public class RectangularColumnExtractor(IColumnModelFactory columnModelFactory) : IRectangularColumnExtractor
 {
-    private readonly IColumnModelFactory _columnModelFactory ;
-
-    public RectangularColumnExtractor(IColumnModelFactory columnModelFactory)
-    {
-        _columnModelFactory = columnModelFactory ;
-    }
-
     public List<RectangularColumnModel> ExtractFromBoundaryLines(ImportInstance cadInstance,
         string selectedLayer)
     {
@@ -40,7 +33,7 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
                 var line4 = Line.CreateBound(coordinates[3],
                     coordinates[4]) ;
 
-                columns.Add(_columnModelFactory.CreateRectangular([line1, line2, line3, line4])) ;
+                columns.Add(columnModelFactory.CreateRectangular([line1, line2, line3, line4])) ;
             }
         }
 
@@ -67,7 +60,7 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
                 .ToList() ;
 
             if (curves.Count == 4) {
-                columns.Add(_columnModelFactory.CreateRectangular(curves)) ;
+                columns.Add(columnModelFactory.CreateRectangular(curves)) ;
             }
         }
 

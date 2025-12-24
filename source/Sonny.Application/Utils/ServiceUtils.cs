@@ -3,7 +3,7 @@
 
 using Serilog ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Domain.Services ;
+using Sonny.Application.UseCases.Services ;
 
 namespace Sonny.Application.Utils ;
 

@@ -1,18 +1,11 @@
-using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
 using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Infrastructure.Services ;
 
-public class ColumnFamilyLoader : IColumnFamilyLoader
+public class ColumnFamilyLoader(IFamilySymbolProvider familySymbolProvider) : IColumnFamilyLoader
 {
-    private readonly IFamilySymbolProvider _familySymbolProvider ;
-
-    public ColumnFamilyLoader(IFamilySymbolProvider familySymbolProvider)
-    {
-        _familySymbolProvider = familySymbolProvider ;
-    }
-
     public List<Family> GetAllColumnFamilies(Document document)
     {
         var structuralColumns = Category.GetCategory(document,
@@ -32,7 +25,7 @@ public class ColumnFamilyLoader : IColumnFamilyLoader
 
     public HashSet<string> GetNumericParameters(Family family)
     {
-        if (_familySymbolProvider.GetFamilySymbols(family)
+        if (familySymbolProvider.GetFamilySymbols(family)
                 .FirstOrDefault() is not { } familySymbol) {
             return [] ;
         }

@@ -1,6 +1,6 @@
 using Sonny.RevitExtensions.RevitWrapper ;
 
-namespace Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
+namespace Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
 
 /// <summary>
 ///     Interface for finding the nearest grid based on direction and point

@@ -4,7 +4,7 @@ using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
+using Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 
 namespace Sonny.Application.Tests.Features.AutoColumnDimension.IntegrationTests ;
@@ -19,7 +19,7 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
     private const string TargetViewName = "Level 2" ;
     private const string TestRevitFileName = "Test_V2023.rvt" ;
     private IRevitDocument? _revitDocumentService ;
-    private IAutoColumnDimensionHandler? _handler ;
+    private IAutoColumnDimensionInteractor? _handler ;
 
     /// <summary>
     ///     Get relative path to test Revit file
@@ -38,11 +38,11 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         // Get Revit Document Service from DI container
         _revitDocumentService = Host.GetService<IRevitDocument>() ;
 
-        // Create handler with mock MessageService using NSubstitute to avoid showing dialogs in tests
+        // Create interactor with mock MessageService using NSubstitute to avoid showing dialogs in tests
         var mockMessageService = Substitute.For<IMessageService>() ;
         var logger = Host.GetService<ILogger>() ;
-        var autoColumnDimensionService = Host.GetService<IAutoColumnDimensionService>() ;
-        _handler = new AutoColumnDimensionHandler(mockMessageService,
+        var autoColumnDimensionService = Host.GetService<IAutoColumnDimension>() ;
+        _handler = new AutoColumnDimensionInteractor(mockMessageService,
             logger,
             autoColumnDimensionService,
             Host.GetService<IResourceHelper>(), Host.GetService<ITransactionManagerFactory>()) ;
@@ -99,9 +99,9 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         // Step 4: RunAutoDimension - Execute auto dimension command
         Log("Step 4: Running AutoColumnDimension command") ;
         Assert.IsNotNull(_handler,
-            "Handler should be initialized in OnSetup") ;
+            "Interactor should be initialized in OnSetup") ;
         Assert.IsNotNull(_revitDocumentService,
-            "RevitDocumentService should be initialized in OnSetup") ;
+            "RevitDocument should be initialized in OnSetup") ;
 
         const double snapDistance = 5.0 ;
         DimensionType? dimensionType = null ;

@@ -1,11 +1,11 @@
-using Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
+using Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
 using Sonny.RevitExtensions.Extensions.Elements ;
 using Sonny.RevitExtensions.Extensions.GeometryObjects.Solids ;
 using Sonny.RevitExtensions.Extensions.Views ;
 using Sonny.RevitExtensions.Extensions.XYZs ;
 using Sonny.RevitExtensions.RevitWrapper ;
 
-namespace Sonny.Application.UseCases.AutoColumnDimension.Contexts ;
+namespace Sonny.Application.Infrastructure.AutoColumnDimension.Contexts ;
 
 /// <summary>
 ///     Immutable context containing information to create dimension for column

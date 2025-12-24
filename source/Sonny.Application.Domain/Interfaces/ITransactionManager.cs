@@ -1,5 +1,5 @@
+using Sonny.Application.Domain.Entites ;
 using Sonny.Application.Domain.Exceptions ;
-using Sonny.Application.Entities ;
 
 namespace Sonny.Application.Domain.Interfaces ;
 

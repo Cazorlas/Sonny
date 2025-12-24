@@ -1,6 +1,6 @@
-using Sonny.Application.Domain.InputPorts.ColumnFromCad ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.UseCases.ColumnFromCad.Services ;
 using Sonny.RevitExtensions.Extensions ;
 using Sonny.RevitExtensions.Extensions.CurveLoops ;
 using Sonny.RevitExtensions.Extensions.Elements ;
@@ -10,15 +10,9 @@ using Sonny.RevitExtensions.Extensions.GeometryObjects.Solids ;
 
 namespace Sonny.Application.Infrastructure.Services ;
 
-public class CircularColumnExtractor : ICircularColumnExtractor
+public class CircularColumnExtractor(IColumnModelFactory columnModelFactory) : ICircularColumnExtractor
 {
     private const double Tolerance = 1e-4 ;
-    private readonly IColumnModelFactory _columnModelFactory ;
-
-    public CircularColumnExtractor(IColumnModelFactory columnModelFactory)
-    {
-        _columnModelFactory = columnModelFactory ;
-    }
 
     public List<CircularColumnModel> ExtractFromBoundaryLines(ImportInstance cadInstance,
         string selectedLayer)
@@ -31,7 +25,7 @@ public class CircularColumnExtractor : ICircularColumnExtractor
             .ToList() ;
 
         foreach (var arc in arcs) {
-            columns.Add(_columnModelFactory.CreateCircular(arc)) ;
+            columns.Add(columnModelFactory.CreateCircular(arc)) ;
         }
 
         return columns ;
@@ -80,7 +74,7 @@ public class CircularColumnExtractor : ICircularColumnExtractor
                 }) ;
 
                 if (allPointsSameDistance) {
-                    columns.Add(_columnModelFactory.CreateCircular(arc)) ;
+                    columns.Add(columnModelFactory.CreateCircular(arc)) ;
                 }
             }
         }

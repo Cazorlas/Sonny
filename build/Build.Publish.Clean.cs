@@ -1,6 +1,8 @@
 ﻿using Nuke.Common.Tools.Git ;
 using Nuke.Common.Utilities.Collections ;
 
+namespace Build ;
+
 sealed partial class Build
 {
     /// <summary>

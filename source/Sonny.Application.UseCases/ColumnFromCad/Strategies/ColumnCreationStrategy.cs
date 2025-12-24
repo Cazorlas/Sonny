@@ -2,9 +2,9 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Autodesk.Revit.DB.Structure ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Contexts ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Entities.ColumnFromCad ;
-using Sonny.Application.Entities.ColumnFromCad.Contexts ;
 
 namespace Sonny.Application.UseCases.ColumnFromCad.Strategies ;
 

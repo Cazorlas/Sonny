@@ -51,7 +51,6 @@
         <!-- Reference Domain Layer to implement interfaces -->
         <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
         <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj" />
-        <ProjectReference Include="..\Sonny.Application.Entities\Sonny.Application.Entities.csproj"/>
         
         <!-- Reference Use Cases to implement Input Ports (acceptable exception for Revit add-in) -->
         <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj"/>

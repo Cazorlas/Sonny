@@ -1,4 +1,4 @@
-using Sonny.Application.Entities.ColumnFromCad ;
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 
 namespace Sonny.Application.Domain.Interfaces ;
 

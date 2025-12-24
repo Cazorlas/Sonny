@@ -1,6 +1,5 @@
+using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Entities.ColumnFromCad ;
-using Sonny.RevitExtensions.Extensions.GeometryObjects.Curves.Lines ;
 
 namespace Sonny.Application.Infrastructure.Services ;
 

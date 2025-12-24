@@ -1,5 +1,5 @@
+using Sonny.Application.Domain.Entites ;
 using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Entities ;
 
 namespace Sonny.Application.Infrastructure.Managers ;
 

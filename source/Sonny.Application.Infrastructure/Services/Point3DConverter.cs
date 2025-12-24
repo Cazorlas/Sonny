@@ -1,5 +1,5 @@
+using Sonny.Application.Domain.Entites ;
 using Sonny.Application.Domain.Interfaces;
-using Sonny.Application.Entities;
 
 namespace Sonny.Application.Infrastructure.Services;
 
@@ -9,4 +9,5 @@ public class Point3DConverter : IPoint3DConverter
 
     public Point3D FromXyz(XYZ xyz) => new Point3D(xyz.X, xyz.Y, xyz.Z);
 }
+
 

@@ -1,0 +1,56 @@
+using Serilog ;
+using Sonny.Application.Domain.Interfaces ;
+
+namespace Sonny.Application.UseCases.Services ;
+
+/// <summary>
+///     Implementation of common services container
+/// </summary>
+public class CommonServices : ICommonServices
+{
+    /// <summary>
+    ///     Initializes a new instance of CommonServices
+    /// </summary>
+    /// <param name="revitDocument">Revit document service</param>
+    /// <param name="messageService">Message service</param>
+    /// <param name="logger">Logger</param>
+    /// <param name="unitConverter">Unit converter</param>
+    /// <param name="settingsService">Settings service</param>
+    public CommonServices(IRevitDocument revitDocument,
+        IMessageService messageService,
+        ILogger logger,
+        IUnitConverter unitConverter,
+        ISettingsService settingsService)
+    {
+        RevitDocument = revitDocument ;
+        MessageService = messageService ;
+        Logger = logger ;
+        UnitConverter = unitConverter ;
+        SettingsService = settingsService ;
+    }
+
+    /// <summary>
+    ///     Revit document service for accessing Revit API
+    /// </summary>
+    public IRevitDocument RevitDocument { get ; }
+
+    /// <summary>
+    ///     Message service for showing messages to user
+    /// </summary>
+    public IMessageService MessageService { get ; }
+
+    /// <summary>
+    ///     Logger for logging operations
+    /// </summary>
+    public ILogger Logger { get ; }
+
+    /// <summary>
+    ///     Unit converter for converting between display units and internal units
+    /// </summary>
+    public IUnitConverter UnitConverter { get ; }
+
+    /// <summary>
+    ///     Settings service for managing application preferences
+    /// </summary>
+    public ISettingsService SettingsService { get ; }
+}

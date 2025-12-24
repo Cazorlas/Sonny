@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Colors must be loaded first -->
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Resources/Colors.xaml" />
+
+        <!-- Then load all style dictionaries -->
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/ButtonStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/TextBlockStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/LabelStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/TextBoxStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/ComboBoxStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/LayoutStyles.xaml" />
+        <ResourceDictionary Source="/Sonny.Application.UIStyle;component/Styles/GroupBoxStyles.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

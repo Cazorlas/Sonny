@@ -1,6 +1,6 @@
 using Sonny.RevitExtensions.RevitWrapper ;
 
-namespace Sonny.Application.UseCases.AutoColumnDimension.Interfaces ;
+namespace Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
 
 /// <summary>
 ///     Interface for creating dimensions by direction
