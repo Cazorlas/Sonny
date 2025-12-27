@@ -3,6 +3,8 @@ using Autodesk.PackageBuilder ;
 using Nuke.Common.ProjectModel ;
 using Nuke.Common.Utilities ;
 
+namespace Build ;
+
 sealed partial class Build
 {
     /// <summary>

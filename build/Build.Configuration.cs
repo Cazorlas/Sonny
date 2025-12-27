@@ -1,6 +1,8 @@
 ﻿using Nuke.Common.Git ;
-using Nuke.Common.Tools.Git ;
 using Nuke.Common.ProjectModel ;
+using Nuke.Common.Tools.Git ;
+
+namespace Build ;
 
 sealed partial class Build
 {

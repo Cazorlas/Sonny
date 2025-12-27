@@ -1,8 +1,8 @@
 using System ;
 using NUnit.Framework ;
-using Sonny.Application.Features.Settings.Models ;
+using Sonny.Application.Domain.Entities.Settings ;
 using Sonny.Application.Tests.Utils ;
-using Sonny.ResourceManager ;
+using Sonny.Application.UseCases.Settings.Models ;
 
 namespace Sonny.Application.Tests.ResourceManager.UnitTests ;
 
@@ -17,7 +17,7 @@ public class LanguageOptionTests
     {
         // Arrange
         var displayName = "English" ;
-        var languageCode = LanguageCode.En ;
+        var languageCode = AppLanguageCode.En ;
 
         // Act
         var option = new LanguageOption(displayName,
@@ -35,7 +35,7 @@ public class LanguageOptionTests
     {
         // Arrange
         var displayName = string.Empty ;
-        var languageCode = LanguageCode.En ;
+        var languageCode = AppLanguageCode.En ;
 
         // Act
         var option = new LanguageOption(displayName,
@@ -44,7 +44,7 @@ public class LanguageOptionTests
         // Assert
         Assert.AreEqual(string.Empty,
             option.DisplayName) ;
-        Assert.AreEqual(LanguageCode.En,
+        Assert.AreEqual(AppLanguageCode.En,
             option.LanguageCode) ;
     }
 
@@ -53,7 +53,7 @@ public class LanguageOptionTests
     {
         // Arrange
         string? displayName = null ;
-        var languageCode = LanguageCode.Vi ;
+        var languageCode = AppLanguageCode.Vi ;
 
         // Act
         var option = new LanguageOption(displayName!,
@@ -61,7 +61,7 @@ public class LanguageOptionTests
 
         // Assert
         Assert.IsNull(option.DisplayName) ;
-        Assert.AreEqual(LanguageCode.Vi,
+        Assert.AreEqual(AppLanguageCode.Vi,
             option.LanguageCode) ;
     }
 
@@ -70,7 +70,7 @@ public class LanguageOptionTests
     {
         // Arrange
         var displayName = "Vietnamese" ;
-        var languageCode = LanguageCode.Vi ;
+        var languageCode = AppLanguageCode.Vi ;
         var option = new LanguageOption(displayName,
             languageCode) ;
 
@@ -87,7 +87,7 @@ public class LanguageOptionTests
     {
         // Arrange
         var option = new LanguageOption(string.Empty,
-            LanguageCode.En) ;
+            AppLanguageCode.En) ;
 
         // Act
         var result = option.ToString() ;
@@ -102,7 +102,7 @@ public class LanguageOptionTests
     {
         // Arrange
         var option = new LanguageOption("English",
-            LanguageCode.En) ;
+            AppLanguageCode.En) ;
 
         // Act & Assert
         // Properties should be get-only, so we can't set them
@@ -115,7 +115,7 @@ public class LanguageOptionTests
     public void Constructor_ShouldWorkWithAllLanguageCodes()
     {
         // Act & Assert - Verify constructor works with all language codes
-        var allCodes = EnumHelper.GetValues<LanguageCode>() ;
+        var allCodes = EnumHelper.GetValues<AppLanguageCode>() ;
 
         foreach (var code in allCodes) {
             var displayName = $"Language {code}" ;

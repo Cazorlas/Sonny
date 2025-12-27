@@ -66,3 +66,8 @@ public class RectangularColumnExtractor : IRectangularColumnExtractor
         return columns ;
     }
 }
+
+
+
+
+

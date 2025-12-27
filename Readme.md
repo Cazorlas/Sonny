@@ -3,6 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://img.shields.io/badge/.NET-9.0-blue.svg)](https://dotnet.microsoft.com/)
 [![Revit](https://img.shields.io/badge/Revit-2021--2026-orange.svg)](https://www.autodesk.com/products/revit)
+[![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-blueviolet.svg)](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/PhanCongVuDuc/Sonny/Compile.yml?branch=master)](https://github.com/PhanCongVuDuc/Sonny/actions)
 
 Autodesk Revit plugin project organized into multiple solution files that target versions 2021 - 2026.
@@ -22,6 +23,7 @@ learn, contribute, and use freely.
 
 <!-- TOC -->
 
+* [Architecture](#architecture)
 * [What You Can Learn](#what-you-can-learn)
 * [Videos](#videos)
 * [Prerequisites](#prerequisites)
@@ -35,6 +37,21 @@ learn, contribute, and use freely.
 * [Acknowledgments](#acknowledgments)
 
 <!-- TOC -->
+
+## Architecture
+
+This project follows **Clean Architecture** principles, organizing code into layers with clear separation of concerns:
+
+![Clean Architecture](assets/images/clean-architecture.png)
+
+The architecture consists of four main layers:
+
+- **Domain Layer** - Core business entities and interfaces, framework-agnostic
+- **UseCases Layer** - Application business rules and use case implementations
+- **Infrastructure Layer** - Framework implementations (Revit API, external services)
+- **Presentation Layer** - UI components, ViewModels, and user interface
+
+Dependencies flow inward, ensuring that core business logic remains independent of frameworks and external concerns.
 
 ## What You Can Learn
 
@@ -156,13 +173,7 @@ This project includes the following submodules:
 
 ## Learn More
 
-For detailed documentation, see [RevitTemplates Wiki](https://github.com/Nice3point/RevitTemplates/wiki):
-
-- [Building](https://github.com/Nice3point/RevitTemplates/wiki) - Build with IDE or NUKE
-- [Publishing Releases](https://github.com/Nice3point/RevitTemplates/wiki) - Create releases and tags
-- [Compiling on GitHub](https://github.com/Nice3point/RevitTemplates/wiki) - CI/CD pipelines
-- [Conditional Compilation](https://github.com/Nice3point/RevitTemplates/wiki) - Multi-version support
-- [API References](https://github.com/Nice3point/RevitTemplates/wiki) - NuGet packages for CI/CD
+For detailed documentation about building, publishing, CI/CD, conditional compilation, and API references, see [RevitTemplates Wiki](https://github.com/Nice3point/RevitTemplates/wiki).
 
 ## Dependencies
 

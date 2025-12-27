@@ -47,7 +47,6 @@
   <!-- Build configuration -->
   <!-- https://github.com/Nice3point/Revit.Build.Tasks -->
   <PropertyGroup>
-    <!--        <IsRepackable>true</IsRepackable>-->
     <DeployRevitAddin>true</DeployRevitAddin>
   </PropertyGroup>
 
@@ -57,24 +56,9 @@
     <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(RevitVersion).*"/>
     <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
     <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-
-    <!-- MVVM -->
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0"/>
 
     <!-- IOC -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3"/>
-
-    <!-- Logging -->
-    <PackageReference Include="Serilog" Version="4.2.0"/>
-    <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0"/>
-    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
-    <PackageReference Include="Serilog.Sinks.File" Version="6.0.0"/>
-
-    <!-- Build -->
-    <PackageReference Include="ILRepack" Version="2.0.41"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -85,11 +69,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sonny.Application.Core\Sonny.Application.Core.csproj"/>
-    <ProjectReference Include="..\Sonny.Application.Features\Sonny.Application.Features.csproj"/>
-    <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
-    <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj"/>
+    <ProjectReference Include="..\Sonny.Application.Infrastructure\Sonny.Application.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Sonny.Application.UIStyle\Sonny.Application.UIStyle.csproj"/>
+    <ProjectReference Include="..\Sonny.Application.Presentation\Sonny.Application.Presentation.csproj"/>
     <ProjectReference Include="..\Sonny.EasyRibbon\Sonny.EasyRibbon\Sonny.EasyRibbon.csproj"/>
   </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions ;
 
+namespace Build ;
+
 sealed partial class Build
 {
     /// <summary>

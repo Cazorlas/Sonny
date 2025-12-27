@@ -1,9 +1,8 @@
 ﻿using Nice3point.Revit.Toolkit.External ;
 using Revit.Async ;
-using Sonny.Application.Core.Interfaces ;
-using Sonny.Application.Features ;
+using Sonny.Application.Infrastructure.Resource.Implements ;
 using Sonny.Application.Modules ;
-using Sonny.Application.UI ;
+using Sonny.Application.UIStyle ;
 
 namespace Sonny.Application ;
 
@@ -24,10 +23,10 @@ public class SonnyApp : ExternalApplication
         UIStyleManager.LoadTheme() ;
 
         Host.Start() ;
-        // Initialize resources if not already initialized
-        var settingsService = Host.GetService<ISettingsService>() ;
-        var currentLanguage = settingsService.GetLanguage() ;
-        SonnyResourcesInitializer.Initialize(currentLanguage) ;
+
+        // Initialize application resources
+        var resourcesInitializer = Host.GetService<ResourcesInitializer>() ;
+        resourcesInitializer.Initialize() ;
 
         // Initialize EasyRibbon module
         _module.OnStartup(Application) ;

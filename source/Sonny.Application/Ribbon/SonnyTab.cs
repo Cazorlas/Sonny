@@ -49,7 +49,7 @@ public class SonnyTab
     ///     Panel for column creation tools
     /// </summary>
     [Panel("Model from CAD")]
-    public class ColumnPanel
+    public class ColumnFromCadPanel
     {
         /// <summary>
         ///     Button for column from CAD feature

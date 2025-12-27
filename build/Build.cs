@@ -1,6 +1,8 @@
 using System.IO.Enumeration ;
 using JetBrains.Annotations ;
 
+namespace Build ;
+
 [PublicAPI]
 sealed partial class Build : NukeBuild
 {
