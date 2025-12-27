@@ -1,4 +1,5 @@
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Services ;
+using Sonny.Application.Presentation.Services ;
 
 namespace Sonny.Application.Presentation.Bases ;
 
@@ -19,9 +20,12 @@ public abstract class BaseViewModelWithSettings<TSettings> : BaseViewModel where
     ///     Initializes a new instance of BaseViewModelWithSettings
     /// </summary>
     /// <param name="commonServices">Common services</param>
+    /// <param name="displayUnitProvider">Display unit provider</param>
     /// <param name="settingsService">Settings service</param>
     protected BaseViewModelWithSettings(ICommonServices commonServices,
-        IViewModelSettingsService<TSettings> settingsService) : base(commonServices) =>
+        IDisplayUnitProvider displayUnitProvider,
+        IViewModelSettingsService<TSettings> settingsService) : base(commonServices,
+        displayUnitProvider) =>
         _settingsService = settingsService ;
 
     /// <summary>

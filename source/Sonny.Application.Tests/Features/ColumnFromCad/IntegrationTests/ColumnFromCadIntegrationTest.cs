@@ -3,11 +3,13 @@ using Autodesk.Revit.DB ;
 using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Contexts ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Contexts ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Implements ;
+using Sonny.Application.Domain.Services ;
+using Sonny.Application.Infrastructure.Revit.Services ;
+using Sonny.Application.Presentation.Implements ;
 using Sonny.Application.UseCases.ColumnFromCad.Services ;
-using Sonny.Application.UseCases.Services ;
 using Sonny.RevitExtensions.Extensions ;
 
 namespace Sonny.Application.Tests.Features.ColumnFromCad.IntegrationTests ;
@@ -76,9 +78,16 @@ public class ColumnFromCadIntegrationTest : SonnyDocumentTestBase
 
         // Step 3: Extract column data
         Log("Step 3: Extracting column data") ;
-        var extractColumnData = columnFromCadOrchestrator.ExtractColumnData(importInstance,
-            testSelectedLayer,
-            testIsModelByHatch) ;
+        var extractContext = new ColumnCreationContext
+        {
+            Settings = new ColumnFromCadSettings
+            {
+                SelectedCadLinkId = importInstance.UniqueId,
+                SelectedLayer = testSelectedLayer,
+                IsModelByHatch = testIsModelByHatch
+            }
+        } ;
+        var extractColumnData = columnFromCadOrchestrator.ExtractColumnData(extractContext) ;
 
         Assert.Greater(extractColumnData.Count,
             0,
@@ -165,43 +174,41 @@ public class ColumnFromCadIntegrationTest : SonnyDocumentTestBase
 
         // Step 8: Convert display offsets to internal units (feet)
         Log("Step 8: Converting offsets") ;
-        var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;
-        var documentQuery = Host.GetService<IDocumentQuery>() ;
-        var revitDocumentService = new RevitDocument(uiDocumentProvider, documentQuery) ;
         var mockMessageService = Substitute.For<IMessageService>() ;
 
-        var commonServices = new CommonServices(revitDocumentService,
-            mockMessageService,
+        var commonServices = new CommonServices(mockMessageService,
             Host.GetService<ILogger>(),
             Host.GetService<IUnitConverter>(),
-            Host.GetService<ISettingsService>()) ;
+            Host.GetService<ISettingsService>(),
+            Host.GetService<IResourceHelper>()) ;
 
-        var forgeTypeId = commonServices.SettingsService.GetDisplayUnit(document) ;
+        var displayUnitProvider = Host.GetService<IDisplayUnitProvider>() ;
+        var displayUnit =
+            commonServices.SettingsService.GetDisplayUnitOrDefault(() => displayUnitProvider.GetDefaultDisplayUnit()) ;
         var unitConverter = Host.GetService<IUnitConverter>() ;
         var baseOffsetInternal = unitConverter.ToInternalUnit(testBaseOffsetDisplay,
-            forgeTypeId) ;
+            displayUnit) ;
         var topOffsetInternal = unitConverter.ToInternalUnit(testTopOffsetDisplay,
-            forgeTypeId) ;
+            displayUnit) ;
 
         // Step 9: Create column creation context
         Log("Step 9: Creating columns") ;
-        var context = new ColumnCreationContext
+        var settings = new ColumnFromCadSettings
         {
-            Document = document,
-            SelectedRectangularColumnFamily = rectangularFamily,
-            SelectedCircularColumnFamily = circularFamily,
+            RectangularColumnFamilyId = rectangularFamily.UniqueId,
+            CircularColumnFamilyId = circularFamily.UniqueId,
             WidthParameter = testWidthParameter,
             HeightParameter = testHeightParameter,
             DiameterParameter = testDiameterParameter,
-            BaseLevel = baseLevel,
-            TopLevel = topLevel,
-            BaseOffset = baseOffsetInternal,
-            TopOffset = topOffsetInternal,
-            ProgressCallback = (current,
-                total) =>
-            {
-                Log($"Progress: {current}/{total}") ;
-            }
+            BaseLevelId = baseLevel.UniqueId,
+            TopLevelId = topLevel.UniqueId,
+            BaseOffsetDisplay = testBaseOffsetDisplay,
+            TopOffsetDisplay = testTopOffsetDisplay
+        } ;
+
+        var context = new ColumnCreationContext
+        {
+            Settings = settings, BaseOffset = baseOffsetInternal, TopOffset = topOffsetInternal
         } ;
 
         // Create columns

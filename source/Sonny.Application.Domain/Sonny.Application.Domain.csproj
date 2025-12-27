@@ -55,11 +55,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
   </ItemGroup>
-
   <ItemGroup>
-    <!-- Entities Layer - Domain entities and value objects -->
-    
-    <!-- Sonny.ResourceManager kept for LanguageCode enum (acceptable exception) -->
-    <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
+    <Reference Include="PresentationFramework"/>
   </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
@@ -54,6 +53,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj" />
+    <!--    <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />-->
+    <ProjectReference Include="..\Sonny.Application.Domain\Sonny.Application.Domain.csproj"/>
   </ItemGroup>
+
 </Project>

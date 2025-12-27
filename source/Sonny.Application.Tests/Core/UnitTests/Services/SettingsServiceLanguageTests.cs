@@ -1,9 +1,9 @@
 using System ;
 using System.IO ;
 using NUnit.Framework ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Domain.Implements ;
 using Sonny.Application.Tests.Utils ;
-using Sonny.Application.UseCases.Services ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Tests.Core.UnitTests.Services ;
 
@@ -50,7 +50,7 @@ public class SettingsServiceLanguageTests
         var result = _settingsService.GetLanguage() ;
 
         // Assert
-        Assert.AreEqual(LanguageCode.En,
+        Assert.AreEqual(AppLanguageCode.En,
             result) ;
     }
 
@@ -58,7 +58,7 @@ public class SettingsServiceLanguageTests
     public void SetLanguage_ShouldSaveLanguageToFile()
     {
         // Arrange
-        var languageCode = LanguageCode.Vi ;
+        var languageCode = AppLanguageCode.Vi ;
 
         // Act
         _settingsService.SetLanguage(languageCode) ;
@@ -74,8 +74,8 @@ public class SettingsServiceLanguageTests
     public void SetLanguage_ShouldRaiseLanguageChangedEvent()
     {
         // Arrange
-        var languageCode = LanguageCode.Ja ;
-        LanguageCode? eventLanguage = null ;
+        var languageCode = AppLanguageCode.Ja ;
+        AppLanguageCode? eventLanguage = null ;
         _settingsService.LanguageChanged += (sender,
             code) =>
         {
@@ -94,7 +94,7 @@ public class SettingsServiceLanguageTests
     public void GetLanguage_ShouldReturnCachedValue_AfterSetLanguage()
     {
         // Arrange
-        var languageCode = LanguageCode.Es ;
+        var languageCode = AppLanguageCode.Es ;
 
         // Act
         _settingsService.SetLanguage(languageCode) ;
@@ -109,7 +109,7 @@ public class SettingsServiceLanguageTests
     public void SetLanguage_ShouldWorkWithAllLanguageCodes()
     {
         // Act & Assert - Verify SetLanguage works with all language codes
-        var allCodes = EnumHelper.GetValues<LanguageCode>() ;
+        var allCodes = EnumHelper.GetValues<AppLanguageCode>() ;
 
         foreach (var code in allCodes) {
             _settingsService.SetLanguage(code) ;
@@ -124,7 +124,7 @@ public class SettingsServiceLanguageTests
     public void GetLanguage_ShouldLoadFromFile_WhenSettingsFileExists()
     {
         // Arrange
-        var languageCode = LanguageCode.Th ;
+        var languageCode = AppLanguageCode.Th ;
         _settingsService.SetLanguage(languageCode) ;
 
         // Create a new instance to test loading from file
@@ -142,14 +142,14 @@ public class SettingsServiceLanguageTests
     public void SetLanguage_ShouldUpdateExistingSettingsFile()
     {
         // Arrange
-        _settingsService.SetLanguage(LanguageCode.En) ;
+        _settingsService.SetLanguage(AppLanguageCode.En) ;
 
         // Act
-        _settingsService.SetLanguage(LanguageCode.Ko) ;
+        _settingsService.SetLanguage(AppLanguageCode.Ko) ;
 
         // Assert
         var result = _settingsService.GetLanguage() ;
-        Assert.AreEqual(LanguageCode.Ko,
+        Assert.AreEqual(AppLanguageCode.Ko,
             result) ;
     }
 
@@ -157,7 +157,7 @@ public class SettingsServiceLanguageTests
     public void LanguageChanged_ShouldNotRaiseEvent_WhenSettingSameLanguage()
     {
         // Arrange
-        var languageCode = LanguageCode.Zh ;
+        var languageCode = AppLanguageCode.Zh ;
         _settingsService.SetLanguage(languageCode) ;
         var eventRaised = false ;
         _settingsService.LanguageChanged += (sender,

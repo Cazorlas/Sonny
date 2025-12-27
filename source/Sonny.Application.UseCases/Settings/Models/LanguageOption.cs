@@ -1,4 +1,4 @@
-using Sonny.ResourceManager ;
+using Sonny.Application.Domain.Entities.Settings ;
 
 namespace Sonny.Application.UseCases.Settings.Models ;
 
@@ -13,7 +13,7 @@ public class LanguageOption
     /// <param name="displayName">Display name (e.g., "English", "Vietnamese")</param>
     /// <param name="languageCode">Language code enum</param>
     public LanguageOption(string displayName,
-        LanguageCode languageCode)
+        AppLanguageCode languageCode)
     {
         DisplayName = displayName ;
         LanguageCode = languageCode ;
@@ -27,7 +27,7 @@ public class LanguageOption
     /// <summary>
     ///     Language code enum
     /// </summary>
-    public LanguageCode LanguageCode { get ; }
+    public AppLanguageCode LanguageCode { get ; }
 
     /// <summary>
     ///     String representation for display

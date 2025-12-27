@@ -2,10 +2,13 @@
 // The.NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.Extensions.DependencyInjection ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Presentation.AutoColumnDimension.ViewModels ;
 using Sonny.Application.Presentation.AutoColumnDimension.Views ;
 using Sonny.Application.Presentation.ColumnFromCad.ViewModels ;
 using Sonny.Application.Presentation.ColumnFromCad.Views ;
+using Sonny.Application.Presentation.Implements ;
+using Sonny.Application.Presentation.Services ;
 using Sonny.Application.Presentation.Settings.ViewModels ;
 using Sonny.Application.Presentation.Settings.Views ;
 using Sonny.Application.Presentation.Views ;
@@ -24,6 +27,7 @@ public static class ServiceRegistration
     public static void AddPresentationsServices(this IServiceCollection services)
     {
         services.AddTransient<ProgressView>() ;
+        services.AddTransient<IProgressReporter, ProgressReporter>() ;
 
         // Register Views
         services.AddTransient<AutoColumnDimensionViewModel>() ;
@@ -37,4 +41,3 @@ public static class ServiceRegistration
         services.AddTransient<SettingsView>() ;
     }
 }
-

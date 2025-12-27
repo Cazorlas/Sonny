@@ -1,103 +1,113 @@
-using Sonny.Application.Domain.Entites.ColumnFromCad.Contexts ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
-using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.UseCases.ColumnFromCad.Models.Inputs ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Contexts ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Services ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.UseCases.ColumnFromCad.Services ;
-using Sonny.Application.UseCases.ColumnFromCad.Strategies ;
 
 namespace Sonny.Application.UseCases.ColumnFromCad.Implements ;
 
 public class ColumnFromCadInteractor(
-    IRectangularColumnExtractor rectangularExtractor,
-    ICircularColumnExtractor circularExtractor,
+    IColumnDataExtractor columnDataExtractor,
     IResourceHelper resourceHelper,
     ITransactionManagerFactory transactionManagerFactory,
-    IRevitDocument revitDocument,
-    IFamilySymbolProvider familySymbolProvider,
-    IGeometryHelper geometryHelper,
-    IFailurePreprocessorFactory failurePreprocessorFactory,
-    IPoint3DConverter point3DConverter) : IColumnFromCadInteractor
+    IColumnCreationStrategyFactory columnCreationStrategyFactory,
+    IProgressReporter progressReporter,
+    IMessageService messageService,
+    IElementSelector elementSelector,
+    IRevitTaskRunner revitTaskRunner) : IColumnFromCadInteractor
 {
     private readonly List<ColumnModel> _extractedColumns = [] ;
 
-    public void Execute( ExecuteInput  input)
+    public async Task Execute(ColumnCreationContext input)
     {
+        // Extract column data
+        _extractedColumns.Clear() ;
+        var columnModels = await revitTaskRunner.RunAsync(() => ExtractColumnData(input)) ;
 
-    }
+        if (columnModels.Count == 0) {
+            messageService.ShowInfo(resourceHelper.GetString("MessageNoColumnsFound")) ;
+            return ;
+        }
 
-    public List<ColumnModel> ExtractColumnData(ImportInstance cadInstance,
-        string selectedLayer,
-        bool isModelByHatch)
-    {
-        if (isModelByHatch) {
-            // Extract from planar faces (hatch)
-            _extractedColumns.AddRange(rectangularExtractor.ExtractFromPlanarFaces(cadInstance,
-                selectedLayer)) ;
-            _extractedColumns.AddRange(circularExtractor.ExtractFromPlanarFaces(cadInstance,
-                selectedLayer)) ;
+        // Create columns
+        var createdIds = await revitTaskRunner.RunAsync(() => CreateColumns(input)) ;
+
+        // Show result and select columns
+        if (createdIds.Count > 0) {
+            // Select created columns to highlight them in Revit UI
+            await revitTaskRunner.RunAsync(() => elementSelector.SelectElements(createdIds)) ;
+
+            messageService.ShowInfo(resourceHelper.GetString("MessageSuccessfullyCreated",
+                createdIds.Count)) ;
         }
         else {
-            // Extract from boundary lines (poly lines and arcs)
-            _extractedColumns.AddRange(rectangularExtractor.ExtractFromBoundaryLines(cadInstance,
-                selectedLayer)) ;
-            _extractedColumns.AddRange(circularExtractor.ExtractFromBoundaryLines(cadInstance,
-                selectedLayer)) ;
+            messageService.ShowWarning(resourceHelper.GetString("MessageNoColumnsCreated")) ;
         }
-
-        return _extractedColumns ;
     }
 
-    public List<ElementId> CreateColumns(ColumnCreationContext columnCreationContext)
+    public List<ColumnModel> ExtractColumnData(ColumnCreationContext input)
+    {
+        var columnModels = columnDataExtractor.Extract(input) ;
+        _extractedColumns.AddRange(columnModels) ;
+
+        return columnModels ;
+    }
+
+    public HashSet<string> CreateColumns(ColumnCreationContext columnCreationContext)
     {
         if (_extractedColumns.Count == 0) {
             throw new InvalidOperationException(resourceHelper.GetString("MessageNoExtractedColumnsFound")) ;
         }
 
-        var createdIds = new List<ElementId>() ;
         var total = _extractedColumns.Count ;
-        var current = 0 ;
 
-        using var transactionGroup = transactionManagerFactory.CreateGroup(revitDocument,
-            resourceHelper.GetString("TransactionCreateColumns")) ;
-        transactionGroup.Start() ;
+        // Show progress window
+        progressReporter.Show(resourceHelper.GetString("MessageCreatingColumns")) ;
 
-        foreach (var columnModel in _extractedColumns) {
-            current++ ;
-            columnCreationContext.ProgressCallback?.Invoke(current,
-                total) ;
+        try {
+            var createdIds = new HashSet<string>() ;
+            var current = 0 ;
 
-            try {
-                var compositeFailurePreprocessor = failurePreprocessorFactory.CreateCompositeFailurePreprocessor() ;
-                compositeFailurePreprocessor.AddPreprocessor(failurePreprocessorFactory.CreateSuppressWarningsPreprocessor()) ;
+            using var transactionGroup = transactionManagerFactory.CreateGroup(
+                resourceHelper.GetString("TransactionCreateColumns")) ;
+            transactionGroup.Start() ;
 
-                using var transactionManager = transactionManagerFactory.Create(revitDocument,
-                    resourceHelper.GetString("TransactionCreateColumn"),
-                    compositeFailurePreprocessor) ;
-                transactionManager.Start() ;
+            foreach (var columnModel in _extractedColumns) {
+                current++ ;
+                progressReporter.Update(current,
+                    total) ;
 
-                if (ColumnCreationStrategy.CreateInstance(columnModel,
-                        columnCreationContext,
-                        familySymbolProvider,
-                        geometryHelper,
-                        point3DConverter) is not { } columnCreationStrategy) {
-                    continue ;
+                try {
+                    using var transactionManager = transactionManagerFactory.Create(
+                        resourceHelper.GetString("TransactionCreateColumn"),
+                        [FailurePreprocessorType.SuppressWarnings]) ;
+                    transactionManager.Start() ;
+
+                    if (columnCreationStrategyFactory.CreateStrategy(columnModel,
+                            columnCreationContext) is not { } columnCreationStrategy) {
+                        continue ;
+                    }
+
+                    if (columnCreationStrategy.Execute() is not { } columnUniqueId) {
+                        continue ;
+                    }
+
+                    createdIds.Add(columnUniqueId) ;
+
+                    transactionManager.Commit() ; // Commit now → show on UI
                 }
-
-                if (columnCreationStrategy.Execute() is not { } column) {
-                    continue ;
+                catch {
+                    // Continue with next column if one fails
                 }
-
-                createdIds.Add(column.Id) ;
-
-                transactionManager.Commit() ; // Commit now → show on UI
             }
-            catch {
-                // Continue with next column if one fails
-            }
+
+            transactionGroup.Assimilate() ;
+
+            return createdIds ;
         }
-
-        transactionGroup.Assimilate() ;
-
-        return createdIds ;
+        finally {
+            // Close progress window
+            progressReporter.Close() ;
+        }
     }
 }

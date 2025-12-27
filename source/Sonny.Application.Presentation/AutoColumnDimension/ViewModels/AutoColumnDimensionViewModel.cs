@@ -1,9 +1,10 @@
 using System.Collections.ObjectModel ;
-using Revit.Async ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Domain.Entities.Settings.Models ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Presentation.Bases ;
+using Sonny.Application.Presentation.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Presentation.AutoColumnDimension.ViewModels ;
 
@@ -11,21 +12,32 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
 {
     #region Services
 
-    /// <summary>
-    ///     Interactor for auto column dimension feature
-    /// </summary>
-    private IAutoColumnDimensionInteractor Interactor { get ; }
+    private readonly IAutoColumnDimensionInteractor _interactor ;
+
+    private readonly IDimensionTypeProvider _dimensionTypeProvider ;
+
+    private readonly IViewScaleProvider _viewScaleProvider ;
+
+    private readonly IRevitTaskRunner _revitTaskRunner ;
 
     #endregion
 
     #region Constructor
 
     public AutoColumnDimensionViewModel(ICommonServices commonServices,
-        IAutoColumnDimensionInteractor interactor) : base(commonServices)
+        IDisplayUnitProvider displayUnitProvider,
+        IAutoColumnDimensionInteractor interactor,
+        IDimensionTypeProvider dimensionTypeProvider,
+        IViewScaleProvider viewScaleProvider,
+        IRevitTaskRunner revitTaskRunner) : base(commonServices,
+        displayUnitProvider)
     {
-        Interactor = interactor ;
+        _interactor = interactor ;
+        _dimensionTypeProvider = dimensionTypeProvider ;
+        _viewScaleProvider = viewScaleProvider ;
+        _revitTaskRunner = revitTaskRunner ;
 
-        // Initialize data synchronously (using RevitDocument service directly)
+        // Initialize data synchronously
         InitializeData() ;
     }
 
@@ -34,9 +46,9 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
     #region Properties for UI Binding
 
     [ObservableProperty]
-    private DimensionType? selectedDimensionType ;
+    private DimensionTypeModel? selectedDimensionType ;
 
-    public ObservableCollection<DimensionType> DimensionTypes { get ; set ; } = [] ;
+    public ObservableCollection<DimensionTypeModel> DimensionTypes { get ; set ; } = [] ;
 
     /// <summary>
     ///     Snap distance in display unit (mm, cm, m, etc.) for UI binding
@@ -59,10 +71,12 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
     private async Task Run()
     {
         try {
-            // Convert display unit to internal unit (feet) before passing to interactor
-            await RevitTask.RunAsync(() => Interactor.Execute(RevitDocument,
-                SnapDistanceInternal * RevitDocument.ActiveView.Scale,
-                SelectedDimensionType)) ;
+            // Calculate snap distance: convert to internal unit and multiply by view scale
+            var snapDistance = SnapDistanceInternal * _viewScaleProvider.GetActiveViewScale() ;
+            var dimensionTypeUniqueId = SelectedDimensionType?.UniqueId ;
+
+            await _revitTaskRunner.RunAsync(() => _interactor.Execute(snapDistance,
+                dimensionTypeUniqueId)) ;
 
             // Close window after successful execution
             CloseWindow() ;
@@ -79,15 +93,15 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
 
     #region Event Handlers
 
-    partial void OnSelectedDimensionTypeChanged(DimensionType? value) => UpdateSnapDistanceFromDimensionType() ;
+    partial void OnSelectedDimensionTypeChanged(DimensionTypeModel? value) => UpdateSnapDistanceFromDimensionType() ;
 
     /// <summary>
     ///     Handle display unit changed event to convert snap distance value
     /// </summary>
     /// <param name="oldUnit">Previous display unit</param>
     /// <param name="newUnit">New display unit</param>
-    protected override void OnDisplayUnitChanged(ForgeTypeId oldUnit,
-        ForgeTypeId newUnit)
+    protected override void OnDisplayUnitChanged(AppDisplayUnit oldUnit,
+        AppDisplayUnit newUnit)
     {
         base.OnDisplayUnitChanged(oldUnit,
             newUnit) ;
@@ -114,10 +128,10 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
     private void InitializeData()
     {
         try {
-            // Get dimension types using RevitDocument service (already in Revit API context)
-            var dimensionTypes = RevitDocument.GetDimensionTypes() ;
+            // Get dimension types from provider (Domain models)
+            var dimensionTypes = _dimensionTypeProvider.GetDimensionTypes() ;
 
-            DimensionTypes = new ObservableCollection<DimensionType>(dimensionTypes) ;
+            DimensionTypes = new ObservableCollection<DimensionTypeModel>(dimensionTypes) ;
             SelectedDimensionType = DimensionTypes.LastOrDefault() ;
 
             // Update snap distance
@@ -142,13 +156,8 @@ public partial class AutoColumnDimensionViewModel : BaseViewModel
         }
 
         try {
-            var parameter = dimensionType.FindParameter(BuiltInParameter.DIM_STYLE_DIM_LINE_SNAP_DIST) ;
-            if (parameter is not { StorageType: StorageType.Double }) {
-                return ;
-            }
-
-            // Get value in feet from Revit parameter
-            var snapDistanceFeet = parameter.AsDouble() ;
+            // Get snap distance from Domain model (already in feet)
+            var snapDistanceFeet = dimensionType.SnapDistance ;
 
             // Convert from internal unit (feet) to display unit (mm, cm, etc.)
             SnapDistanceDisplay = UnitConverter.FromInternalUnit(snapDistanceFeet,

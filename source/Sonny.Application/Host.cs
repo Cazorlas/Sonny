@@ -1,16 +1,25 @@
 using Microsoft.Extensions.DependencyInjection ;
 using Serilog ;
 using Sonny.Application.Domain.Config.Logging ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
-using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
-using Sonny.Application.Infrastructure.Managers ;
-using Sonny.Application.Infrastructure.Services ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Services ;
+using Sonny.Application.Domain.Implements ;
+using Sonny.Application.Domain.Services ;
+using Sonny.Application.Infrastructure.Features.AutoColumnDimension.Implements ;
+using Sonny.Application.Infrastructure.Features.AutoColumnDimension.Services ;
+using Sonny.Application.Infrastructure.Features.ColumnFromCad.Implements ;
+using Sonny.Application.Infrastructure.Features.ColumnFromCad.Services ;
+using Sonny.Application.Infrastructure.Features.ColumnFromCad.Strategies ;
+using Sonny.Application.Infrastructure.Resource.Implements ;
+using Sonny.Application.Infrastructure.Revit.Implements ;
+using Sonny.Application.Infrastructure.Revit.Managers.Transactions ;
+using Sonny.Application.Infrastructure.Revit.Services ;
 using Sonny.Application.Presentation ;
+using Sonny.Application.Presentation.Implements ;
+using Sonny.Application.Presentation.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 using Sonny.Application.UseCases.ColumnFromCad.Implements ;
 using Sonny.Application.UseCases.ColumnFromCad.Services ;
-using Sonny.Application.UseCases.Services ;
 
 namespace Sonny.Application ;
 
@@ -42,9 +51,6 @@ public static class Host
             services.AddSerilogConfiguration() ;
             services.AddSingleton<IResourceHelper, ResourceHelper>() ;
             services.AddSingleton<ITransactionManagerFactory, TransactionManagerFactory>() ;
-            services.AddSingleton<IFamilySymbolProvider, FamilySymbolProvider>() ;
-            services.AddSingleton<ICadLayerProvider, CadLayerProvider>() ;
-            services.AddSingleton<IGeometryHelper, GeometryHelper>() ;
             services.AddSingleton<IFailurePreprocessorFactory, FailurePreprocessorFactory>() ;
             services.AddSingleton<IPoint3DConverter, Point3DConverter>() ;
 
@@ -53,24 +59,41 @@ public static class Host
             services.AddSingleton<IUnitConverter, UnitConverter>() ;
             services.AddSingleton<ISettingsService, SettingsService>() ;
 
+            // Resources initializer (must be registered after ISettingsService)
+            services.AddSingleton<ResourcesInitializer>() ;
+
+            // Language change handler (must be registered after ISettingsService)
+            services.AddSingleton<LanguageChangeHandler>() ;
+
             // UIDocument Provider (Singleton - stores current UIDocument)
             services.AddSingleton<IUIDocumentProvider, UIDocumentProvider>() ;
-            services.AddScoped<IDocumentQuery, DocumentQuery>() ;
-
 
             // RevitDocument (Singleton - gets UIDocument from provider each time, no caching)
             services.AddTransient<IRevitDocument, RevitDocument>() ;
 
+            // DisplayUnitProvider (depends on IRevitDocument)
+            services.AddTransient<IDisplayUnitProvider, DisplayUnitProvider>() ;
+
+            services.AddTransient<IDimensionTypeProvider, DimensionTypeProvider>() ;
+
+            // ViewScaleProvider (depends on IRevitDocument)
+            services.AddTransient<IViewScaleProvider, ViewScaleProvider>() ;
+
             // CommonServices (Singleton - gets fresh UIDocument from provider via IRevitDocument)
             services.AddTransient<ICommonServices, CommonServices>() ;
 
+            // RevitTaskRunner (for async Revit API execution)
+            services.AddSingleton<IRevitTaskRunner, RevitTaskRunner>() ;
+
             // ColumnFromCadFromCad
             services.AddSingleton<ICadLinkSelector, CadLinkSelector>() ;
-            services.AddSingleton<IColumnFamilyLoader, ColumnFamilyLoader>() ;
             services.AddSingleton<IColumnModelFactory, ColumnModelFactory>() ;
 
             services.AddSingleton<IRectangularColumnExtractor, RectangularColumnExtractor>() ;
             services.AddSingleton<ICircularColumnExtractor, CircularColumnExtractor>() ;
+            services.AddSingleton<IColumnDataExtractor, ColumnDataExtractor>() ;
+            services.AddSingleton<IElementSelector, ElementSelector>() ;
+            services.AddSingleton<IColumnCreationStrategyFactory, ColumnCreationStrategyFactory>() ;
             services.AddTransient<IColumnFromCadContext, ColumnFromCadContext>() ;
             services.AddTransient<IColumnFromCadInteractor, ColumnFromCadInteractor>() ;
 
@@ -85,6 +108,10 @@ public static class Host
             services.AddPresentationsServices() ; // Presentation services (Views)
 
             s_serviceProvider = services.BuildServiceProvider() ;
+
+            // Initialize LanguageChangeHandler to subscribe to language change events
+            _ = s_serviceProvider.GetRequiredService<LanguageChangeHandler>() ;
+
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException ;
         }
     }

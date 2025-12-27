@@ -64,7 +64,8 @@ internal class ResourceRegistry
     /// <returns>ResourceConfig if found, null otherwise</returns>
     public ResourceConfig? GetConfig(string resourceId)
 #if NETCOREAPP
-        => _registeredResources.GetValueOrDefault(resourceId);
+        =>
+            _registeredResources.GetValueOrDefault(resourceId) ;
 #else
         =>
             _registeredResources.TryGetValue(resourceId,

@@ -12,7 +12,7 @@ public partial class ProgressView : Window
     {
         _title = title ;
         InitializeComponent() ;
-        this.SetOwnerByRevit();
+        this.SetOwnerByRevit() ;
 
         // Initialize progress bar
         ProgressBar.Minimum = 0 ;
@@ -24,21 +24,12 @@ public partial class ProgressView : Window
     ///     Updates progress bar
     /// </summary>
     public void UpdateProgress(int current,
-        int total)
-    {
-        if (Dispatcher.CheckAccess()) {
-            ProgressBar.Maximum = total ;
-            ProgressBar.Value = current ;
-            Title = $"{_title} ({current} / {total})" ;
-        }
-        else {
-            Dispatcher.Invoke(() =>
-                {
-                    ProgressBar.Maximum = total ;
-                    ProgressBar.Value = current ;
-                    Title = $"{_title} ({current} / {total})" ;
-                },
-                DispatcherPriority.Background) ;
-        }
-    }
+        int total) =>
+        Dispatcher.Invoke(() =>
+            {
+                ProgressBar.Maximum = total ;
+                ProgressBar.Value = current ;
+                Title = $"{_title} ({current} / {total})" ;
+            },
+            DispatcherPriority.Background) ;
 }

@@ -3,8 +3,10 @@ using Autodesk.Revit.DB ;
 using NSubstitute ;
 using NUnit.Framework ;
 using Serilog ;
-using Sonny.Application.Domain.Interfaces ;
-using Sonny.Application.Infrastructure.AutoColumnDimension.Services ;
+using Sonny.Application.Domain.Services ;
+using Sonny.Application.Infrastructure.Features.AutoColumnDimension.Implements ;
+using Sonny.Application.Infrastructure.Features.AutoColumnDimension.Services ;
+using Sonny.Application.Infrastructure.Revit.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 
 namespace Sonny.Application.Tests.Features.AutoColumnDimension.IntegrationTests ;
@@ -42,10 +44,12 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         var mockMessageService = Substitute.For<IMessageService>() ;
         var logger = Host.GetService<ILogger>() ;
         var autoColumnDimensionService = Host.GetService<IAutoColumnDimension>() ;
-        _handler = new AutoColumnDimensionInteractor(mockMessageService,
+        _handler = new AutoColumnDimensionInteractor(_revitDocumentService,
+            mockMessageService,
             logger,
             autoColumnDimensionService,
-            Host.GetService<IResourceHelper>(), Host.GetService<ITransactionManagerFactory>()) ;
+            Host.GetService<IResourceHelper>(),
+            Host.GetService<ITransactionManagerFactory>()) ;
     }
 
     [Test]
@@ -107,9 +111,8 @@ public class AutoColumnDimensionIntegrationTest : SonnyDocumentTestBase
         DimensionType? dimensionType = null ;
 
         try {
-            _handler!.Execute(_revitDocumentService!,
-                snapDistance,
-                dimensionType) ;
+            _handler!.Execute(snapDistance,
+                dimensionType?.UniqueId) ;
             Log("AutoColumnDimension command executed successfully") ;
         }
         catch (Exception ex) {

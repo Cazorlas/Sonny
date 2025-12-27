@@ -1,6 +1,6 @@
-using Autodesk.Revit.DB ;
 using NUnit.Framework ;
-using Sonny.Application.UseCases.Services ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Infrastructure.Revit.Implements ;
 
 namespace Sonny.Application.Tests.Core.UnitTests.Services ;
 
@@ -20,7 +20,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 3048.0 ; // 3048 mm = 10 feet
-        var displayUnit = UnitTypeId.Millimeters ;
+        var displayUnit = AppDisplayUnit.Millimeters ;
 
         // Act
         var result = _converter.ToInternalUnit(value,
@@ -38,7 +38,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 10.0 ;
-        var displayUnit = UnitTypeId.Feet ;
+        var displayUnit = AppDisplayUnit.Feet ;
 
         // Act
         var result = _converter.ToInternalUnit(value,
@@ -54,7 +54,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 10.0 ; // 10 feet
-        var displayUnit = UnitTypeId.Millimeters ;
+        var displayUnit = AppDisplayUnit.Millimeters ;
 
         // Act
         var result = _converter.FromInternalUnit(value,
@@ -72,7 +72,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 10.0 ;
-        var displayUnit = UnitTypeId.Feet ;
+        var displayUnit = AppDisplayUnit.Feet ;
 
         // Act
         var result = _converter.FromInternalUnit(value,
@@ -88,15 +88,15 @@ public class UnitConverterTests
     {
         // Act & Assert
         Assert.AreEqual("mm",
-            _converter.GetUnitDisplayName(UnitTypeId.Millimeters)) ;
+            _converter.GetUnitDisplayName(AppDisplayUnit.Millimeters)) ;
         Assert.AreEqual("cm",
-            _converter.GetUnitDisplayName(UnitTypeId.Centimeters)) ;
+            _converter.GetUnitDisplayName(AppDisplayUnit.Centimeters)) ;
         Assert.AreEqual("m",
-            _converter.GetUnitDisplayName(UnitTypeId.Meters)) ;
+            _converter.GetUnitDisplayName(AppDisplayUnit.Meters)) ;
         Assert.AreEqual("ft",
-            _converter.GetUnitDisplayName(UnitTypeId.Feet)) ;
+            _converter.GetUnitDisplayName(AppDisplayUnit.Feet)) ;
         Assert.AreEqual("in",
-            _converter.GetUnitDisplayName(UnitTypeId.Inches)) ;
+            _converter.GetUnitDisplayName(AppDisplayUnit.Inches)) ;
     }
 
     [Test]
@@ -104,7 +104,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 10.5 ;
-        var displayUnit = UnitTypeId.Millimeters ;
+        var displayUnit = AppDisplayUnit.Millimeters ;
 
         // Act
         var result = _converter.FormatWithUnit(value,
@@ -120,7 +120,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 120.0 ; // 120 inches = 10 feet
-        var displayUnit = UnitTypeId.Inches ;
+        var displayUnit = AppDisplayUnit.Inches ;
 
         // Act
         var result = _converter.ToInternalUnit(value,
@@ -137,7 +137,7 @@ public class UnitConverterTests
     {
         // Arrange
         var value = 10.0 ; // 10 feet
-        var displayUnit = UnitTypeId.Inches ;
+        var displayUnit = AppDisplayUnit.Inches ;
 
         // Act
         var result = _converter.FromInternalUnit(value,

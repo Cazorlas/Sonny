@@ -38,7 +38,7 @@
 
   <ItemGroup>
     <!-- Revit References -->
-    <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="2023.1.80"/>
+    <PackageReference Include="Nice3point.Revit.Api.AdWindows" Version="$(RevitVersion).*"/>
     <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="3.0.1"/>
     <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
 
@@ -57,7 +57,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Revit.Async\Revit.Async\Revit.Async.csproj" />
     <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj"/>
   </ItemGroup>
 

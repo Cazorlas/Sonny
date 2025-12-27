@@ -1,9 +1,10 @@
 using System.Collections.ObjectModel ;
-using Sonny.Application.Domain.Entites.Settings.Models ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Domain.Entities.Settings.Models ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Presentation.Bases ;
+using Sonny.Application.Presentation.Services ;
 using Sonny.Application.UseCases.Settings.Models ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Presentation.Settings.ViewModels ;
 
@@ -14,12 +15,18 @@ public partial class SettingsViewModel : BaseViewModel
 {
     #region Constructor
 
+    private readonly IDisplayUnitProvider _displayUnitProvider ;
+
     /// <summary>
     ///     Initializes a new instance of SettingsViewModel
     /// </summary>
     /// <param name="commonServices">Common services container</param>
-    public SettingsViewModel(ICommonServices commonServices) : base(commonServices)
+    /// <param name="displayUnitProvider">Display unit provider</param>
+    public SettingsViewModel(ICommonServices commonServices,
+        IDisplayUnitProvider displayUnitProvider) : base(commonServices,
+        displayUnitProvider)
     {
+        _displayUnitProvider = displayUnitProvider ;
         InitializeUnitOptions() ;
         InitializeLanguageOptions() ;
         LoadCurrentSettings() ;
@@ -63,13 +70,11 @@ public partial class SettingsViewModel : BaseViewModel
     {
         try {
             if (SelectedUnitOption != null) {
-                SettingsService.SetDisplayUnit(SelectedUnitOption.UnitTypeId) ;
+                SettingsService.SetDisplayUnit(SelectedUnitOption.DisplayUnit) ;
             }
 
             if (SelectedLanguageOption != null) {
                 SettingsService.SetLanguage(SelectedLanguageOption.LanguageCode) ;
-                // Change language in ResourceDictionaryManager
-                ResourceDictionaryManager.Instance.ChangeLanguage(SelectedLanguageOption.LanguageCode) ;
             }
 
             ShowInfo("Settings saved successfully") ;
@@ -99,15 +104,15 @@ public partial class SettingsViewModel : BaseViewModel
         UnitOptions = new ObservableCollection<UnitOption>
         {
             new("Millimeters (mm)",
-                UnitTypeId.Millimeters),
+                AppDisplayUnit.Millimeters),
             new("Centimeters (cm)",
-                UnitTypeId.Centimeters),
+                AppDisplayUnit.Centimeters),
             new("Meters (m)",
-                UnitTypeId.Meters),
+                AppDisplayUnit.Meters),
             new("Feet (ft)",
-                UnitTypeId.Feet),
+                AppDisplayUnit.Feet),
             new("Inches (in)",
-                UnitTypeId.Inches)
+                AppDisplayUnit.Inches)
         } ;
 
     /// <summary>
@@ -117,9 +122,9 @@ public partial class SettingsViewModel : BaseViewModel
         LanguageOptions =
         [
             new LanguageOption("English",
-                LanguageCode.En),
+                AppLanguageCode.En),
             new LanguageOption("Vietnamese",
-                LanguageCode.Vi)
+                AppLanguageCode.Vi)
         ] ;
 
     /// <summary>
@@ -127,8 +132,8 @@ public partial class SettingsViewModel : BaseViewModel
     /// </summary>
     private void LoadCurrentSettings()
     {
-        var currentUnit = SettingsService.GetDisplayUnit(RevitDocument.Document) ;
-        SelectedUnitOption = UnitOptions.FirstOrDefault(u => u.UnitTypeId.TypeId == currentUnit.TypeId) ;
+        var currentUnit = SettingsService.GetDisplayUnitOrDefault(() => _displayUnitProvider.GetDefaultDisplayUnit()) ;
+        SelectedUnitOption = UnitOptions.FirstOrDefault(u => u.DisplayUnit == currentUnit) ;
 
         var currentLanguage = SettingsService.GetLanguage() ;
         SelectedLanguageOption = LanguageOptions.FirstOrDefault(l => l.LanguageCode == currentLanguage) ;

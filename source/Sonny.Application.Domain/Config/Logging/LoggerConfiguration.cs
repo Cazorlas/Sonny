@@ -5,20 +5,6 @@ using Serilog.Events ;
 
 namespace Sonny.Application.Domain.Config.Logging ;
 
-/// <summary>
-///     Application logging configuration
-/// </summary>
-/// <example>
-///     <code lang="csharp">
-/// public class Class(ILogger logger)
-/// {
-///     private void Execute()
-///     {
-///         logger.Information("Message");
-///     }
-/// }
-/// </code>
-/// </example>
 public static class LoggerConfiguration
 {
     private const string LogTemplate =

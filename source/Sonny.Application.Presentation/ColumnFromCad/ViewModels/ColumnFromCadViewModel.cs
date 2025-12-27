@@ -1,13 +1,12 @@
 using System.Collections.ObjectModel ;
-using System.Windows.Threading ;
-using Revit.Async ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Contexts ;
-using Sonny.Application.Domain.Entites.ColumnFromCad.Models ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Contexts ;
+using Sonny.Application.Domain.Entities.ColumnFromCad.Models ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Domain.Entities.Settings.Models ;
+using Sonny.Application.Domain.Services ;
 using Sonny.Application.Presentation.Bases ;
-using Sonny.Application.Presentation.Views ;
+using Sonny.Application.Presentation.Services ;
 using Sonny.Application.UseCases.ColumnFromCad.Services ;
-using Sonny.ResourceManager ;
 
 namespace Sonny.Application.Presentation.ColumnFromCad.ViewModels ;
 
@@ -15,26 +14,24 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 {
     #region Services
 
-    private IColumnFromCadInteractor ColumnFromCadInteractor { get ; }
+    private readonly IColumnFromCadInteractor _columnFromCadInteractor ;
 
-    private IColumnFromCadContext Context { get ; }
-
-    private IDocumentQuery DocumentQuery { get ; }
+    private readonly IColumnFromCadContext _context ;
 
     #endregion
 
     #region Constructor
 
     public ColumnFromCadViewModel(ICommonServices commonServices,
+        IDisplayUnitProvider displayUnitProvider,
         IColumnFromCadInteractor columnFromCadInteractor,
         IColumnFromCadContext context,
-        IViewModelSettingsService<ColumnFromCadSettings> settingsService,
-        IDocumentQuery documentQuery) : base(commonServices,
+        IViewModelSettingsService<ColumnFromCadSettings> settingsService) : base(commonServices,
+        displayUnitProvider,
         settingsService)
     {
-        ColumnFromCadInteractor = columnFromCadInteractor ;
-        Context = context ;
-        DocumentQuery = documentQuery ;
+        _columnFromCadInteractor = columnFromCadInteractor ;
+        _context = context ;
 
         InitializeWithSettings() ;
     }
@@ -71,19 +68,19 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     ///     All available column families
     /// </summary>
     [ObservableProperty]
-    private ObservableCollection<Family> _allColumnFamilies = [] ;
+    private ObservableCollection<FamilyModel> _allColumnFamilies = [] ;
 
     /// <summary>
     ///     Selected rectangular column family
     /// </summary>
     [ObservableProperty]
-    private Family? _selectedRectangularColumnFamily ;
+    private FamilyModel? _selectedRectangularColumnFamily ;
 
     /// <summary>
     ///     Selected circular column family
     /// </summary>
     [ObservableProperty]
-    private Family? _selectedCircularColumnFamily ;
+    private FamilyModel? _selectedCircularColumnFamily ;
 
     /// <summary>
     ///     All available type parameters for rectangular columns (Width, Height)
@@ -119,19 +116,19 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     ///     All available levels
     /// </summary>
     [ObservableProperty]
-    private ObservableCollection<Level> _allLevels = [] ;
+    private ObservableCollection<LevelModel> _allLevels = [] ;
 
     /// <summary>
     ///     Base level for columns
     /// </summary>
     [ObservableProperty]
-    private Level? _baseLevel ;
+    private LevelModel? _baseLevel ;
 
     /// <summary>
     ///     Top level for columns
     /// </summary>
     [ObservableProperty]
-    private Level? _topLevel ;
+    private LevelModel? _topLevel ;
 
     /// <summary>
     ///     Base offset in display unit
@@ -165,69 +162,13 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
             return ;
         }
 
-        // Extract column data
-        var columnsData = await RevitTask.RunAsync(() => ColumnFromCadInteractor.ExtractColumnData(
-            Context.SelectedCadLink,
-            SelectedLayer!,
-            IsModelByHatch)) ;
-
-        if (columnsData.Count == 0) {
-            ShowInfo(ResourceHelper.GetString("MessageNoColumnsFound")) ;
-            return ;
-        }
-
-        // Show progress window on UI thread
-        var processWindow = new ProgressView(ResourceHelper.GetString("MessageCreatingColumns")) ;
-        processWindow.Show() ;
-
-        // Force UI update
-        await Task.Delay(100) ;
-
-        // Create columns
-        var createdIds = await RevitTask.RunAsync(() =>
+        var context = new ColumnCreationContext
         {
-            var context = new ColumnCreationContext
-            {
-                Document = RevitDocument.Document,
-                SelectedRectangularColumnFamily = SelectedRectangularColumnFamily!,
-                SelectedCircularColumnFamily = SelectedCircularColumnFamily!,
-                WidthParameter = WidthParameter!,
-                HeightParameter = HeightParameter!,
-                DiameterParameter = DiameterParameter!,
-                BaseLevel = BaseLevel!,
-                TopLevel = TopLevel!,
-                BaseOffset = BaseOffsetInternal,
-                TopOffset = TopOffsetInternal,
-                ProgressCallback = (current,
-                    total) =>
-                {
-                    // Update progress on UI thread
-                    processWindow.Dispatcher.Invoke(() =>
-                        {
-                            processWindow.UpdateProgress(current,
-                                total) ;
-                        },
-                        DispatcherPriority.Background) ;
-                }
-            } ;
+            Settings = CreateSettings(), BaseOffset = BaseOffsetInternal, TopOffset = TopOffsetInternal
+        } ;
 
-            return ColumnFromCadInteractor.CreateColumns(context) ;
-        }) ;
-
-        // Close progress window
-        processWindow.Dispatcher.Invoke(() => { processWindow.Close() ; }) ;
-
-        // Show result and select columns
-        if (createdIds.Count > 0) {
-            // Select created columns to highlight them in Revit UI
-            await RevitTask.RunAsync(() => { RevitDocument.UIDocument.Selection.SetElementIds(createdIds) ; }) ;
-
-            ShowInfo(ResourceHelper.GetString("MessageSuccessfullyCreated",
-                createdIds.Count)) ;
-        }
-        else {
-            ShowWarning(ResourceHelper.GetString("MessageNoColumnsCreated")) ;
-        }
+        // Extract column data
+        await _columnFromCadInteractor.Execute(context) ;
     }
 
     /// <summary>
@@ -240,7 +181,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
 
     #region Event Handlers
 
-    partial void OnSelectedRectangularColumnFamilyChanged(Family? value)
+    partial void OnSelectedRectangularColumnFamilyChanged(FamilyModel? value)
     {
         if (value == null) {
             return ;
@@ -249,7 +190,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
         LoadRectangularColumnParameters(value) ;
     }
 
-    partial void OnSelectedCircularColumnFamilyChanged(Family? value)
+    partial void OnSelectedCircularColumnFamilyChanged(FamilyModel? value)
     {
         if (value == null) {
             return ;
@@ -279,8 +220,8 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// <summary>
     ///     Called when display unit changes, converts offset values to new unit
     /// </summary>
-    protected override void OnDisplayUnitChanged(ForgeTypeId oldUnit,
-        ForgeTypeId newUnit)
+    protected override void OnDisplayUnitChanged(AppDisplayUnit oldUnit,
+        AppDisplayUnit newUnit)
     {
         // Convert BaseOffsetDisplay from old unit to new unit
         var baseOffsetInternal = UnitConverter.ToInternalUnit(BaseOffsetDisplay,
@@ -371,6 +312,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     protected override ColumnFromCadSettings CreateSettings() =>
         new()
         {
+            SelectedCadLinkId = _context.SelectedCadLinkId,
             SelectedLayer = SelectedLayer,
             IsModelByHatch = IsModelByHatch,
             RectangularColumnFamilyId = SelectedRectangularColumnFamily?.UniqueId,
@@ -393,7 +335,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// </summary>
     protected override void OnDataInitialized()
     {
-        AllLayerNames = new ObservableCollection<string>(Context.LayerNames) ;
+        AllLayerNames = new ObservableCollection<string>(_context.LayerNames) ;
         SelectedLayer = AllLayerNames[0] ;
 
         LoadColumnFamilies() ;
@@ -406,7 +348,7 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// </summary>
     private void LoadColumnFamilies()
     {
-        AllColumnFamilies = new ObservableCollection<Family>(Context.ColumnFamilies) ;
+        AllColumnFamilies = new ObservableCollection<FamilyModel>(_context.ColumnFamilies) ;
         SelectedRectangularColumnFamily = AllColumnFamilies.First() ;
         SelectedCircularColumnFamily = AllColumnFamilies.First() ;
 
@@ -417,10 +359,10 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// <summary>
     ///     Loads rectangular column type parameters from context (business data already extracted)
     /// </summary>
-    private void LoadRectangularColumnParameters(Family family)
+    private void LoadRectangularColumnParameters(FamilyModel family)
     {
         // Get parameters from context (business data already extracted)
-        var allParameters = Context.FamilyNumericParameters[family.Id] ;
+        var allParameters = _context.FamilyNumericParameters[family.UniqueId] ;
         AllRectangularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
 
         WidthParameter = AllRectangularColumnTypeParameters[0] ;
@@ -432,26 +374,21 @@ public partial class ColumnFromCadViewModel : BaseViewModelWithSettings<ColumnFr
     /// <summary>
     ///     Loads circular column type parameters from context (business data already extracted)
     /// </summary>
-    private void LoadCircularColumnParameters(Family family)
+    private void LoadCircularColumnParameters(FamilyModel family)
     {
         // Get parameters from context (business data already extracted)
-        var allParameters = Context.FamilyNumericParameters[family.Id] ;
+        var allParameters = _context.FamilyNumericParameters[family.UniqueId] ;
         AllCircularColumnTypeParameters = new ObservableCollection<string>(allParameters) ;
 
         DiameterParameter = AllCircularColumnTypeParameters[0] ;
     }
 
     /// <summary>
-    ///     Loads levels from document
+    ///     Loads levels from context (business data already extracted)
     /// </summary>
     private void LoadLevels()
     {
-        var levels = DocumentQuery
-            .GetAllElements<Level>()
-            .OrderBy(level => level.Elevation)
-            .ToList() ;
-
-        AllLevels = new ObservableCollection<Level>(levels) ;
+        AllLevels = new ObservableCollection<LevelModel>(_context.Levels) ;
 
         if (AllLevels.Count <= 0) {
             return ;

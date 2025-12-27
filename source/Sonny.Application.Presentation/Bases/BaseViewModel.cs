@@ -1,6 +1,8 @@
 using System.Windows ;
 using Serilog ;
-using Sonny.Application.Domain.Interfaces ;
+using Sonny.Application.Domain.Entities.Settings ;
+using Sonny.Application.Domain.Services ;
+using Sonny.Application.Presentation.Services ;
 
 namespace Sonny.Application.Presentation.Bases ;
 
@@ -15,16 +17,18 @@ public abstract class BaseViewModel : ObservableObject
     ///     Initializes a new instance of BaseViewModel
     /// </summary>
     /// <param name="commonServices">Common services container</param>
-    protected BaseViewModel(ICommonServices commonServices)
+    /// <param name="displayUnitProvider">Display unit provider</param>
+    protected BaseViewModel(ICommonServices commonServices,
+        IDisplayUnitProvider displayUnitProvider)
     {
-        RevitDocument = commonServices.RevitDocument ;
         MessageService = commonServices.MessageService ;
         Logger = commonServices.Logger ;
         UnitConverter = commonServices.UnitConverter ;
         SettingsService = commonServices.SettingsService ;
+        ResourceHelper = commonServices.ResourceHelper ;
 
         // Initialize display unit from user settings (or default)
-        DisplayUnit = SettingsService.GetDisplayUnit(RevitDocument.Document) ;
+        DisplayUnit = SettingsService.GetDisplayUnitOrDefault(displayUnitProvider.GetDefaultDisplayUnit) ;
 
         // Subscribe to display unit changes
         SettingsService.DisplayUnitChanged += OnDisplayUnitChanged ;
@@ -34,7 +38,7 @@ public abstract class BaseViewModel : ObservableObject
     ///     Handle display unit changed event
     /// </summary>
     private void OnDisplayUnitChanged(object? sender,
-        ForgeTypeId newUnit)
+        AppDisplayUnit newUnit)
     {
         var oldUnit = DisplayUnit ;
         DisplayUnit = newUnit ;
@@ -51,8 +55,8 @@ public abstract class BaseViewModel : ObservableObject
     /// </summary>
     /// <param name="oldUnit">Previous display unit</param>
     /// <param name="newUnit">New display unit</param>
-    protected virtual void OnDisplayUnitChanged(ForgeTypeId oldUnit,
-        ForgeTypeId newUnit)
+    protected virtual void OnDisplayUnitChanged(AppDisplayUnit oldUnit,
+        AppDisplayUnit newUnit)
     {
         // Override in derived classes to convert values when unit changes
     }
@@ -61,19 +65,8 @@ public abstract class BaseViewModel : ObservableObject
 
     #region Common Services (Dependency Injection)
 
-    /// <summary>
-    ///     Revit document service for accessing Revit API
-    /// </summary>
-    protected IRevitDocument RevitDocument { get ; }
-
-    /// <summary>
-    ///     Message service for showing messages to user
-    /// </summary>
     protected IMessageService MessageService { get ; }
 
-    /// <summary>
-    ///     Logger for logging operations
-    /// </summary>
     protected ILogger Logger { get ; }
 
     /// <summary>
@@ -85,6 +78,8 @@ public abstract class BaseViewModel : ObservableObject
     ///     Settings service for managing application preferences
     /// </summary>
     protected ISettingsService SettingsService { get ; }
+
+    protected IResourceHelper ResourceHelper { get ; }
 
     #endregion
 
@@ -98,7 +93,7 @@ public abstract class BaseViewModel : ObservableObject
     /// <summary>
     ///     Display unit type (default: millimeters for metric, feet for imperial)
     /// </summary>
-    protected ForgeTypeId DisplayUnit { get ; private set ; }
+    protected AppDisplayUnit DisplayUnit { get ; private set ; }
 
     /// <summary>
     ///     Display unit name for UI (e.g., "mm", "cm", "ft")
