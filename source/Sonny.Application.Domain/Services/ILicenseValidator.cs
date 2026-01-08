@@ -6,5 +6,5 @@ public interface ILicenseValidator
 {
     LicenseStatus GetLicenseStatus() ;
     Task<LicenseStatus> TryAutoLoginAsync() ;
-    void ShowLicenseWindow() ;
+    Task ShowLicenseWindow() ;
 }

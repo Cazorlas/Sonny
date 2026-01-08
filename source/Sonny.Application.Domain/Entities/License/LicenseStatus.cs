@@ -3,13 +3,8 @@ namespace Sonny.Application.Domain.Entities.License ;
 public class LicenseStatus
 {
     public bool IsValid { get ; set ; }
-
     public string? Email { get ; set ; }
-
-    /// <summary>
-    ///     User ID from Keygen
-    /// </summary>
-    public string? UserId { get ; set ; }
+    public bool IsOfflineLicense { get ; set ; }
 
     /// <summary>
     ///     License type/policy name (e.g., "Trial", "Pro", etc.)
@@ -17,7 +12,6 @@ public class LicenseStatus
     public string? LicenseType { get ; set ; }
 
     public DateTime? StartDate { get ; set ; }
-
     public DateTime? ExpiryDate { get ; set ; }
 
     /// <summary>
@@ -28,16 +22,16 @@ public class LicenseStatus
     public static LicenseStatus Invalid(string? error = null) => new() { IsValid = false, Error = error } ;
 
     public static LicenseStatus Valid(string? email,
-        string? userId,
         string? licenseType,
+        bool isOfflineLicense,
         DateTime? startDate,
         DateTime? expiryDate) =>
         new()
         {
             IsValid = true,
             Email = email,
-            UserId = userId,
             LicenseType = licenseType,
+            IsOfflineLicense = isOfflineLicense,
             StartDate = startDate,
             ExpiryDate = expiryDate
         } ;

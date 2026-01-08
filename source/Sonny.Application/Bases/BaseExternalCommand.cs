@@ -33,8 +33,11 @@ public abstract class BaseExternalCommand : IExternalCommand
             // Initialize Host if not already initialized
             Host.Start() ;
 
-            if (! CheckLicense()) {
-                return Result.Cancelled ;
+            if (ShouldCheckLicense()) {
+                var licenseCheckService = Host.GetService<ILicenseCheckService>() ;
+                if (! licenseCheckService.CheckLicense()) {
+                    return Result.Cancelled ;
+                }
             }
 
             // Set UIDocument in provider for DI container
@@ -87,14 +90,4 @@ public abstract class BaseExternalCommand : IExternalCommand
     protected abstract Result ExecuteInternal(ExternalCommandData commandData,
         ref string message,
         ElementSet elements) ;
-
-    private bool CheckLicense()
-    {
-        if (! ShouldCheckLicense()) {
-            return true ;
-        }
-
-        var licenseCheckService = Host.GetService<ILicenseCheckService>() ;
-        return licenseCheckService.CheckLicense() ;
-    }
 }

@@ -46,8 +46,8 @@ public class KeygenLicenseValidator(AutoLoginService autoLoginService, UserInfoS
             // Update cached status
             if (_userInfo != null) {
                 _cachedStatus = LicenseStatus.Valid(_userInfo.Email,
-                    autoLoginResult.UserId,
                     _userInfo.LicenseType,
+                    autoLoginResult.IsOfflineLicense,
                     ParseDate(_userInfo.LicenseStartDate),
                     ParseDate(_userInfo.LicenseExpiryDate)) ;
             }
@@ -63,7 +63,7 @@ public class KeygenLicenseValidator(AutoLoginService autoLoginService, UserInfoS
         }
     }
 
-    public void ShowLicenseWindow()
+    public async Task ShowLicenseWindow()
     {
         LoginView window ;
 
@@ -76,9 +76,8 @@ public class KeygenLicenseValidator(AutoLoginService autoLoginService, UserInfoS
         }
 
         window.ShowDialog() ;
-
         // After window closes, refresh cached status
-        _ = TryAutoLoginAsync() ;
+        _ = await TryAutoLoginAsync() ;
     }
 
     private static DateTime? ParseDate(string? dateString)

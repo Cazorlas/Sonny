@@ -9,35 +9,23 @@ public class LicenseCheckService(ILicenseValidator licenseValidator, IMessageSer
     {
         var licenseStatus = licenseValidator.GetLicenseStatus() ;
 
-        // Check if license is invalid or expired
-        var isExpired = licenseStatus.ExpiryDate.HasValue && licenseStatus.ExpiryDate.Value < DateTime.Now ;
+        if (! licenseStatus.ExpiryDate.HasValue) {
+            messageService.ShowError("License Required",
+                "License invalid or not found") ;
 
-        if (licenseStatus.IsValid
-            && ! isExpired) {
+            return false ;
+        }
+
+        // Check if license is expired first
+        var isExpired = licenseStatus.ExpiryDate!.Value < DateTime.Now ;
+
+        if (! isExpired) {
             return true ;
         }
 
-        try {
-            string errorMessage ;
-
-            if (licenseStatus.ExpiryDate != null) {
-                errorMessage =
-                    $"License has expired on {licenseStatus.ExpiryDate.Value:yyyy-MM-dd}. Please renew your license to continue." ;
-            }
-            else {
-                errorMessage = string.IsNullOrEmpty(licenseStatus.Error)
-                    ? "License is not valid. Please activate your license to continue."
-                    : $"License is not valid: {licenseStatus.Error}" ;
-            }
-
-            messageService.ShowWarning("License Required",
-                errorMessage) ;
-
-            licenseValidator.ShowLicenseWindow() ;
-        }
-        catch {
-            // Ignore message service errors
-        }
+        var expiryDate = licenseStatus.ExpiryDate.Value.ToString("yyyy-MM-dd") ;
+        messageService.ShowError("License Expired",
+            $"License has expired on {expiryDate}. Please renew your license.") ;
 
         return false ;
     }
