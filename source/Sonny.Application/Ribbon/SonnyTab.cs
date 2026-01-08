@@ -16,6 +16,17 @@ public class SonnyTab
     public class SettingsPanel
     {
         /// <summary>
+        ///     Button for license info
+        /// </summary>
+        [Button("License",
+            typeof( LoginCommand ),
+            Image = "/Sonny.Application;component/Resources/Icons/LoginCommand16.png",
+            LargeImage = "/Sonny.Application;component/Resources/Icons/LoginCommand32.png",
+            ToolTip = "View license information",
+            LongDescription = "View and manage your license information")]
+        public class LicenseButton ;
+
+        /// <summary>
         ///     Button for application settings
         /// </summary>
         [Button("Settings",

@@ -10,6 +10,7 @@ using Sonny.Application.Infrastructure.Features.AutoColumnDimension.Services ;
 using Sonny.Application.Infrastructure.Features.ColumnFromCad.Implements ;
 using Sonny.Application.Infrastructure.Features.ColumnFromCad.Services ;
 using Sonny.Application.Infrastructure.Features.ColumnFromCad.Strategies ;
+using Sonny.Application.Infrastructure.License ;
 using Sonny.Application.Infrastructure.Resource.Implements ;
 using Sonny.Application.Infrastructure.Revit.Implements ;
 using Sonny.Application.Infrastructure.Revit.Managers.Transactions ;
@@ -20,6 +21,8 @@ using Sonny.Application.Presentation.Services ;
 using Sonny.Application.UseCases.AutoColumnDimension.Services ;
 using Sonny.Application.UseCases.ColumnFromCad.Implements ;
 using Sonny.Application.UseCases.ColumnFromCad.Services ;
+using Sonny.Application.UseCases.Services ;
+using Sonny.Keygen.Services ;
 
 namespace Sonny.Application ;
 
@@ -58,6 +61,15 @@ public static class Host
             services.AddSingleton<IMessageService, MessageService>() ;
             services.AddSingleton<IUnitConverter, UnitConverter>() ;
             services.AddSingleton<ISettingsService, SettingsService>() ;
+
+            // License validation - Keygen services
+            services.AddSingleton<AuthService>() ;
+            services.AddSingleton<KeygenAuthService>() ;
+            services.AddSingleton<OfflineLicenseManager>() ;
+            services.AddSingleton<AutoLoginService>() ;
+            services.AddSingleton<UserInfoService>() ;
+            services.AddSingleton<ILicenseValidator, KeygenLicenseValidator>() ;
+            services.AddSingleton<ILicenseCheckService, LicenseCheckService>() ;
 
             // Resources initializer (must be registered after ISettingsService)
             services.AddSingleton<ResourcesInitializer>() ;

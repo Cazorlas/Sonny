@@ -106,6 +106,7 @@ their own repositories:
 - **Revit.Async** - Async utilities for Revit API
 - **Sonny.EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
 - **Sonny.RevitExtensions** - Revit API extension methods and utilities library
+- **Sonny.Keygen** - License management library using Keygen API with Auth0 authentication
 
 ### Clone with Submodules
 
@@ -128,7 +129,7 @@ To update submodules to their latest commits:
 git submodule update --remote
 
 # Commit and push the submodule reference update to GitHub
-git add source/Revit.Async source/Sonny.EasyRibbon source/Sonny.RevitExtensions
+git add source/Revit.Async source/Sonny.EasyRibbon source/Sonny.RevitExtensions source/Sonny.Keygen
 git commit -m "Update submodules to latest version"
 git push origin master
 ```
@@ -157,6 +158,13 @@ This project includes the following submodules:
 - **Submodule repository**: [Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)
 - The submodule tracks a specific commit from the Sonny.RevitExtensions repository
 - Changes to Sonny.RevitExtensions should be committed in its own repository, not in Sonny
+
+#### Sonny.Keygen
+
+- **Submodule location**: `source/Sonny.Keygen`
+- **Submodule repository**: [Sonny.Keygen](https://github.com/PhanCongVuDuc/Sonny.Keygen)
+- The submodule tracks a specific commit from the Sonny.Keygen repository
+- Changes to Sonny.Keygen should be committed in its own repository, not in Sonny
 
 > [!NOTE]
 > If you see empty submodule folders after cloning, you need to initialize submodules using
