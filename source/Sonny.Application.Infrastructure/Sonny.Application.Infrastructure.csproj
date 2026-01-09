@@ -62,6 +62,13 @@
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
   </ItemGroup>
 
+  <!-- WPF references for net48 (needed for LoginView Window) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="PresentationCore"/>
+    <Reference Include="PresentationFramework"/>
+    <Reference Include="WindowsBase"/>
+  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Features\"/>
   </ItemGroup>
