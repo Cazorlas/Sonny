@@ -1,4 +1,5 @@
-﻿using Nuke.Common.Git ;
+﻿using JetBrains.Annotations ;
+using Nuke.Common.Git ;
 using Nuke.Common.ProjectModel ;
 using Nuke.Common.Tools.Git ;
 
@@ -96,6 +97,7 @@ sealed partial class Build
     ///     Git repository metadata.
     /// </summary>
     [GitRepository]
+    [CanBeNull]
     readonly GitRepository GitRepository ;
 
     /// <summary>
@@ -107,5 +109,5 @@ sealed partial class Build
     /// <summary>
     ///     Set not-defined properties.
     /// </summary>
-    protected override void OnBuildInitialized() => ReleaseVersion ??= GitRepository.Tags.SingleOrDefault() ;
+    protected override void OnBuildInitialized() => ReleaseVersion ??= GitRepository?.Tags.SingleOrDefault() ;
 }

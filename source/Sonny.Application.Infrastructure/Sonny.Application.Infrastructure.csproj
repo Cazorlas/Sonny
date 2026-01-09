@@ -54,10 +54,19 @@
 
     <!-- Reference Use Cases to implement Input Ports (acceptable exception for Revit add-in) -->
     <ProjectReference Include="..\Sonny.Application.UseCases\Sonny.Application.UseCases.csproj"/>
+    <ProjectReference Include="..\Sonny.Keygen\Sonny.Keygen.UI\Sonny.Keygen.UI.csproj" />
+    <ProjectReference Include="..\Sonny.Keygen\Sonny.Keygen\Sonny.Keygen.csproj" />
 
     <!-- Reference Infrastructure libraries -->
     <ProjectReference Include="..\Sonny.ResourceManager\Sonny.ResourceManager.csproj"/>
     <ProjectReference Include="..\Sonny.RevitExtensions\source\Sonny.RevitExtensions\Sonny.RevitExtensions.csproj"/>
+  </ItemGroup>
+
+  <!-- WPF references for net48 (needed for LoginView Window) -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <Reference Include="PresentationCore"/>
+    <Reference Include="PresentationFramework"/>
+    <Reference Include="WindowsBase"/>
   </ItemGroup>
 
   <ItemGroup>

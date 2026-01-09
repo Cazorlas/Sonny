@@ -1,9 +1,9 @@
-using Autodesk.Revit.DB ;
 using Autodesk.Revit.UI ;
 using Revit.Async ;
 using Serilog ;
 using Sonny.Application.Domain.Services ;
 using Sonny.Application.Infrastructure.Revit.Services ;
+using Sonny.Application.UseCases.Services ;
 
 namespace Sonny.Application.Bases ;
 
@@ -12,6 +12,12 @@ namespace Sonny.Application.Bases ;
 /// </summary>
 public abstract class BaseExternalCommand : IExternalCommand
 {
+    /// <summary>
+    ///     Determines whether license check should be performed for this command
+    /// </summary>
+    /// <returns>True if license should be checked, false otherwise</returns>
+    protected virtual bool ShouldCheckLicense() => true ;
+
     /// <summary>
     ///     Executes the command with automatic RevitTask initialization
     /// </summary>
@@ -26,6 +32,13 @@ public abstract class BaseExternalCommand : IExternalCommand
         try {
             // Initialize Host if not already initialized
             Host.Start() ;
+
+            if (ShouldCheckLicense()) {
+                var licenseCheckService = Host.GetService<ILicenseCheckService>() ;
+                if (! licenseCheckService.CheckLicense()) {
+                    return Result.Cancelled ;
+                }
+            }
 
             // Set UIDocument in provider for DI container
             var uiDocumentProvider = Host.GetService<IUIDocumentProvider>() ;

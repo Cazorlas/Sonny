@@ -25,8 +25,3 @@ public interface ICircularColumnExtractor
     List<CircularColumnModel> ExtractFromPlanarFaces(ImportInstance cadInstance,
         string selectedLayer) ;
 }
-
-
-
-
-

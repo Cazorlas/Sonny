@@ -10,3 +10,7 @@
 	path = source/Sonny.EasyRibbon
 	url = https://github.com/PhanCongVuDuc/Sonny.EasyRibbon.git
 	branch = main
+[submodule "source/Sonny.Keygen"]
+	path = source/Sonny.Keygen
+	url = https://github.com/PhanCongVuDuc/Sonny.Keygen
+	branch = master

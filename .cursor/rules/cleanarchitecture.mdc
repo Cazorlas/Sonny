@@ -4,16 +4,17 @@ alwaysApply: true
 
 # Clean Architecture – Layered by Circles
 
-## 1. Enterprise Business Rules (Inner Circle)
+## Project Structure Mapping
 
-**Purpose:** Core, long-term business logic.
+- **Domain Layer** (`Sonny.Application.Domain`) = Enterprise Business Rules (Inner Circle)
+- **UseCases Layer** (`Sonny.Application.UseCases`) = Application Business Rules
+- **Infrastructure Layer** (`Sonny.Application.Infrastructure`) = Interface Adapters (Framework Implementations)
+- **Presentation Layer** (`Sonny.Application.Presentation`) = Interface Adapters (UI)
+- **Application Layer** (`Sonny.Application`) = Entry Point / Host (Frameworks & Drivers)
 
-**Includes:**
+## 1. Domain Layer (`Sonny.Application.Domain`)
 
-- **Entities**
-  - Core domain models
-  - Business invariants and rules
-  - Independent of application, UI, DB, frameworks
+**Includes:** Entities, Service Interfaces, Exceptions, Managers, SelectionFilters, Preprocessors
 
 **⚠️ CRITICAL RESTRICTIONS:**
 - ❌ **MUST NOT** use Revit API
@@ -21,120 +22,78 @@ alwaysApply: true
 - ❌ **MUST NOT** know about ViewModels, UI, or frameworks
 - ✅ **MUST** be completely framework-agnostic
 
-## 2. Application Business Rules
+## 2. UseCases Layer (`Sonny.Application.UseCases`)
 
-**Purpose:** Application-specific behavior.
+**Includes:** Interactors, Interactor Interfaces, Application Services
 
-**Includes:**
-
-- **Use Cases**
-  - Define application workflows
-  - **Rule: Each feature requires a use case**
-
-- **Use Case Interactors**
-  - Implement use case logic
-  - Orchestrate entities
-
-- **Input Ports**
-  - Interfaces used to invoke use cases
-
-- **Output Ports**
-  - Interfaces used to return results
+**Rule:** Each feature requires an interactor
 
 **⚠️ CRITICAL RESTRICTIONS:**
 - ❌ **MUST NOT** use Revit API
 - ❌ **MUST NOT** reference Revit packages
-- ❌ **MUST NOT** depend on Infrastructure layer
+- ❌ **MUST NOT** depend on Infrastructure or Presentation layers
 - ✅ **MUST** depend only on Domain layer
-- ✅ **MUST** use only Domain interfaces and entities
 
-## 3. Interface Adapters
+## 3. Infrastructure Layer (`Sonny.Application.Infrastructure`)
 
-**Purpose:** Translate between core logic and external systems.
+**Includes:** Domain interface implementations, Feature implementations, Revit services
 
-**Includes:**
+**⚠️ RESTRICTIONS:**
+- ✅ **CAN** use Revit API
+- ✅ **CAN** reference Revit packages
+- ✅ **CAN** reference Domain layer
+- ❌ **MUST NOT** Presentation layers
 
-- **Controllers**
-  - Convert external requests to Input Port models
+## 4. Presentation Layer (`Sonny.Application.Presentation`)
 
-- **Presenters**
-  - Convert Output Port data to UI-friendly models
+**Includes:** ViewModels, Views, UI Services
 
-- **Gateways (Repository Interfaces)**
-  - Define data access contracts
+**⚠️ RESTRICTIONS:**
+- ✅ **CAN** reference UseCases and Domain layers
+- ❌ **MUST NOT** reference Infrastructure layer directly
+- ❌ **MUST NOT** use Revit API directly
 
-- **DTOs / ViewModels**
-  - Data structures for communication
+## 5. Application Layer (`Sonny.Application`)
 
-## 4. Frameworks & Drivers (Outer Circle)
+**Includes:** Commands, Host (DI setup), Ribbon, Modules
 
-**Purpose:** Technical and delivery details.
+**⚠️ RESTRICTIONS:**
+- ✅ **CAN** reference all layers
+- ✅ **CAN** use Revit API (entry point)
 
-**Includes:**
+## Dependency Rule
 
-- **UI**
-  - Web, Desktop, Mobile
+**Dependencies always point inward:**
 
-- **Database**
-  - SQL, NoSQL, Files
+```
+Application → Infrastructure, Presentation, UseCases, Domain
+Presentation → UseCases, Domain
+Infrastructure → UseCases, Domain
+UseCases → Domain
+Domain → (nothing)
+```
 
-- **External Systems**
-  - APIs, Devices, Third-party services
-
-- **Framework Implementations**
-  - ORM, Web frameworks, SDKs
-
-## Interactor Clarification
-
-- **Interactor belongs to the Application Business Rules layer**
-- **Implements a single Use Case**
-
-**Depends only on:**
-- Entities
-- Input / Output Ports
-
-**Must not depend on:**
-- UI
-- Database
-- Frameworks
+**Forbidden:**
+- Domain → any other layer
+- UseCases → Infrastructure, Presentation
+- Presentation → Infrastructure
 
 ## CRITICAL: Revit API Restrictions
 
 **⚠️ ABSOLUTE RULE - NEVER VIOLATE:**
 
-- **Domain Layer (Enterprise Business Rules)**
-  - ❌ **MUST NOT** use Revit API directly
-  - ❌ **MUST NOT** reference Revit API types (Document, Element, etc.)
-  - ❌ **MUST NOT** reference Revit packages (Nice3point.Revit.*)
-  - ✅ **MUST** use only abstract interfaces defined in Domain
-  - ✅ **MUST** be completely independent of Revit
-
-- **UseCases Layer (Application Business Rules)**
-  - ❌ **MUST NOT** use Revit API directly
-  - ❌ **MUST NOT** reference Revit API types
+- **Domain & UseCases Layers**
+  - ❌ **MUST NOT** use Revit API
   - ❌ **MUST NOT** reference Revit packages
   - ✅ **MUST** use only Domain interfaces and entities
-  - ✅ **MUST** depend only on Domain layer
 
-- **Infrastructure Layer (Interface Adapters)**
+- **Infrastructure Layer**
   - ✅ **CAN** use Revit API
-  - ✅ **CAN** implement Domain interfaces using Revit API
-  - ✅ **CAN** reference Revit packages
+  - ✅ **CAN** use Library
 
-**Why:**
-- Domain and UseCases must be testable without Revit
-- Domain and UseCases must be framework-agnostic
-- Only Infrastructure layer knows about Revit implementation details
-
-## Dependency Rule (Global)
-
-- **Dependencies always point inward**
-- **Outer layers depend on inner layers**
-- **Inner layers never reference outer layers**
+**Why:** Domain and UseCases must be testable without Revit and framework-agnostic.
 
 ## Documentation Rules
 
-- **Document interfaces only**
-  - Interfaces require full XML documentation
-  - Classes/implementations don't need documentation unless they contain complex logic
-  - Don't add unnecessary documentation
+- **Document interfaces only** - Interfaces require full XML documentation
+- Classes/implementations don't need documentation unless complex logic

@@ -25,8 +25,3 @@ public interface IRectangularColumnExtractor
     List<RectangularColumnModel> ExtractFromPlanarFaces(ImportInstance cadInstance,
         string selectedLayer) ;
 }
-
-
-
-
-

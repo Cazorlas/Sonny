@@ -67,25 +67,23 @@ Dependencies flow inward, ensuring that core business logic remains independent 
 
 ## Videos
 
-### AutoColumnDimension Demo
+### Settings
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=ue2QgaLX7fE" target="_blank"><img src="http://img.youtube.com/vi/ue2QgaLX7fE/0.jpg" alt="AutoColumnDimension Demo" width="560" height="315" border="10" /></a>
+- [Login Demo](https://youtu.be/H_OkdKYkkwk)
+- [Units & Languages Support](https://www.youtube.com/watch?v=DQbC8JEZ5BM)
 
-### ColumnFromCad Demo
+### Dimension Tools
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=D6tkBJeo9uo" target="_blank"><img src="http://img.youtube.com/vi/D6tkBJeo9uo/0.jpg" alt="ColumnFromCad Demo" width="560" height="315" border="10" /></a>
+- [AutoColumnDimension Demo](https://www.youtube.com/watch?v=ue2QgaLX7fE)
 
-### Unit Testing by Console
+### Model from CAD
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=L4UvIr6Km7g" target="_blank"><img src="http://img.youtube.com/vi/L4UvIr6Km7g/0.jpg" alt="Unit Testing by Console" width="560" height="315" border="10" /></a>
+- [ColumnFromCad Demo](https://www.youtube.com/watch?v=D6tkBJeo9uo)
 
-### Unit Testing by Visual Studio
+### Unit Testing
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=exr4cEYcHmk" target="_blank"><img src="http://img.youtube.com/vi/exr4cEYcHmk/0.jpg" alt="Unit Testing by Visual Studio" width="560" height="315" border="10" /></a>
-
-### Units & Languages Support
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=DQbC8JEZ5BM" target="_blank"><img src="http://img.youtube.com/vi/DQbC8JEZ5BM/0.jpg" alt="Units & Languages Support" width="560" height="315" border="10" /></a>
+- [Unit Testing by Console](https://www.youtube.com/watch?v=L4UvIr6Km7g)
+- [Unit Testing by Visual Studio](https://www.youtube.com/watch?v=exr4cEYcHmk)
 
 ## Prerequisites
 
@@ -106,6 +104,7 @@ their own repositories:
 - **Revit.Async** - Async utilities for Revit API
 - **Sonny.EasyRibbon** - Attribute-based framework for creating Revit Ribbon UI
 - **Sonny.RevitExtensions** - Revit API extension methods and utilities library
+- **Sonny.Keygen** - License management library using Keygen API with Auth0 authentication
 
 ### Clone with Submodules
 
@@ -128,7 +127,7 @@ To update submodules to their latest commits:
 git submodule update --remote
 
 # Commit and push the submodule reference update to GitHub
-git add source/Revit.Async source/Sonny.EasyRibbon source/Sonny.RevitExtensions
+git add source/Revit.Async source/Sonny.EasyRibbon source/Sonny.RevitExtensions source/Sonny.Keygen
 git commit -m "Update submodules to latest version"
 git push origin master
 ```
@@ -157,6 +156,13 @@ This project includes the following submodules:
 - **Submodule repository**: [Sonny.RevitExtensions](https://github.com/PhanCongVuDuc/Sonny.RevitExtensions)
 - The submodule tracks a specific commit from the Sonny.RevitExtensions repository
 - Changes to Sonny.RevitExtensions should be committed in its own repository, not in Sonny
+
+#### Sonny.Keygen
+
+- **Submodule location**: `source/Sonny.Keygen`
+- **Submodule repository**: [Sonny.Keygen](https://github.com/PhanCongVuDuc/Sonny.Keygen)
+- The submodule tracks a specific commit from the Sonny.Keygen repository
+- Changes to Sonny.Keygen should be committed in its own repository, not in Sonny
 
 > [!NOTE]
 > If you see empty submodule folders after cloning, you need to initialize submodules using
