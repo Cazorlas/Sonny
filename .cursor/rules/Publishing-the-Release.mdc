@@ -1,0 +1,140 @@
+---
+alwaysApply: true
+---
+
+# Clean Architecture – Layered by Circles
+
+## 1. Enterprise Business Rules (Inner Circle)
+
+**Purpose:** Core, long-term business logic.
+
+**Includes:**
+
+- **Entities**
+  - Core domain models
+  - Business invariants and rules
+  - Independent of application, UI, DB, frameworks
+
+**⚠️ CRITICAL RESTRICTIONS:**
+- ❌ **MUST NOT** use Revit API
+- ❌ **MUST NOT** reference Revit packages
+- ❌ **MUST NOT** know about ViewModels, UI, or frameworks
+- ✅ **MUST** be completely framework-agnostic
+
+## 2. Application Business Rules
+
+**Purpose:** Application-specific behavior.
+
+**Includes:**
+
+- **Use Cases**
+  - Define application workflows
+  - **Rule: Each feature requires a use case**
+
+- **Use Case Interactors**
+  - Implement use case logic
+  - Orchestrate entities
+
+- **Input Ports**
+  - Interfaces used to invoke use cases
+
+- **Output Ports**
+  - Interfaces used to return results
+
+**⚠️ CRITICAL RESTRICTIONS:**
+- ❌ **MUST NOT** use Revit API
+- ❌ **MUST NOT** reference Revit packages
+- ❌ **MUST NOT** depend on Infrastructure layer
+- ✅ **MUST** depend only on Domain layer
+- ✅ **MUST** use only Domain interfaces and entities
+
+## 3. Interface Adapters
+
+**Purpose:** Translate between core logic and external systems.
+
+**Includes:**
+
+- **Controllers**
+  - Convert external requests to Input Port models
+
+- **Presenters**
+  - Convert Output Port data to UI-friendly models
+
+- **Gateways (Repository Interfaces)**
+  - Define data access contracts
+
+- **DTOs / ViewModels**
+  - Data structures for communication
+
+## 4. Frameworks & Drivers (Outer Circle)
+
+**Purpose:** Technical and delivery details.
+
+**Includes:**
+
+- **UI**
+  - Web, Desktop, Mobile
+
+- **Database**
+  - SQL, NoSQL, Files
+
+- **External Systems**
+  - APIs, Devices, Third-party services
+
+- **Framework Implementations**
+  - ORM, Web frameworks, SDKs
+
+## Interactor Clarification
+
+- **Interactor belongs to the Application Business Rules layer**
+- **Implements a single Use Case**
+
+**Depends only on:**
+- Entities
+- Input / Output Ports
+
+**Must not depend on:**
+- UI
+- Database
+- Frameworks
+
+## CRITICAL: Revit API Restrictions
+
+**⚠️ ABSOLUTE RULE - NEVER VIOLATE:**
+
+- **Domain Layer (Enterprise Business Rules)**
+  - ❌ **MUST NOT** use Revit API directly
+  - ❌ **MUST NOT** reference Revit API types (Document, Element, etc.)
+  - ❌ **MUST NOT** reference Revit packages (Nice3point.Revit.*)
+  - ✅ **MUST** use only abstract interfaces defined in Domain
+  - ✅ **MUST** be completely independent of Revit
+
+- **UseCases Layer (Application Business Rules)**
+  - ❌ **MUST NOT** use Revit API directly
+  - ❌ **MUST NOT** reference Revit API types
+  - ❌ **MUST NOT** reference Revit packages
+  - ✅ **MUST** use only Domain interfaces and entities
+  - ✅ **MUST** depend only on Domain layer
+
+- **Infrastructure Layer (Interface Adapters)**
+  - ✅ **CAN** use Revit API
+  - ✅ **CAN** implement Domain interfaces using Revit API
+  - ✅ **CAN** reference Revit packages
+
+**Why:**
+- Domain and UseCases must be testable without Revit
+- Domain and UseCases must be framework-agnostic
+- Only Infrastructure layer knows about Revit implementation details
+
+## Dependency Rule (Global)
+
+- **Dependencies always point inward**
+- **Outer layers depend on inner layers**
+- **Inner layers never reference outer layers**
+
+## Documentation Rules
+
+- **Document interfaces only**
+  - Interfaces require full XML documentation
+  - Classes/implementations don't need documentation unless they contain complex logic
+  - Don't add unnecessary documentation
